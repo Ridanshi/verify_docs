@@ -33,7 +33,7 @@ def _load_model():
         _processor = AutoProcessor.from_pretrained(VLM_MODEL_ID)
 
 
-PROMPT = """You are a financial document extraction assistant.
+PROMPT = """You are a financial document extraction assistant for Indian loan documents.
 
 Step 1: Identify the document type — one of:
   sanctioned_letter, disbursement_letter, offer_letter, banker_confirmation, invalid
@@ -41,11 +41,41 @@ Step 1: Identify the document type — one of:
 If this image is not a financial document (photo of objects, people, or unrelated content),
 set document_type to "invalid" and all fields to null.
 
-Step 2: Extract these fields (set null if not found in the document):
-  customer_name, bank_name, loan_account_number, application_id,
-  sanction_amount, disbursement_amount, loan_type, branch, disbursement_date
+Step 2: Extract exactly these 9 fields. Read each definition carefully before extracting.
 
-Return ONLY valid JSON with no explanation:
+  customer_name       — Full name of the loan applicant/borrower. Usually appears after
+                        "Dear", "To", "Borrower Name", or "Customer Name".
+
+  bank_name           — Name of the lending institution (the company issuing this letter),
+                        e.g. "ABC Finance Ltd", "XYZ Housing Finance". This is the
+                        organisation's name, NOT a street address, city, or branch name.
+
+  loan_account_number — The loan account number for this disbursement. Usually labelled
+                        "Loan Account No", "Account Number", or "LAP No". It is a unique
+                        identifier for the loan itself, different from the application ID.
+
+  application_id      — The loan application reference number. Usually labelled
+                        "Application No", "Application ID", or "Ref No". It identifies
+                        the application, not the loan account.
+
+  sanction_amount     — The total loan amount sanctioned/approved. Extract the value
+                        exactly as written (e.g. "Rs.25.00 lakhs", "₹25,00,000").
+
+  disbursement_amount — The amount actually disbursed in this letter. Extract exactly
+                        as written. May differ from sanction_amount.
+
+  loan_type           — Category of loan, e.g. "Home Loan", "SME Loan", "Mortgage Loan",
+                        "Loan Against Property". Extract as written.
+
+  branch              — The branch name or city where the loan is being processed.
+                        Usually labelled "Branch", "Branch Office", or "Processing Centre".
+
+  disbursement_date   — The date of disbursement as written in the document
+                        (e.g. "19 Jun 2026", "19.06.2026"). NOT the sanction date.
+
+Set a field to null only if it is genuinely absent from the document.
+
+Return ONLY valid JSON, no explanation:
 {
   "document_type": "...",
   "fields": {
