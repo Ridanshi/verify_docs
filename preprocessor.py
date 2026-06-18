@@ -1,5 +1,5 @@
+import fitz  # PyMuPDF — no Poppler required
 from PIL import Image
-from pdf2image import convert_from_path
 
 SUPPORTED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".tiff", ".tif", ".bmp"}
 MAX_SIDE = 1120
@@ -17,8 +17,12 @@ def load_image(file_path: str) -> Image.Image:
     path = file_path.lower()
 
     if path.endswith(".pdf"):
-        pages = convert_from_path(file_path, dpi=200, first_page=1, last_page=1)
-        img = pages[0].convert("RGB")
+        doc = fitz.open(file_path)
+        page = doc[0]
+        mat = fitz.Matrix(200 / 72, 200 / 72)  # 200 DPI
+        pix = page.get_pixmap(matrix=mat)
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        doc.close()
         return _resize(img)
 
     ext = "." + path.rsplit(".", 1)[-1] if "." in path else ""
