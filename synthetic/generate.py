@@ -116,14 +116,7 @@ def indian_comma(n: int) -> str:
 
 
 def format_amount_doc(lakhs: float) -> str:
-    rupees = int(lakhs * 100_000)
-    choice = random.choice(["lakhs", "indian_comma", "plain_slash"])
-    if choice == "lakhs":
-        return f"Rs.{lakhs:.2f} lakhs"
-    elif choice == "indian_comma":
-        return f"₹{indian_comma(rupees)}.00"
-    else:
-        return f"Rs. {rupees:,}/-"
+    return f"Rs.{lakhs:.2f} lakhs"
 
 
 def format_date_doc(d: date) -> str:
@@ -215,8 +208,8 @@ def _mahindra_data(idx: int) -> dict:
     first, second = random.choice(CUSTOMERS)
     lakhs         = random_lakhs()
     disb_date     = random_date()
-    app_id        = f"AP{random.randint(1000000000, 9999999999)}"
-    loan_no       = f"LAPSEC{random.randint(100000000, 999999999)}"
+    app_id        = f"AP{random.randint(1000000, 9999999)}"
+    loan_no       = f"LAPSEC{random.randint(100000, 999999)}"
     branch        = random.choice(BRANCHES_MAHINDRA)
     loan_type     = random.choice(LOAN_TYPES_MAHINDRA)
     channel       = random.choice(CHANNEL_PARTNERS)
@@ -325,8 +318,8 @@ def _aadhar_data(idx: int) -> dict:
     first, second = random.choice(CUSTOMERS)
     lakhs          = random_lakhs()
     disb_date      = random_date()
-    app_id         = str(random.randint(300000000, 399999999))
-    loan_no        = str(random.randint(300000000, 399999999))
+    app_id         = str(random.randint(3000000, 3999999))
+    loan_no        = str(random.randint(3000000, 3999999))
     branch         = random.choice(BRANCHES_AADHAR)
     loan_type      = random.choice(LOAN_TYPES_AADHAR)
     rate           = random.choice(RATES_OF_INTEREST)
@@ -484,8 +477,8 @@ def _hdfc_data(idx: int) -> dict:
     first, second = random.choice(CUSTOMERS)
     lakhs          = random_lakhs()
     disb_date      = random_date()
-    app_id         = f"HDFC{random.randint(10000000, 99999999)}"
-    loan_no        = f"HL{random.randint(10000000, 99999999)}"
+    app_id         = f"HDFC{random.randint(100000, 999999)}"
+    loan_no        = f"HL{random.randint(100000, 799999)}"
     branch         = random.choice(BRANCHES_HDFC)
     loan_type      = random.choice(LOAN_TYPES_HDFC)
     rate           = random.choice(RATES_OF_INTEREST)
