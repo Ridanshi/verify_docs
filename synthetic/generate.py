@@ -249,7 +249,7 @@ def build_mahindra_pdf(path: Path, fields: dict):
 
     # email header bar
     header_data = [[
-        Paragraph(f'<font color="white"><b>Mount Road</b></font>',
+        Paragraph(f'<font color="white"><b>Mahindra Finance</b></font>',
                   ParagraphStyle("WB", fontName="Helvetica-Bold", fontSize=10, textColor=colors.white)),
         Paragraph(f'<font color="white">{fields["disbursement_date"]}</font>',
                   ParagraphStyle("WR", fontName="Helvetica", fontSize=9,
@@ -282,8 +282,9 @@ def build_mahindra_pdf(path: Path, fields: dict):
     rows = [
         ["Channel Partner Name", fields["channel_partner"]],
         ["Customer Name",        fields["customer_name"]],
+        ["Loan Account No (LAN)", fields["loan_account_number"]],
+        ["Application No",       fields["application_id"]],
         ["Disb Amount",          fields["disbursement_amount"]],
-        ["App/LAN Number",       fields["application_id"]],
         ["Sanction Amount",      fields["sanction_amount"]],
         ["Disb Date",            fields["disbursement_date"]],
         ["Loan Type",            fields["loan_type"]],
