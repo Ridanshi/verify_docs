@@ -49,13 +49,13 @@ def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
 
     if field_key in FUZZY_FIELDS:
         threshold = FUZZY_THRESHOLDS.get(field_key, 80)
-        score = fuzz.partial_ratio(
+        score = fuzz.ratio(
             normalize_text(str(extracted_val)),
             normalize_text(str(expected_val)),
         )
         return score >= threshold
 
-    score = fuzz.partial_ratio(
+    score = fuzz.ratio(
         normalize_text(str(extracted_val)),
         normalize_text(str(expected_val)),
     )

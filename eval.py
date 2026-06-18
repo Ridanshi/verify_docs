@@ -93,15 +93,20 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str) -> None:
         else:
             confusion["FN"] += 1
 
-        # per-field extraction accuracy: compare VLM raw output vs document_raw_fields
+        # per-field accuracy: does the pipeline match extracted vs normalized expected?
+        from comparator import _fields_match
+        from config import FIELDS
         field_detail: dict[str, dict] = {}
-        for field, raw_expected in raw_fields.items():
+        for field in FIELDS:
+            expected_val = expected_values.get(field)
+            if not expected_val:
+                continue
             field_total[field] = field_total.get(field, 0) + 1
             got_raw = (extracted or {}).get(field)
-            hit = str(got_raw).strip().lower() == str(raw_expected).strip().lower() if got_raw else False
+            hit = _fields_match(field, got_raw, expected_val)
             if hit:
                 field_hits[field] = field_hits.get(field, 0) + 1
-            field_detail[field] = {"expected": raw_expected, "got": got_raw, "match": hit}
+            field_detail[field] = {"expected": expected_val, "got": got_raw, "match": hit}
 
         mark = "OK" if status_ok else "FAIL"
         print(f"  [{i}/{total}] {mark}  {filename}  ({elapsed:.1f}s)  "
