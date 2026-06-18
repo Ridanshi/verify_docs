@@ -237,6 +237,68 @@ Output saved to `eval_results.json`.
 
 ---
 
+## 8b. Bug Fixes Applied (Post-Initial Build)
+
+### comparator.py
+- `fuzz.partial_ratio` → `fuzz.ratio` everywhere. Partial ratio caused false negatives: "T.Nagar" vs "T.Nagar Branch" scored 100% (substring match), flagged as correct when it shouldn't be.
+- Added `endswith` fallback for `EXACT_FIELDS`: `e == x or e.endswith(x)`. Handles Aadhar case where Qwen extracted "AHFLN No. 337887565" instead of "337887565".
+
+### eval.py
+- Per-field accuracy was using raw exact string comparison → required Qwen to output "Rs.25.00 lakhs" exactly. Fixed to use `_fields_match()` with `expected_values` (same normalization pipeline as production).
+
+### normalizer.py
+- ISO date bug: `dayfirst=True` on `dateparser.parse("2026-01-06")` swapped month/day → "2026-06-01". Fixed with regex check: if input matches `^\d{4}-\d{2}-\d{2}$`, parse without `dayfirst`.
+
+### extractor.py
+- Amount prompt rewritten to force "X.XX lakhs" output format. Qwen was character-copying Indian comma format "₹2,00,00,000" and reading Western comma "₹2,000,000" (10x error). Semantic instruction forces conversion.
+- ID fields: added "Copy EVERY character exactly — do not skip, add, or transpose digits."
+- `_USE_4BIT` default changed to `"1"` (always on for 32B).
+
+### synthetic/generate.py (anti-overfitting restoration)
+- Restored 3 amount formats: `Rs.X.XX lakhs`, `₹Indian,comma`, `Rs. plain/-`. Was temporarily simplified to lakhs-only → inflated accuracy to 94.7% on easy test data.
+- Restored realistic ID lengths: Mahindra `LAPSEC` + 9 digits, Aadhar 9-digit numeric, HDFC `HL` + 10 digits. Was temporarily shortened to avoid Qwen digit-drop errors → hid real OCR failure modes.
+- Aadhar template: moved loan_account_number and application_id from inline ref paragraph to footer table with clean label:value rows.
+
+---
+
+## 8c. Model Upgrade: 7B → 32B
+
+**Decision:** Qwen2.5-VL-7B was achieving ~78% status accuracy with production-realistic data. Fine-tuning rejected (would overfit to 3 templates, catastrophic forgetting on unknown lender layouts). Upgraded to `Qwen/Qwen2.5-VL-32B-Instruct`.
+
+**Expected improvement:** 32B has stronger multi-digit OCR, better Indian comma parsing, more reliable JSON adherence → estimated 85–93% accuracy.
+
+**Infrastructure:** Kaggle T4 x2 (32GB total). 32B in 4-bit ≈ 18GB, fits across both GPUs with `device_map="auto"`.
+
+---
+
+## 8d. Current Blocker: OOM on Kaggle T4 x2
+
+**Symptom:** Model downloads (68.3GB) but inference fails immediately.
+
+Two error types observed:
+1. `CUDA out of memory. GPU 0 has 14.56 GiB total, 48.81 MiB free` — model loaded entirely onto GPU 0, never split to GPU 1.
+2. `Some modules are dispatched on the CPU or the disk` — `device_map="auto"` fell back to CPU offload, which bitsandbytes 4-bit does not support.
+
+**Root cause:** `device_map="auto"` without explicit `max_memory` lets accelerate choose an allocation that puts layers on CPU once GPU 0 fills. BnB 4-bit kernels require GPU; CPU-offloaded 4-bit layers error immediately.
+
+**Fix (not yet applied):** Pass `max_memory` to force both GPUs and block CPU fallback:
+
+```python
+max_memory = {0: "13GiB", 1: "13GiB", "cpu": "0GiB"}
+_model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+    VLM_MODEL_ID,
+    quantization_config=bnb_config,
+    device_map="auto",
+    max_memory=max_memory,
+)
+```
+
+This tells accelerate: fill both GPUs up to 13GB each (leaving ~1.5GB headroom per GPU for activations), never touch CPU.
+
+**Status:** Not yet evaluated with 32B. Fix needs to be applied and re-run.
+
+---
+
 ## 9. v2 Roadmap (After Company Testing)
 
 | Milestone | What | Why |
@@ -295,4 +357,12 @@ ff225b8  feat: synthetic document generator — 75 PDFs + 75 JPGs, 3 lenders, gr
 f2f335c  docs: update session log with synthetic data generation details
 ecfb1ce  feat: smoke test script and fix app launch for RunPod (0.0.0.0 binding)
 0360d65  feat: batch eval script against 150 synthetic docs
+9946892  fix: repair Mahindra template — add lender name and loan account number
+8447f99  fix: normalize_date ISO format bug — dayfirst=True swapped month/day
+80ff17e  fix: partial_ratio -> ratio to catch suffix mismatches; fix eval per-field metric
+2ca143d  fix: Aadhar/HDFC loan_account_number extraction failures
+e5717d9  fix: remove ambiguous amount formats; shorten IDs to cut Qwen OCR errors
+        (later reverted — overfitting)
+[unpushed] fix: restore realistic amount formats + ID lengths (anti-overfitting)
+[unpushed] fix: upgrade VLM to Qwen2.5-VL-32B-Instruct + 4-bit default
 ```

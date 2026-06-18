@@ -17,18 +17,24 @@ _USE_4BIT = os.environ.get("USE_4BIT", "1") == "1"
 def _load_model():
     global _model, _processor
     if _model is None:
+        num_gpus = torch.cuda.device_count()
+        max_memory = {i: "13GiB" for i in range(num_gpus)}
+        max_memory["cpu"] = "0GiB"
+
         if _USE_4BIT:
             bnb_config = BitsAndBytesConfig(load_in_4bit=True)
             _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
                 VLM_MODEL_ID,
                 quantization_config=bnb_config,
                 device_map="auto",
+                max_memory=max_memory,
             )
         else:
             _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
                 VLM_MODEL_ID,
                 torch_dtype=torch.float16,
                 device_map="auto",
+                max_memory=max_memory,
             )
         _processor = AutoProcessor.from_pretrained(VLM_MODEL_ID)
 
