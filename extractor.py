@@ -53,16 +53,24 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
   loan_account_number — The loan account number for this disbursement. Usually labelled
                         "Loan Account No", "Account Number", or "LAP No". It is a unique
                         identifier for the loan itself, different from the application ID.
+                        Copy EVERY character exactly — do not skip, add, or transpose digits.
 
   application_id      — The loan application reference number. Usually labelled
                         "Application No", "Application ID", or "Ref No". It identifies
                         the application, not the loan account.
+                        Copy EVERY character exactly — do not skip, add, or transpose digits.
 
-  sanction_amount     — The total loan amount sanctioned/approved. Extract the value
-                        exactly as written (e.g. "Rs.25.00 lakhs", "₹25,00,000").
+  sanction_amount     — The total loan amount sanctioned/approved. Always express as
+                        "X.XX lakhs" in Indian rupees. Examples:
+                          ₹25,00,000  →  "25.00 lakhs"
+                          Rs.25.00 lakhs  →  "25.00 lakhs"
+                          ₹2,00,00,000  →  "200.00 lakhs"
+                          Rs. 1,50,00,000/-  →  "150.00 lakhs"
+                        Convert any format (crore, comma-separated, symbols) to lakhs.
 
-  disbursement_amount — The amount actually disbursed in this letter. Extract exactly
-                        as written. May differ from sanction_amount.
+  disbursement_amount — The amount actually disbursed. Always express as "X.XX lakhs"
+                        using the same conversion rules as sanction_amount.
+                        May differ from sanction_amount.
 
   loan_type           — Category of loan, e.g. "Home Loan", "SME Loan", "Mortgage Loan",
                         "Loan Against Property". Extract as written.
