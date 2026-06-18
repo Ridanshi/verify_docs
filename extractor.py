@@ -10,8 +10,8 @@ from config import VLM_MODEL_ID, VLM_MAX_NEW_TOKENS, FIELDS
 _model = None
 _processor = None
 
-# Set USE_4BIT=1 on Kaggle/Colab (T4/P100, 16GB VRAM). Leave unset on RTX 4090+.
-_USE_4BIT = os.environ.get("USE_4BIT", "0") == "1"
+# 32B model always needs 4-bit. 7B can run float16 on RTX 4090+.
+_USE_4BIT = os.environ.get("USE_4BIT", "1") == "1"
 
 
 def _load_model():
