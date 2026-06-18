@@ -145,12 +145,17 @@ D:\Verify Docs\
 │   ├── test_comparator.py     7 tests
 │   ├── test_preprocessor.py   4 tests
 │   └── test_database.py       5 tests
+├── synthetic/
+│   ├── generate.py           Synthetic document generator (75 PDFs + 75 JPGs)
+│   ├── ground_truth.json     150 entries with expected values + status per file
+│   ├── data/pdfs/            75 PDFs (25 each: mahindra, aadhar, hdfc)
+│   └── data/images/          75 JPGs with scan augmentation
 └── docs/
     ├── superpowers/specs/2026-06-18-loan-document-verification-design.md
     └── superpowers/plans/2026-06-18-loan-document-verification.md
 ```
 
-**Total: 31 tests, all passing.**
+**Total: 31 tests, all passing. 150 synthetic documents generated.**
 
 ---
 
@@ -223,7 +228,38 @@ Task 7 (smoke test) must be run on a cloud GPU machine:
 
 ---
 
-## 10. Git Log
+## 10. Synthetic Data Generator
+
+**Script:** `synthetic/generate.py`
+
+Three lender templates built with reportlab:
+
+| Template | Style | Fields |
+|---|---|---|
+| Mahindra Finance | Blue header email + colored data table | All 9 fields |
+| Aadhar Housing Finance | Orange logo header + offer letter prose | All 9 fields |
+| HDFC | Blue letterhead + formal sanction letter | All 9 fields |
+
+**Generation stats:**
+- 25 docs per lender × 3 lenders = 75 PDFs in `synthetic/data/pdfs/`
+- Each PDF converted to JPG via PyMuPDF with scan augmentation (rotation ±2.5°, brightness, contrast, optional blur) = 75 JPGs in `synthetic/data/images/`
+- Total: 150 files (PDF + JPG per doc), 57 APPROVED / 18 CHANGES_REQUESTED
+
+**Mismatch injection logic:**
+- Index 0–6 (7 in 10): no mismatches → APPROVED
+- Index 7–8 (2 in 10): 1 random field mismatch → CHANGES_REQUESTED
+- Index 9 (1 in 10): 2 field mismatches → CHANGES_REQUESTED
+
+**ground_truth.json:** 150 entries, each with `expected_values` (normalized), `expected_status`, and `mismatch_fields`.
+
+**Bugs fixed during generation:**
+1. Trailing `+` operator syntax error in pool tuple — removed
+2. `pdf2image` requires Poppler binary (not available on Windows) — replaced with PyMuPDF (`fitz`)
+3. `✓` and `→` UnicodeEncodeError on Windows terminal (cp1252) — replaced with ASCII
+
+---
+
+## 11. Git Log
 
 ```
 0d3cc06  feat: project setup and config
@@ -233,4 +269,6 @@ ee5f813  feat: image preprocessor for PDF and image inputs
 0fc15f0  feat: Qwen2.5-VL extractor with retry and invalid doc detection
 8187d14  feat: Gradio UI for document upload, field input, and result display
 6fc3813  feat: SQLite storage and history tab
+c87b2f9  docs: session log with full design and implementation record
+ff225b8  feat: synthetic document generator — 75 PDFs + 75 JPGs, 3 lenders, ground truth JSON
 ```
