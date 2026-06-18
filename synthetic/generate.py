@@ -397,7 +397,7 @@ def build_aadhar_pdf(path: Path, fields: dict):
     story.append(Spacer(1, 4*mm))
 
     ref_data = [[
-        Paragraph(f"<b>AHFLN No.</b>  {fields['loan_account_number']}", normal),
+        Paragraph("", normal),
         Paragraph(fields["disbursement_date"], right),
     ]]
     ref_tbl = Table(ref_data, colWidths=[W*0.6, W*0.4])
@@ -459,7 +459,12 @@ def build_aadhar_pdf(path: Path, fields: dict):
     story.append(Spacer(1, 4*mm))
 
     # branch + loan type footer row
-    footer_rows = [["Branch", fields["branch"]], ["Loan Type", fields["loan_type"]]]
+    footer_rows = [
+        ["Loan Account No.", fields["loan_account_number"]],
+        ["Application No.",  fields["application_id"]],
+        ["Branch",           fields["branch"]],
+        ["Loan Type",        fields["loan_type"]],
+    ]
     footer_tbl_data = [[
         Paragraph(f"<b>{r[0]}</b>", normal),
         Paragraph(str(r[1]), normal),
@@ -480,7 +485,7 @@ def _hdfc_data(idx: int) -> dict:
     lakhs          = random_lakhs()
     disb_date      = random_date()
     app_id         = f"HDFC{random.randint(10000000, 99999999)}"
-    loan_no        = f"0{random.randint(100000000000, 999999999999)}"
+    loan_no        = f"HL{random.randint(10000000, 99999999)}"
     branch         = random.choice(BRANCHES_HDFC)
     loan_type      = random.choice(LOAN_TYPES_HDFC)
     rate           = random.choice(RATES_OF_INTEREST)

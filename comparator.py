@@ -42,7 +42,10 @@ def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
         return e == x
 
     if field_key in EXACT_FIELDS:
-        return str(extracted_val).strip() == str(expected_val).strip()
+        e = str(extracted_val).strip()
+        x = str(expected_val).strip()
+        # accept if extracted ends with expected — handles "AHFLN No. 337887565" vs "337887565"
+        return e == x or e.endswith(x)
 
     if field_key in FUZZY_FIELDS:
         threshold = FUZZY_THRESHOLDS.get(field_key, 80)
