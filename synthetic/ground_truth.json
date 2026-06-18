@@ -1,0 +1,3986 @@
+{
+  "mahindra_001.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC202672784",
+      "application_id": "AP7755079301",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "SME Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-06-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC202672784",
+      "application_id": "AP7755079301",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "\u20b92,50,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "Guindy",
+      "disbursement_date": "19 Jun 2026"
+    }
+  },
+  "mahindra_001.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC202672784",
+      "application_id": "AP7755079301",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "SME Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-06-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC202672784",
+      "application_id": "AP7755079301",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "\u20b92,50,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "Guindy",
+      "disbursement_date": "19 Jun 2026"
+    }
+  },
+  "mahindra_002.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC442678447",
+      "application_id": "AP5035073608",
+      "sanction_amount": "7000000",
+      "disbursement_amount": "7000000",
+      "loan_type": "SME Loan",
+      "branch": "MountRoad",
+      "disbursement_date": "2026-05-16"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC442678447",
+      "application_id": "AP5035073608",
+      "sanction_amount": "Rs.70.00 lakhs",
+      "disbursement_amount": "\u20b970,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "MountRoad",
+      "disbursement_date": "16 May 2026"
+    }
+  },
+  "mahindra_002.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC442678447",
+      "application_id": "AP5035073608",
+      "sanction_amount": "7000000",
+      "disbursement_amount": "7000000",
+      "loan_type": "SME Loan",
+      "branch": "MountRoad",
+      "disbursement_date": "2026-05-16"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC442678447",
+      "application_id": "AP5035073608",
+      "sanction_amount": "Rs.70.00 lakhs",
+      "disbursement_amount": "\u20b970,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "MountRoad",
+      "disbursement_date": "16 May 2026"
+    }
+  },
+  "mahindra_003.pdf": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC775715648",
+      "application_id": "AP9507275641",
+      "sanction_amount": "8000000",
+      "disbursement_amount": "8000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-04-18"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC775715648",
+      "application_id": "AP9507275641",
+      "sanction_amount": "Rs. 8,000,000/-",
+      "disbursement_amount": "Rs. 8,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "18 Apr 2026"
+    }
+  },
+  "mahindra_003.jpg": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC775715648",
+      "application_id": "AP9507275641",
+      "sanction_amount": "8000000",
+      "disbursement_amount": "8000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-04-18"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC775715648",
+      "application_id": "AP9507275641",
+      "sanction_amount": "Rs. 8,000,000/-",
+      "disbursement_amount": "Rs. 8,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "18 Apr 2026"
+    }
+  },
+  "mahindra_004.pdf": {
+    "expected_values": {
+      "customer_name": "Prasad Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC644424082",
+      "application_id": "AP2918313312",
+      "sanction_amount": "2500000",
+      "disbursement_amount": "2500000",
+      "loan_type": "SME Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-05-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Prasad Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC644424082",
+      "application_id": "AP2918313312",
+      "sanction_amount": "\u20b925,00,000.00",
+      "disbursement_amount": "\u20b925,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "Porur",
+      "disbursement_date": "19.05.2026"
+    }
+  },
+  "mahindra_004.jpg": {
+    "expected_values": {
+      "customer_name": "Prasad Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC644424082",
+      "application_id": "AP2918313312",
+      "sanction_amount": "2500000",
+      "disbursement_amount": "2500000",
+      "loan_type": "SME Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-05-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Prasad Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC644424082",
+      "application_id": "AP2918313312",
+      "sanction_amount": "\u20b925,00,000.00",
+      "disbursement_amount": "\u20b925,00,000.00",
+      "loan_type": "SME Loan",
+      "branch": "Porur",
+      "disbursement_date": "19.05.2026"
+    }
+  },
+  "mahindra_005.pdf": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC219477614",
+      "application_id": "AP5170400704",
+      "sanction_amount": "9000000",
+      "disbursement_amount": "9000000",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "2026-05-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC219477614",
+      "application_id": "AP5170400704",
+      "sanction_amount": "Rs. 9,000,000/-",
+      "disbursement_amount": "Rs.90.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "05/05/2026"
+    }
+  },
+  "mahindra_005.jpg": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC219477614",
+      "application_id": "AP5170400704",
+      "sanction_amount": "9000000",
+      "disbursement_amount": "9000000",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "2026-05-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC219477614",
+      "application_id": "AP5170400704",
+      "sanction_amount": "Rs. 9,000,000/-",
+      "disbursement_amount": "Rs.90.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "05/05/2026"
+    }
+  },
+  "mahindra_006.pdf": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC861327742",
+      "application_id": "AP4245273163",
+      "sanction_amount": "12500000",
+      "disbursement_amount": "12500000",
+      "loan_type": "Business Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-06-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC861327742",
+      "application_id": "AP4245273163",
+      "sanction_amount": "Rs.125.00 lakhs",
+      "disbursement_amount": "Rs. 12,500,000/-",
+      "loan_type": "Business Loan",
+      "branch": "Perambur",
+      "disbursement_date": "22/06/2026"
+    }
+  },
+  "mahindra_006.jpg": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC861327742",
+      "application_id": "AP4245273163",
+      "sanction_amount": "12500000",
+      "disbursement_amount": "12500000",
+      "loan_type": "Business Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-06-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC861327742",
+      "application_id": "AP4245273163",
+      "sanction_amount": "Rs.125.00 lakhs",
+      "disbursement_amount": "Rs. 12,500,000/-",
+      "loan_type": "Business Loan",
+      "branch": "Perambur",
+      "disbursement_date": "22/06/2026"
+    }
+  },
+  "mahindra_007.pdf": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC457813190",
+      "application_id": "AP8364076204",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "LAP",
+      "branch": "Vellore",
+      "disbursement_date": "2026-02-14"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC457813190",
+      "application_id": "AP8364076204",
+      "sanction_amount": "Rs. 1,500,000/-",
+      "disbursement_amount": "Rs.15.00 lakhs",
+      "loan_type": "LAP",
+      "branch": "Vellore",
+      "disbursement_date": "14.02.2026"
+    }
+  },
+  "mahindra_007.jpg": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC457813190",
+      "application_id": "AP8364076204",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "LAP",
+      "branch": "Vellore",
+      "disbursement_date": "2026-02-14"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC457813190",
+      "application_id": "AP8364076204",
+      "sanction_amount": "Rs. 1,500,000/-",
+      "disbursement_amount": "Rs.15.00 lakhs",
+      "loan_type": "LAP",
+      "branch": "Vellore",
+      "disbursement_date": "14.02.2026"
+    }
+  },
+  "mahindra_008.pdf": {
+    "expected_values": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC428892552",
+      "application_id": "AP7681385439",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Madurai",
+      "disbursement_date": "2026-06-15"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC428892552",
+      "application_id": "AP7681385439",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Madurai",
+      "disbursement_date": "14/06/2026"
+    }
+  },
+  "mahindra_008.jpg": {
+    "expected_values": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC428892552",
+      "application_id": "AP7681385439",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Madurai",
+      "disbursement_date": "2026-06-15"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC428892552",
+      "application_id": "AP7681385439",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Madurai",
+      "disbursement_date": "14/06/2026"
+    }
+  },
+  "mahindra_009.pdf": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC645884435",
+      "application_id": "AP1885823519",
+      "sanction_amount": "13500000",
+      "disbursement_amount": "13000000",
+      "loan_type": "Home Loan",
+      "branch": "Trichy",
+      "disbursement_date": "2026-02-07"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC645884435",
+      "application_id": "AP1885823519",
+      "sanction_amount": "Rs.130.00 lakhs",
+      "disbursement_amount": "Rs.130.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Trichy",
+      "disbursement_date": "07.02.2026"
+    }
+  },
+  "mahindra_009.jpg": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC645884435",
+      "application_id": "AP1885823519",
+      "sanction_amount": "13500000",
+      "disbursement_amount": "13000000",
+      "loan_type": "Home Loan",
+      "branch": "Trichy",
+      "disbursement_date": "2026-02-07"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC645884435",
+      "application_id": "AP1885823519",
+      "sanction_amount": "Rs.130.00 lakhs",
+      "disbursement_amount": "Rs.130.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Trichy",
+      "disbursement_date": "07.02.2026"
+    }
+  },
+  "mahindra_010.pdf": {
+    "expected_values": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC845211840",
+      "application_id": "AP6965574749",
+      "sanction_amount": "5500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Home Loan",
+      "branch": "Madurai",
+      "disbursement_date": "2026-05-13"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC845211840",
+      "application_id": "AP6965574749",
+      "sanction_amount": "\u20b945,00,000.00",
+      "disbursement_amount": "Rs.45.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Madurai",
+      "disbursement_date": "13 May 2026"
+    }
+  },
+  "mahindra_010.jpg": {
+    "expected_values": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC845211840",
+      "application_id": "AP6965574749",
+      "sanction_amount": "5500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Home Loan",
+      "branch": "Madurai",
+      "disbursement_date": "2026-05-13"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC845211840",
+      "application_id": "AP6965574749",
+      "sanction_amount": "\u20b945,00,000.00",
+      "disbursement_amount": "Rs.45.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Madurai",
+      "disbursement_date": "13 May 2026"
+    }
+  },
+  "mahindra_011.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC413022742",
+      "application_id": "AP5397274990",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-06"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC413022742",
+      "application_id": "AP5397274990",
+      "sanction_amount": "Rs.200.00 lakhs",
+      "disbursement_amount": "Rs.200.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "06/02/2026"
+    }
+  },
+  "mahindra_011.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC413022742",
+      "application_id": "AP5397274990",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-06"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC413022742",
+      "application_id": "AP5397274990",
+      "sanction_amount": "Rs.200.00 lakhs",
+      "disbursement_amount": "Rs.200.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "06/02/2026"
+    }
+  },
+  "mahindra_012.pdf": {
+    "expected_values": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC900964057",
+      "application_id": "AP3872045691",
+      "sanction_amount": "3000000",
+      "disbursement_amount": "3000000",
+      "loan_type": "LAP",
+      "branch": "Porur",
+      "disbursement_date": "2026-02-15"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC900964057",
+      "application_id": "AP3872045691",
+      "sanction_amount": "Rs. 3,000,000/-",
+      "disbursement_amount": "Rs.30.00 lakhs",
+      "loan_type": "LAP",
+      "branch": "Porur",
+      "disbursement_date": "15/02/2026"
+    }
+  },
+  "mahindra_012.jpg": {
+    "expected_values": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC900964057",
+      "application_id": "AP3872045691",
+      "sanction_amount": "3000000",
+      "disbursement_amount": "3000000",
+      "loan_type": "LAP",
+      "branch": "Porur",
+      "disbursement_date": "2026-02-15"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC900964057",
+      "application_id": "AP3872045691",
+      "sanction_amount": "Rs. 3,000,000/-",
+      "disbursement_amount": "Rs.30.00 lakhs",
+      "loan_type": "LAP",
+      "branch": "Porur",
+      "disbursement_date": "15/02/2026"
+    }
+  },
+  "mahindra_013.pdf": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC877041842",
+      "application_id": "AP9625939685",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "Home Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-05-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC877041842",
+      "application_id": "AP9625939685",
+      "sanction_amount": "Rs. 4,000,000/-",
+      "disbursement_amount": "\u20b940,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Salem",
+      "disbursement_date": "05.05.2026"
+    }
+  },
+  "mahindra_013.jpg": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC877041842",
+      "application_id": "AP9625939685",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "Home Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-05-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC877041842",
+      "application_id": "AP9625939685",
+      "sanction_amount": "Rs. 4,000,000/-",
+      "disbursement_amount": "\u20b940,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Salem",
+      "disbursement_date": "05.05.2026"
+    }
+  },
+  "mahindra_014.pdf": {
+    "expected_values": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC568845013",
+      "application_id": "AP2055133048",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Business Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-02-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC568845013",
+      "application_id": "AP2055133048",
+      "sanction_amount": "\u20b91,50,00,000.00",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "Business Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "08 Feb 2026"
+    }
+  },
+  "mahindra_014.jpg": {
+    "expected_values": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC568845013",
+      "application_id": "AP2055133048",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Business Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-02-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Lakshmi Devi",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC568845013",
+      "application_id": "AP2055133048",
+      "sanction_amount": "\u20b91,50,00,000.00",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "Business Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "08 Feb 2026"
+    }
+  },
+  "mahindra_015.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC200122937",
+      "application_id": "AP5029294354",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Business Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-01-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC200122937",
+      "application_id": "AP5029294354",
+      "sanction_amount": "Rs.190.00 lakhs",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Business Loan",
+      "branch": "Guindy",
+      "disbursement_date": "23/01/2026"
+    }
+  },
+  "mahindra_015.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC200122937",
+      "application_id": "AP5029294354",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Business Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-01-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC200122937",
+      "application_id": "AP5029294354",
+      "sanction_amount": "Rs.190.00 lakhs",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Business Loan",
+      "branch": "Guindy",
+      "disbursement_date": "23/01/2026"
+    }
+  },
+  "mahindra_016.pdf": {
+    "expected_values": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC233971419",
+      "application_id": "AP9037613225",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC233971419",
+      "application_id": "AP9037613225",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "21 Jan 2026"
+    }
+  },
+  "mahindra_016.jpg": {
+    "expected_values": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC233971419",
+      "application_id": "AP9037613225",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC233971419",
+      "application_id": "AP9037613225",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "21 Jan 2026"
+    }
+  },
+  "mahindra_017.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC708268401",
+      "application_id": "AP7063884657",
+      "sanction_amount": "27500000",
+      "disbursement_amount": "27500000",
+      "loan_type": "Business Loan",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-02-13"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC708268401",
+      "application_id": "AP7063884657",
+      "sanction_amount": "Rs.275.00 lakhs",
+      "disbursement_amount": "Rs. 27,500,000/-",
+      "loan_type": "Business Loan",
+      "branch": "T.Nagar",
+      "disbursement_date": "13/02/2026"
+    }
+  },
+  "mahindra_017.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC708268401",
+      "application_id": "AP7063884657",
+      "sanction_amount": "27500000",
+      "disbursement_amount": "27500000",
+      "loan_type": "Business Loan",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-02-13"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC708268401",
+      "application_id": "AP7063884657",
+      "sanction_amount": "Rs.275.00 lakhs",
+      "disbursement_amount": "Rs. 27,500,000/-",
+      "loan_type": "Business Loan",
+      "branch": "T.Nagar",
+      "disbursement_date": "13/02/2026"
+    }
+  },
+  "mahindra_018.pdf": {
+    "expected_values": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC799296869",
+      "application_id": "AP2686898978",
+      "sanction_amount": "2000000",
+      "disbursement_amount": "2000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Trichy",
+      "disbursement_date": "2026-01-08"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC799296869",
+      "application_id": "AP2686898978",
+      "sanction_amount": "\u20b920,00,000.00",
+      "disbursement_amount": "Rs. 2,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Trichy",
+      "disbursement_date": "07.01.2026"
+    }
+  },
+  "mahindra_018.jpg": {
+    "expected_values": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC799296869",
+      "application_id": "AP2686898978",
+      "sanction_amount": "2000000",
+      "disbursement_amount": "2000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Trichy",
+      "disbursement_date": "2026-01-08"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC799296869",
+      "application_id": "AP2686898978",
+      "sanction_amount": "\u20b920,00,000.00",
+      "disbursement_amount": "Rs. 2,000,000/-",
+      "loan_type": "LAP Non Individual",
+      "branch": "Trichy",
+      "disbursement_date": "07.01.2026"
+    }
+  },
+  "mahindra_019.pdf": {
+    "expected_values": {
+      "customer_name": "Fatima Begum",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC905435691",
+      "application_id": "AP8301457644",
+      "sanction_amount": "12000000",
+      "disbursement_amount": "12000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC905435691",
+      "application_id": "AP8301457644",
+      "sanction_amount": "Rs.120.00 lakhs",
+      "disbursement_amount": "Rs.120.00 lakhs",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "21.01.2026"
+    }
+  },
+  "mahindra_019.jpg": {
+    "expected_values": {
+      "customer_name": "Fatima Begum",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC905435691",
+      "application_id": "AP8301457644",
+      "sanction_amount": "12000000",
+      "disbursement_amount": "12000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC905435691",
+      "application_id": "AP8301457644",
+      "sanction_amount": "Rs.120.00 lakhs",
+      "disbursement_amount": "Rs.120.00 lakhs",
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "21.01.2026"
+    }
+  },
+  "mahindra_020.pdf": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC729583445",
+      "application_id": "AP8045314420",
+      "sanction_amount": "16500000",
+      "disbursement_amount": "14000000",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-02-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC729583445",
+      "application_id": "AP8045314420",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "Rs.140.00 lakhs",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "17.02.2026"
+    }
+  },
+  "mahindra_020.jpg": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC729583445",
+      "application_id": "AP8045314420",
+      "sanction_amount": "16500000",
+      "disbursement_amount": "14000000",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-02-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC729583445",
+      "application_id": "AP8045314420",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "Rs.140.00 lakhs",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "17.02.2026"
+    }
+  },
+  "mahindra_021.pdf": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC425212816",
+      "application_id": "AP7468326410",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-05-15"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC425212816",
+      "application_id": "AP7468326410",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "LAP Non Individual",
+      "branch": "T.Nagar",
+      "disbursement_date": "15.05.2026"
+    }
+  },
+  "mahindra_021.jpg": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC425212816",
+      "application_id": "AP7468326410",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "LAP Non Individual",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-05-15"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC425212816",
+      "application_id": "AP7468326410",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "LAP Non Individual",
+      "branch": "T.Nagar",
+      "disbursement_date": "15.05.2026"
+    }
+  },
+  "mahindra_022.pdf": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC157366602",
+      "application_id": "AP1653598010",
+      "sanction_amount": "17500000",
+      "disbursement_amount": "17500000",
+      "loan_type": "LAP",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-01-07"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC157366602",
+      "application_id": "AP1653598010",
+      "sanction_amount": "Rs. 17,500,000/-",
+      "disbursement_amount": "\u20b91,75,00,000.00",
+      "loan_type": "LAP",
+      "branch": "T.Nagar",
+      "disbursement_date": "07/01/2026"
+    }
+  },
+  "mahindra_022.jpg": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC157366602",
+      "application_id": "AP1653598010",
+      "sanction_amount": "17500000",
+      "disbursement_amount": "17500000",
+      "loan_type": "LAP",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-01-07"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC157366602",
+      "application_id": "AP1653598010",
+      "sanction_amount": "Rs. 17,500,000/-",
+      "disbursement_amount": "\u20b91,75,00,000.00",
+      "loan_type": "LAP",
+      "branch": "T.Nagar",
+      "disbursement_date": "07/01/2026"
+    }
+  },
+  "mahindra_023.pdf": {
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC659929552",
+      "application_id": "AP8511689982",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-04-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC659929552",
+      "application_id": "AP8511689982",
+      "sanction_amount": "Rs.200.00 lakhs",
+      "disbursement_amount": "Rs. 20,000,000/-",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "05.04.2026"
+    }
+  },
+  "mahindra_023.jpg": {
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC659929552",
+      "application_id": "AP8511689982",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "2026-04-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC659929552",
+      "application_id": "AP8511689982",
+      "sanction_amount": "Rs.200.00 lakhs",
+      "disbursement_amount": "Rs. 20,000,000/-",
+      "loan_type": "SME Loan",
+      "branch": "Salem",
+      "disbursement_date": "05.04.2026"
+    }
+  },
+  "mahindra_024.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC976939553",
+      "application_id": "AP1338676615",
+      "sanction_amount": "22500000",
+      "disbursement_amount": "22500000",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "2026-01-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC976939553",
+      "application_id": "AP1338676615",
+      "sanction_amount": "Rs.225.00 lakhs",
+      "disbursement_amount": "Rs. 22,500,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "28.01.2026"
+    }
+  },
+  "mahindra_024.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC976939553",
+      "application_id": "AP1338676615",
+      "sanction_amount": "22500000",
+      "disbursement_amount": "22500000",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "2026-01-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC976939553",
+      "application_id": "AP1338676615",
+      "sanction_amount": "Rs.225.00 lakhs",
+      "disbursement_amount": "Rs. 22,500,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Coimbatore",
+      "disbursement_date": "28.01.2026"
+    }
+  },
+  "mahindra_025.pdf": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC671741353",
+      "application_id": "AP6674308711",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-01-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC671741353",
+      "application_id": "AP6674308711",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "01/01/2026"
+    }
+  },
+  "mahindra_025.jpg": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC671741353",
+      "application_id": "AP6674308711",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-01-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC671741353",
+      "application_id": "AP6674308711",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "01/01/2026"
+    }
+  },
+  "aadhar_001.pdf": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "395959341",
+      "application_id": "389942015",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Home Loan",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "2026-06-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "395959341",
+      "application_id": "389942015",
+      "sanction_amount": "Rs.50.00 lakhs",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "05/06/2026"
+    }
+  },
+  "aadhar_001.jpg": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "395959341",
+      "application_id": "389942015",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Home Loan",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "2026-06-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "395959341",
+      "application_id": "389942015",
+      "sanction_amount": "Rs.50.00 lakhs",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "05/06/2026"
+    }
+  },
+  "aadhar_002.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "375833676",
+      "application_id": "329416648",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "2026-06-04"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "375833676",
+      "application_id": "329416648",
+      "sanction_amount": "\u20b940,00,000.00",
+      "disbursement_amount": "Rs. 4,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "04 Jun 2026"
+    }
+  },
+  "aadhar_002.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "375833676",
+      "application_id": "329416648",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "2026-06-04"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "375833676",
+      "application_id": "329416648",
+      "sanction_amount": "\u20b940,00,000.00",
+      "disbursement_amount": "Rs. 4,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "04 Jun 2026"
+    }
+  },
+  "aadhar_003.pdf": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "393058514",
+      "application_id": "320810650",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Plot Loan",
+      "branch": "Pallavaram",
+      "disbursement_date": "2026-05-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "393058514",
+      "application_id": "320810650",
+      "sanction_amount": "\u20b91,80,00,000.00",
+      "disbursement_amount": "Rs. 18,000,000/-",
+      "loan_type": "Plot Loan",
+      "branch": "Pallavaram",
+      "disbursement_date": "03.05.2026"
+    }
+  },
+  "aadhar_003.jpg": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "393058514",
+      "application_id": "320810650",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Plot Loan",
+      "branch": "Pallavaram",
+      "disbursement_date": "2026-05-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "393058514",
+      "application_id": "320810650",
+      "sanction_amount": "\u20b91,80,00,000.00",
+      "disbursement_amount": "Rs. 18,000,000/-",
+      "loan_type": "Plot Loan",
+      "branch": "Pallavaram",
+      "disbursement_date": "03.05.2026"
+    }
+  },
+  "aadhar_004.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "343941473",
+      "application_id": "357652233",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-01-24"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "343941473",
+      "application_id": "357652233",
+      "sanction_amount": "Rs. 10,000,000/-",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Porur",
+      "disbursement_date": "24/01/2026"
+    }
+  },
+  "aadhar_004.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "343941473",
+      "application_id": "357652233",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-01-24"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "343941473",
+      "application_id": "357652233",
+      "sanction_amount": "Rs. 10,000,000/-",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Porur",
+      "disbursement_date": "24/01/2026"
+    }
+  },
+  "aadhar_005.pdf": {
+    "expected_values": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304941443",
+      "application_id": "336106915",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "2026-02-27"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304941443",
+      "application_id": "336106915",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "Rs. 14,000,000/-",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "27.02.2026"
+    }
+  },
+  "aadhar_005.jpg": {
+    "expected_values": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304941443",
+      "application_id": "336106915",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "2026-02-27"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304941443",
+      "application_id": "336106915",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "Rs. 14,000,000/-",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "27.02.2026"
+    }
+  },
+  "aadhar_006.pdf": {
+    "expected_values": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "380441126",
+      "application_id": "377630391",
+      "sanction_amount": "13000000",
+      "disbursement_amount": "13000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Siruseri",
+      "disbursement_date": "2026-01-24"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "380441126",
+      "application_id": "377630391",
+      "sanction_amount": "\u20b91,30,00,000.00",
+      "disbursement_amount": "\u20b91,30,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Siruseri",
+      "disbursement_date": "24.01.2026"
+    }
+  },
+  "aadhar_006.jpg": {
+    "expected_values": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "380441126",
+      "application_id": "377630391",
+      "sanction_amount": "13000000",
+      "disbursement_amount": "13000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Siruseri",
+      "disbursement_date": "2026-01-24"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "380441126",
+      "application_id": "377630391",
+      "sanction_amount": "\u20b91,30,00,000.00",
+      "disbursement_amount": "\u20b91,30,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Siruseri",
+      "disbursement_date": "24.01.2026"
+    }
+  },
+  "aadhar_007.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "328151384",
+      "application_id": "347534044",
+      "sanction_amount": "22500000",
+      "disbursement_amount": "22500000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-01-11"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "328151384",
+      "application_id": "347534044",
+      "sanction_amount": "Rs.225.00 lakhs",
+      "disbursement_amount": "Rs.225.00 lakhs",
+      "loan_type": "Home Extension Loan",
+      "branch": "Porur",
+      "disbursement_date": "11.01.2026"
+    }
+  },
+  "aadhar_007.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "328151384",
+      "application_id": "347534044",
+      "sanction_amount": "22500000",
+      "disbursement_amount": "22500000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Porur",
+      "disbursement_date": "2026-01-11"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "328151384",
+      "application_id": "347534044",
+      "sanction_amount": "Rs.225.00 lakhs",
+      "disbursement_amount": "Rs.225.00 lakhs",
+      "loan_type": "Home Extension Loan",
+      "branch": "Porur",
+      "disbursement_date": "11.01.2026"
+    }
+  },
+  "aadhar_008.pdf": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306304888",
+      "application_id": "316645280",
+      "sanction_amount": "17000000",
+      "disbursement_amount": "17000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur Branch",
+      "disbursement_date": "2026-02-05"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306304888",
+      "application_id": "316645280",
+      "sanction_amount": "Rs. 17,000,000/-",
+      "disbursement_amount": "Rs.170.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "05 Feb 2026"
+    }
+  },
+  "aadhar_008.jpg": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306304888",
+      "application_id": "316645280",
+      "sanction_amount": "17000000",
+      "disbursement_amount": "17000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur Branch",
+      "disbursement_date": "2026-02-05"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306304888",
+      "application_id": "316645280",
+      "sanction_amount": "Rs. 17,000,000/-",
+      "disbursement_amount": "Rs.170.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "05 Feb 2026"
+    }
+  },
+  "aadhar_009.pdf": {
+    "expected_values": {
+      "customer_name": "Ramesh Patel & Sunita Patel",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "368733386",
+      "application_id": "359902786",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "4500000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Siruseri",
+      "disbursement_date": "2026-02-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Ramesh Patel & Sunita Patel",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "368733386",
+      "application_id": "359902786",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "\u20b945,00,000.00",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Siruseri",
+      "disbursement_date": "18.02.2026"
+    }
+  },
+  "aadhar_009.jpg": {
+    "expected_values": {
+      "customer_name": "Ramesh Patel & Sunita Patel",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "368733386",
+      "application_id": "359902786",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "4500000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Siruseri",
+      "disbursement_date": "2026-02-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Ramesh Patel & Sunita Patel",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "368733386",
+      "application_id": "359902786",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "\u20b945,00,000.00",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Siruseri",
+      "disbursement_date": "18.02.2026"
+    }
+  },
+  "aadhar_010.pdf": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306890536",
+      "application_id": "309570940",
+      "sanction_amount": "17000000",
+      "disbursement_amount": "16000000",
+      "loan_type": "Home Extension Loan Variant",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-01-17"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount",
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306890536",
+      "application_id": "309570940",
+      "sanction_amount": "\u20b91,60,00,000.00",
+      "disbursement_amount": "\u20b91,60,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "17.01.2026"
+    }
+  },
+  "aadhar_010.jpg": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306890536",
+      "application_id": "309570940",
+      "sanction_amount": "17000000",
+      "disbursement_amount": "16000000",
+      "loan_type": "Home Extension Loan Variant",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-01-17"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "sanction_amount",
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "306890536",
+      "application_id": "309570940",
+      "sanction_amount": "\u20b91,60,00,000.00",
+      "disbursement_amount": "\u20b91,60,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "17.01.2026"
+    }
+  },
+  "aadhar_011.pdf": {
+    "expected_values": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "316303783",
+      "application_id": "323335856",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Plot Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-03-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "316303783",
+      "application_id": "323335856",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "Rs.250.00 lakhs",
+      "loan_type": "Plot Loan",
+      "branch": "Perambur",
+      "disbursement_date": "01/03/2026"
+    }
+  },
+  "aadhar_011.jpg": {
+    "expected_values": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "316303783",
+      "application_id": "323335856",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Plot Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-03-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Balamurugan S",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "316303783",
+      "application_id": "323335856",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "Rs.250.00 lakhs",
+      "loan_type": "Plot Loan",
+      "branch": "Perambur",
+      "disbursement_date": "01/03/2026"
+    }
+  },
+  "aadhar_012.pdf": {
+    "expected_values": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "322588406",
+      "application_id": "399479390",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Kanchipuram",
+      "disbursement_date": "2026-03-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "322588406",
+      "application_id": "399479390",
+      "sanction_amount": "Rs. 25,000,000/-",
+      "disbursement_amount": "Rs.250.00 lakhs",
+      "loan_type": "Home Extension Loan",
+      "branch": "Kanchipuram",
+      "disbursement_date": "22.03.2026"
+    }
+  },
+  "aadhar_012.jpg": {
+    "expected_values": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "322588406",
+      "application_id": "399479390",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Kanchipuram",
+      "disbursement_date": "2026-03-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Ravi Shankar",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "322588406",
+      "application_id": "399479390",
+      "sanction_amount": "Rs. 25,000,000/-",
+      "disbursement_amount": "Rs.250.00 lakhs",
+      "loan_type": "Home Extension Loan",
+      "branch": "Kanchipuram",
+      "disbursement_date": "22.03.2026"
+    }
+  },
+  "aadhar_013.pdf": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "346461820",
+      "application_id": "314388452",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "2026-02-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "346461820",
+      "application_id": "314388452",
+      "sanction_amount": "\u20b950,00,000.00",
+      "disbursement_amount": "Rs.50.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "01 Feb 2026"
+    }
+  },
+  "aadhar_013.jpg": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "346461820",
+      "application_id": "314388452",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "2026-02-01"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "346461820",
+      "application_id": "314388452",
+      "sanction_amount": "\u20b950,00,000.00",
+      "disbursement_amount": "Rs.50.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Velachery",
+      "disbursement_date": "01 Feb 2026"
+    }
+  },
+  "aadhar_014.pdf": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "331509668",
+      "application_id": "318985833",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Velachery",
+      "disbursement_date": "2026-01-09"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "331509668",
+      "application_id": "318985833",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Velachery",
+      "disbursement_date": "09.01.2026"
+    }
+  },
+  "aadhar_014.jpg": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "331509668",
+      "application_id": "318985833",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Velachery",
+      "disbursement_date": "2026-01-09"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "331509668",
+      "application_id": "318985833",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Velachery",
+      "disbursement_date": "09.01.2026"
+    }
+  },
+  "aadhar_015.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "329330705",
+      "application_id": "374583972",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Uthandi",
+      "disbursement_date": "2026-03-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "329330705",
+      "application_id": "374583972",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "Rs. 5,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Uthandi",
+      "disbursement_date": "28/03/2026"
+    }
+  },
+  "aadhar_015.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "329330705",
+      "application_id": "374583972",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Uthandi",
+      "disbursement_date": "2026-03-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "329330705",
+      "application_id": "374583972",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "Rs. 5,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Uthandi",
+      "disbursement_date": "28/03/2026"
+    }
+  },
+  "aadhar_016.pdf": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "358679351",
+      "application_id": "337758678",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-05-14"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "358679351",
+      "application_id": "337758678",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "Rs.140.00 lakhs",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Perambur",
+      "disbursement_date": "14/05/2026"
+    }
+  },
+  "aadhar_016.jpg": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "358679351",
+      "application_id": "337758678",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Perambur",
+      "disbursement_date": "2026-05-14"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "358679351",
+      "application_id": "337758678",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "Rs.140.00 lakhs",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Perambur",
+      "disbursement_date": "14/05/2026"
+    }
+  },
+  "aadhar_017.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "326391532",
+      "application_id": "388421070",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "2026-04-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "326391532",
+      "application_id": "388421070",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "08/04/2026"
+    }
+  },
+  "aadhar_017.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "326391532",
+      "application_id": "388421070",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "2026-04-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "326391532",
+      "application_id": "388421070",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "08/04/2026"
+    }
+  },
+  "aadhar_018.pdf": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "364398329",
+      "application_id": "354420029",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Plot Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-05-14"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "364398329",
+      "application_id": "354420029",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "Rs.45.00 lakhs",
+      "loan_type": "Plot Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "14/05/2026"
+    }
+  },
+  "aadhar_018.jpg": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "364398329",
+      "application_id": "354420029",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Plot Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-05-14"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "364398329",
+      "application_id": "354420029",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "Rs.45.00 lakhs",
+      "loan_type": "Plot Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "14/05/2026"
+    }
+  },
+  "aadhar_019.pdf": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "350794161",
+      "application_id": "361548281",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Avadi Branch",
+      "disbursement_date": "2026-01-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "350794161",
+      "application_id": "361548281",
+      "sanction_amount": "\u20b915,00,000.00",
+      "disbursement_amount": "Rs.15.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Avadi",
+      "disbursement_date": "18 Jan 2026"
+    }
+  },
+  "aadhar_019.jpg": {
+    "expected_values": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "350794161",
+      "application_id": "361548281",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Avadi Branch",
+      "disbursement_date": "2026-01-18"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Fatima Begum & Abdul Rehman",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "350794161",
+      "application_id": "361548281",
+      "sanction_amount": "\u20b915,00,000.00",
+      "disbursement_amount": "Rs.15.00 lakhs",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Avadi",
+      "disbursement_date": "18 Jan 2026"
+    }
+  },
+  "aadhar_020.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "359624987",
+      "application_id": "352630554",
+      "sanction_amount": "11000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "2026-03-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "359624987",
+      "application_id": "352630554",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "21 Mar 2026"
+    }
+  },
+  "aadhar_020.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "359624987",
+      "application_id": "352630554",
+      "sanction_amount": "11000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "2026-03-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "customer_name",
+      "sanction_amount"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "359624987",
+      "application_id": "352630554",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Porur",
+      "disbursement_date": "21 Mar 2026"
+    }
+  },
+  "aadhar_021.pdf": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "341239137",
+      "application_id": "324516558",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Plot Loan",
+      "branch": "Thiruvanmiyur",
+      "disbursement_date": "2026-05-16"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "341239137",
+      "application_id": "324516558",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Plot Loan",
+      "branch": "Thiruvanmiyur",
+      "disbursement_date": "16.05.2026"
+    }
+  },
+  "aadhar_021.jpg": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "341239137",
+      "application_id": "324516558",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Plot Loan",
+      "branch": "Thiruvanmiyur",
+      "disbursement_date": "2026-05-16"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "341239137",
+      "application_id": "324516558",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Plot Loan",
+      "branch": "Thiruvanmiyur",
+      "disbursement_date": "16.05.2026"
+    }
+  },
+  "aadhar_022.pdf": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "311113560",
+      "application_id": "304039147",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Home Loan",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-05-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "311113560",
+      "application_id": "304039147",
+      "sanction_amount": "Rs.180.00 lakhs",
+      "disbursement_amount": "Rs.180.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Sholinganallur",
+      "disbursement_date": "28 May 2026"
+    }
+  },
+  "aadhar_022.jpg": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "311113560",
+      "application_id": "304039147",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Home Loan",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-05-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "311113560",
+      "application_id": "304039147",
+      "sanction_amount": "Rs.180.00 lakhs",
+      "disbursement_amount": "Rs.180.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Sholinganallur",
+      "disbursement_date": "28 May 2026"
+    }
+  },
+  "aadhar_023.pdf": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "376161481",
+      "application_id": "342655047",
+      "sanction_amount": "3500000",
+      "disbursement_amount": "3500000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "2026-02-09"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "376161481",
+      "application_id": "342655047",
+      "sanction_amount": "Rs.35.00 lakhs",
+      "disbursement_amount": "\u20b935,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "09.02.2026"
+    }
+  },
+  "aadhar_023.jpg": {
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "376161481",
+      "application_id": "342655047",
+      "sanction_amount": "3500000",
+      "disbursement_amount": "3500000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "2026-02-09"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "376161481",
+      "application_id": "342655047",
+      "sanction_amount": "Rs.35.00 lakhs",
+      "disbursement_amount": "\u20b935,00,000.00",
+      "loan_type": "Home Extension Loan",
+      "branch": "Poonamallee",
+      "disbursement_date": "09.02.2026"
+    }
+  },
+  "aadhar_024.pdf": {
+    "expected_values": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304754954",
+      "application_id": "311647989",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-01-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304754954",
+      "application_id": "311647989",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "22/01/2026"
+    }
+  },
+  "aadhar_024.jpg": {
+    "expected_values": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304754954",
+      "application_id": "311647989",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-01-22"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "304754954",
+      "application_id": "311647989",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Ambattur",
+      "disbursement_date": "22/01/2026"
+    }
+  },
+  "aadhar_025.pdf": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "398652046",
+      "application_id": "335653139",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-05-17"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "398652046",
+      "application_id": "335653139",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "17.05.2026"
+    }
+  },
+  "aadhar_025.jpg": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "398652046",
+      "application_id": "335653139",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-05-17"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Aadhar Housing Finance Limited",
+      "loan_account_number": "398652046",
+      "application_id": "335653139",
+      "sanction_amount": "\u20b91,00,00,000.00",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Extension Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "17.05.2026"
+    }
+  },
+  "hdfc_001.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0166782651630",
+      "application_id": "HDFC21126567",
+      "sanction_amount": "12500000",
+      "disbursement_amount": "12500000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-03-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0166782651630",
+      "application_id": "HDFC21126567",
+      "sanction_amount": "Rs.125.00 lakhs",
+      "disbursement_amount": "Rs.125.00 lakhs",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "23 Mar 2026"
+    }
+  },
+  "hdfc_001.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0166782651630",
+      "application_id": "HDFC21126567",
+      "sanction_amount": "12500000",
+      "disbursement_amount": "12500000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-03-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0166782651630",
+      "application_id": "HDFC21126567",
+      "sanction_amount": "Rs.125.00 lakhs",
+      "disbursement_amount": "Rs.125.00 lakhs",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "23 Mar 2026"
+    }
+  },
+  "hdfc_002.pdf": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0443777899395",
+      "application_id": "HDFC23566948",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Kodambakkam",
+      "disbursement_date": "2026-05-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0443777899395",
+      "application_id": "HDFC23566948",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "NRI Home Loan",
+      "branch": "Kodambakkam",
+      "disbursement_date": "03.05.2026"
+    }
+  },
+  "hdfc_002.jpg": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0443777899395",
+      "application_id": "HDFC23566948",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Kodambakkam",
+      "disbursement_date": "2026-05-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0443777899395",
+      "application_id": "HDFC23566948",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs. 15,000,000/-",
+      "loan_type": "NRI Home Loan",
+      "branch": "Kodambakkam",
+      "disbursement_date": "03.05.2026"
+    }
+  },
+  "hdfc_003.pdf": {
+    "expected_values": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0697024405546",
+      "application_id": "HDFC50183416",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "Home Loan",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-06-06"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0697024405546",
+      "application_id": "HDFC50183416",
+      "sanction_amount": "Rs. 20,000,000/-",
+      "disbursement_amount": "Rs. 20,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "06.06.2026"
+    }
+  },
+  "hdfc_003.jpg": {
+    "expected_values": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0697024405546",
+      "application_id": "HDFC50183416",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "Home Loan",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-06-06"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sunitha Thomas",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0697024405546",
+      "application_id": "HDFC50183416",
+      "sanction_amount": "Rs. 20,000,000/-",
+      "disbursement_amount": "Rs. 20,000,000/-",
+      "loan_type": "Home Loan",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "06.06.2026"
+    }
+  },
+  "hdfc_004.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0125621493325",
+      "application_id": "HDFC56320867",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan",
+      "branch": "Nungambakkam",
+      "disbursement_date": "2026-06-10"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0125621493325",
+      "application_id": "HDFC56320867",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "\u20b91,40,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Nungambakkam",
+      "disbursement_date": "10.06.2026"
+    }
+  },
+  "hdfc_004.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0125621493325",
+      "application_id": "HDFC56320867",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan",
+      "branch": "Nungambakkam",
+      "disbursement_date": "2026-06-10"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0125621493325",
+      "application_id": "HDFC56320867",
+      "sanction_amount": "Rs. 14,000,000/-",
+      "disbursement_amount": "\u20b91,40,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Nungambakkam",
+      "disbursement_date": "10.06.2026"
+    }
+  },
+  "hdfc_005.pdf": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0659869006024",
+      "application_id": "HDFC31409969",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Perungudi",
+      "disbursement_date": "2026-03-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0659869006024",
+      "application_id": "HDFC31409969",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "Loan Against Property",
+      "branch": "Perungudi",
+      "disbursement_date": "23.03.2026"
+    }
+  },
+  "hdfc_005.jpg": {
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0659869006024",
+      "application_id": "HDFC31409969",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Perungudi",
+      "disbursement_date": "2026-03-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0659869006024",
+      "application_id": "HDFC31409969",
+      "sanction_amount": "Rs.150.00 lakhs",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "Loan Against Property",
+      "branch": "Perungudi",
+      "disbursement_date": "23.03.2026"
+    }
+  },
+  "hdfc_006.pdf": {
+    "expected_values": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0273763784408",
+      "application_id": "HDFC17569254",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Loan Against Property",
+      "branch": "Chetpet",
+      "disbursement_date": "2026-03-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0273763784408",
+      "application_id": "HDFC17569254",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "Rs. 4,500,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Chetpet",
+      "disbursement_date": "19/03/2026"
+    }
+  },
+  "hdfc_006.jpg": {
+    "expected_values": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0273763784408",
+      "application_id": "HDFC17569254",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Loan Against Property",
+      "branch": "Chetpet",
+      "disbursement_date": "2026-03-19"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Indira Nair & Vijayan Nair",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0273763784408",
+      "application_id": "HDFC17569254",
+      "sanction_amount": "Rs.45.00 lakhs",
+      "disbursement_amount": "Rs. 4,500,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Chetpet",
+      "disbursement_date": "19/03/2026"
+    }
+  },
+  "hdfc_007.pdf": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0915864300225",
+      "application_id": "HDFC78977848",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0915864300225",
+      "application_id": "HDFC78977848",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "23.02.2026"
+    }
+  },
+  "hdfc_007.jpg": {
+    "expected_values": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0915864300225",
+      "application_id": "HDFC78977848",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Sathish Kumar & UMA",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0915864300225",
+      "application_id": "HDFC78977848",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "23.02.2026"
+    }
+  },
+  "hdfc_008.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0870547737077",
+      "application_id": "HDFC63759515",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Home Construction Loan Variant",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "2026-02-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0870547737077",
+      "application_id": "HDFC63759515",
+      "sanction_amount": "Rs.180.00 lakhs",
+      "disbursement_amount": "Rs. 18,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "21.02.2026"
+    }
+  },
+  "hdfc_008.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0870547737077",
+      "application_id": "HDFC63759515",
+      "sanction_amount": "18000000",
+      "disbursement_amount": "18000000",
+      "loan_type": "Home Construction Loan Variant",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "2026-02-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0870547737077",
+      "application_id": "HDFC63759515",
+      "sanction_amount": "Rs.180.00 lakhs",
+      "disbursement_amount": "Rs. 18,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "21.02.2026"
+    }
+  },
+  "hdfc_009.pdf": {
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0841936150156",
+      "application_id": "HDFC40033858",
+      "sanction_amount": "8000000",
+      "disbursement_amount": "8000000",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0841936150156",
+      "application_id": "HDFC40033858",
+      "sanction_amount": "Rs.80.00 lakhs",
+      "disbursement_amount": "\u20b980,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "20.01.2026"
+    }
+  },
+  "hdfc_009.jpg": {
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0841936150156",
+      "application_id": "HDFC40033858",
+      "sanction_amount": "8000000",
+      "disbursement_amount": "8000000",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-01-21"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0841936150156",
+      "application_id": "HDFC40033858",
+      "sanction_amount": "Rs.80.00 lakhs",
+      "disbursement_amount": "\u20b980,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "20.01.2026"
+    }
+  },
+  "hdfc_010.pdf": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0431295726698",
+      "application_id": "HDFC32395235",
+      "sanction_amount": "17500000",
+      "disbursement_amount": "17500000",
+      "loan_type": "Home Loan - Regular Variant",
+      "branch": "Guindy Branch",
+      "disbursement_date": "2026-04-15"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type",
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0431295726698",
+      "application_id": "HDFC32395235",
+      "sanction_amount": "\u20b91,75,00,000.00",
+      "disbursement_amount": "Rs.175.00 lakhs",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Guindy",
+      "disbursement_date": "15 Apr 2026"
+    }
+  },
+  "hdfc_010.jpg": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0431295726698",
+      "application_id": "HDFC32395235",
+      "sanction_amount": "17500000",
+      "disbursement_amount": "17500000",
+      "loan_type": "Home Loan - Regular Variant",
+      "branch": "Guindy Branch",
+      "disbursement_date": "2026-04-15"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type",
+      "branch"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0431295726698",
+      "application_id": "HDFC32395235",
+      "sanction_amount": "\u20b91,75,00,000.00",
+      "disbursement_amount": "Rs.175.00 lakhs",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Guindy",
+      "disbursement_date": "15 Apr 2026"
+    }
+  },
+  "hdfc_011.pdf": {
+    "expected_values": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0572431353459",
+      "application_id": "HDFC53089535",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-03-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0572431353459",
+      "application_id": "HDFC53089535",
+      "sanction_amount": "Rs. 15,000,000/-",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "05/03/2026"
+    }
+  },
+  "hdfc_011.jpg": {
+    "expected_values": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0572431353459",
+      "application_id": "HDFC53089535",
+      "sanction_amount": "15000000",
+      "disbursement_amount": "15000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-03-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Rajesh Kumar",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0572431353459",
+      "application_id": "HDFC53089535",
+      "sanction_amount": "Rs. 15,000,000/-",
+      "disbursement_amount": "Rs.150.00 lakhs",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "05/03/2026"
+    }
+  },
+  "hdfc_012.pdf": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0540314543553",
+      "application_id": "HDFC41873985",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-06-12"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0540314543553",
+      "application_id": "HDFC41873985",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "Rs. 25,000,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "12.06.2026"
+    }
+  },
+  "hdfc_012.jpg": {
+    "expected_values": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0540314543553",
+      "application_id": "HDFC41873985",
+      "sanction_amount": "25000000",
+      "disbursement_amount": "25000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-06-12"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Deepak Joshi & Rekha Joshi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0540314543553",
+      "application_id": "HDFC41873985",
+      "sanction_amount": "Rs.250.00 lakhs",
+      "disbursement_amount": "Rs. 25,000,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "12.06.2026"
+    }
+  },
+  "hdfc_013.pdf": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0679955038467",
+      "application_id": "HDFC35321528",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-03-02"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0679955038467",
+      "application_id": "HDFC35321528",
+      "sanction_amount": "Rs.40.00 lakhs",
+      "disbursement_amount": "Rs. 4,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "02.03.2026"
+    }
+  },
+  "hdfc_013.jpg": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0679955038467",
+      "application_id": "HDFC35321528",
+      "sanction_amount": "4000000",
+      "disbursement_amount": "4000000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-03-02"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0679955038467",
+      "application_id": "HDFC35321528",
+      "sanction_amount": "Rs.40.00 lakhs",
+      "disbursement_amount": "Rs. 4,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "02.03.2026"
+    }
+  },
+  "hdfc_014.pdf": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0589730739910",
+      "application_id": "HDFC86527637",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-02-11"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0589730739910",
+      "application_id": "HDFC86527637",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "11.02.2026"
+    }
+  },
+  "hdfc_014.jpg": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0589730739910",
+      "application_id": "HDFC86527637",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-02-11"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0589730739910",
+      "application_id": "HDFC86527637",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs. 10,000,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "11.02.2026"
+    }
+  },
+  "hdfc_015.pdf": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0520530477592",
+      "application_id": "HDFC36959519",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-10"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0520530477592",
+      "application_id": "HDFC36959519",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "10.02.2026"
+    }
+  },
+  "hdfc_015.jpg": {
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0520530477592",
+      "application_id": "HDFC36959519",
+      "sanction_amount": "5000000",
+      "disbursement_amount": "5000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "2026-02-10"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0520530477592",
+      "application_id": "HDFC36959519",
+      "sanction_amount": "Rs. 5,000,000/-",
+      "disbursement_amount": "\u20b950,00,000.00",
+      "loan_type": "Loan Against Property",
+      "branch": "Guindy",
+      "disbursement_date": "10.02.2026"
+    }
+  },
+  "hdfc_016.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0621828774523",
+      "application_id": "HDFC62543408",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-02-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0621828774523",
+      "application_id": "HDFC62543408",
+      "sanction_amount": "\u20b945,00,000.00",
+      "disbursement_amount": "Rs. 4,500,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "23.02.2026"
+    }
+  },
+  "hdfc_016.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0621828774523",
+      "application_id": "HDFC62543408",
+      "sanction_amount": "4500000",
+      "disbursement_amount": "4500000",
+      "loan_type": "Home Construction Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-02-23"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0621828774523",
+      "application_id": "HDFC62543408",
+      "sanction_amount": "\u20b945,00,000.00",
+      "disbursement_amount": "Rs. 4,500,000/-",
+      "loan_type": "Home Construction Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "23.02.2026"
+    }
+  },
+  "hdfc_017.pdf": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0660523327285",
+      "application_id": "HDFC42104453",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-03-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0660523327285",
+      "application_id": "HDFC42104453",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "28.03.2026"
+    }
+  },
+  "hdfc_017.jpg": {
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0660523327285",
+      "application_id": "HDFC42104453",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-03-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0660523327285",
+      "application_id": "HDFC42104453",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "Rs.100.00 lakhs",
+      "loan_type": "NRI Home Loan",
+      "branch": "Royapettah",
+      "disbursement_date": "28.03.2026"
+    }
+  },
+  "hdfc_018.pdf": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0470156194919",
+      "application_id": "HDFC36764517",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-06-09"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0470156194919",
+      "application_id": "HDFC36764517",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "\u20b91,90,00,000.00",
+      "loan_type": "Loan Against Property",
+      "branch": "Royapettah",
+      "disbursement_date": "08/06/2026"
+    }
+  },
+  "hdfc_018.jpg": {
+    "expected_values": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0470156194919",
+      "application_id": "HDFC36764517",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Royapettah",
+      "disbursement_date": "2026-06-09"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Meena Krishnan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0470156194919",
+      "application_id": "HDFC36764517",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "\u20b91,90,00,000.00",
+      "loan_type": "Loan Against Property",
+      "branch": "Royapettah",
+      "disbursement_date": "08/06/2026"
+    }
+  },
+  "hdfc_019.pdf": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0130845684072",
+      "application_id": "HDFC20413324",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "NRI Home Loan Variant",
+      "branch": "Guindy",
+      "disbursement_date": "2026-06-03"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0130845684072",
+      "application_id": "HDFC20413324",
+      "sanction_amount": "\u20b915,00,000.00",
+      "disbursement_amount": "Rs. 1,500,000/-",
+      "loan_type": "NRI Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "03 Jun 2026"
+    }
+  },
+  "hdfc_019.jpg": {
+    "expected_values": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0130845684072",
+      "application_id": "HDFC20413324",
+      "sanction_amount": "1500000",
+      "disbursement_amount": "1500000",
+      "loan_type": "NRI Home Loan Variant",
+      "branch": "Guindy",
+      "disbursement_date": "2026-06-03"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Zainab Khan",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0130845684072",
+      "application_id": "HDFC20413324",
+      "sanction_amount": "\u20b915,00,000.00",
+      "disbursement_amount": "Rs. 1,500,000/-",
+      "loan_type": "NRI Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "03 Jun 2026"
+    }
+  },
+  "hdfc_020.pdf": {
+    "expected_values": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0450879011548",
+      "application_id": "HDFC68795383",
+      "sanction_amount": "9000000",
+      "disbursement_amount": "9000000",
+      "loan_type": "Home Loan Variant",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "2026-06-10"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date",
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0450879011548",
+      "application_id": "HDFC68795383",
+      "sanction_amount": "Rs.90.00 lakhs",
+      "disbursement_amount": "Rs.90.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "09 Jun 2026"
+    }
+  },
+  "hdfc_020.jpg": {
+    "expected_values": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0450879011548",
+      "application_id": "HDFC68795383",
+      "sanction_amount": "9000000",
+      "disbursement_amount": "9000000",
+      "loan_type": "Home Loan Variant",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "2026-06-10"
+    },
+    "expected_status": "CHANGES_REQUESTED",
+    "mismatch_fields": [
+      "disbursement_date",
+      "loan_type"
+    ],
+    "document_raw_fields": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0450879011548",
+      "application_id": "HDFC68795383",
+      "sanction_amount": "Rs.90.00 lakhs",
+      "disbursement_amount": "Rs.90.00 lakhs",
+      "loan_type": "Home Loan",
+      "branch": "Ashok Nagar",
+      "disbursement_date": "09 Jun 2026"
+    }
+  },
+  "hdfc_021.pdf": {
+    "expected_values": {
+      "customer_name": "Karthik Raj & Divya Karthik",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0984757109832",
+      "application_id": "HDFC75092406",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-02-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Karthik Raj & Divya Karthik",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0984757109832",
+      "application_id": "HDFC75092406",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "Rs. 14,000,000/-",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "05 Feb 2026"
+    }
+  },
+  "hdfc_021.jpg": {
+    "expected_values": {
+      "customer_name": "Karthik Raj & Divya Karthik",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0984757109832",
+      "application_id": "HDFC75092406",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-02-05"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Karthik Raj & Divya Karthik",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0984757109832",
+      "application_id": "HDFC75092406",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "Rs. 14,000,000/-",
+      "loan_type": "Home Loan - Regular",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "05 Feb 2026"
+    }
+  },
+  "hdfc_022.pdf": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0857866788369",
+      "application_id": "HDFC62575875",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-04-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0857866788369",
+      "application_id": "HDFC62575875",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "\u20b91,40,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "08.04.2026"
+    }
+  },
+  "hdfc_022.jpg": {
+    "expected_values": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0857866788369",
+      "application_id": "HDFC62575875",
+      "sanction_amount": "14000000",
+      "disbursement_amount": "14000000",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "2026-04-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Arjun Singh",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0857866788369",
+      "application_id": "HDFC62575875",
+      "sanction_amount": "\u20b91,40,00,000.00",
+      "disbursement_amount": "\u20b91,40,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Guindy",
+      "disbursement_date": "08.04.2026"
+    }
+  },
+  "hdfc_023.pdf": {
+    "expected_values": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0187029744353",
+      "application_id": "HDFC75463160",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Perungudi",
+      "disbursement_date": "2026-05-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0187029744353",
+      "application_id": "HDFC75463160",
+      "sanction_amount": "\u20b92,00,00,000.00",
+      "disbursement_amount": "\u20b92,00,00,000.00",
+      "loan_type": "NRI Home Loan",
+      "branch": "Perungudi",
+      "disbursement_date": "28.05.2026"
+    }
+  },
+  "hdfc_023.jpg": {
+    "expected_values": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0187029744353",
+      "application_id": "HDFC75463160",
+      "sanction_amount": "20000000",
+      "disbursement_amount": "20000000",
+      "loan_type": "NRI Home Loan",
+      "branch": "Perungudi",
+      "disbursement_date": "2026-05-28"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Senthil Kumar & Malathi",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0187029744353",
+      "application_id": "HDFC75463160",
+      "sanction_amount": "\u20b92,00,00,000.00",
+      "disbursement_amount": "\u20b92,00,00,000.00",
+      "loan_type": "NRI Home Loan",
+      "branch": "Perungudi",
+      "disbursement_date": "28.05.2026"
+    }
+  },
+  "hdfc_024.pdf": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0228214009801",
+      "application_id": "HDFC67587166",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-05-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0228214009801",
+      "application_id": "HDFC67587166",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "\u20b91,00,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "08 May 2026"
+    }
+  },
+  "hdfc_024.jpg": {
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0228214009801",
+      "application_id": "HDFC67587166",
+      "sanction_amount": "10000000",
+      "disbursement_amount": "10000000",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-05-08"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0228214009801",
+      "application_id": "HDFC67587166",
+      "sanction_amount": "Rs.100.00 lakhs",
+      "disbursement_amount": "\u20b91,00,00,000.00",
+      "loan_type": "Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "08 May 2026"
+    }
+  },
+  "hdfc_025.pdf": {
+    "expected_values": {
+      "customer_name": "Usha Rani",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0632437181555",
+      "application_id": "HDFC90802637",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-01-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Usha Rani",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0632437181555",
+      "application_id": "HDFC90802637",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "03 Jan 2026"
+    }
+  },
+  "hdfc_025.jpg": {
+    "expected_values": {
+      "customer_name": "Usha Rani",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0632437181555",
+      "application_id": "HDFC90802637",
+      "sanction_amount": "19000000",
+      "disbursement_amount": "19000000",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "2026-01-03"
+    },
+    "expected_status": "APPROVED",
+    "mismatch_fields": [],
+    "document_raw_fields": {
+      "customer_name": "Usha Rani",
+      "bank_name": "HDFC Ltd",
+      "loan_account_number": "0632437181555",
+      "application_id": "HDFC90802637",
+      "sanction_amount": "\u20b91,90,00,000.00",
+      "disbursement_amount": "Rs. 19,000,000/-",
+      "loan_type": "Loan Against Property",
+      "branch": "Thoraipakkam",
+      "disbursement_date": "03 Jan 2026"
+    }
+  }
+}
