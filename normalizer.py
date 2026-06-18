@@ -19,11 +19,18 @@ def normalize_amount(value: str) -> float | None:
         return None
 
 
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
 def normalize_date(value: str) -> str | None:
     if not value:
         return None
+    s = str(value).strip()
     try:
-        return dateparser.parse(str(value), dayfirst=True).strftime("%Y-%m-%d")
+        # ISO format YYYY-MM-DD is unambiguous — don't apply dayfirst
+        if _ISO_DATE.match(s):
+            return dateparser.parse(s).strftime("%Y-%m-%d")
+        # All other formats (DD Mon YYYY, DD/MM/YYYY, DD.MM.YYYY) use dayfirst
+        return dateparser.parse(s, dayfirst=True).strftime("%Y-%m-%d")
     except (ValueError, TypeError, OverflowError):
         return None
 
