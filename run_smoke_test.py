@@ -3,21 +3,12 @@ Smoke test — run this BEFORE launching app.py.
 Verifies: image load, model inference, field extraction, comparison.
 No Gradio needed.
 """
-import sys
-import urllib.request
 from pathlib import Path
 
-# Download a FUNSD sample image if not present
-TEST_IMAGE_URL = (
-    "https://huggingface.co/datasets/nielsr/funsd/resolve/main/"
-    "data/testing_data/images/82092117.png"
-)
-TEST_IMAGE_PATH = Path("test_doc.png")
-
+# Use synthetic doc already in repo — no download needed
+TEST_IMAGE_PATH = Path("synthetic/data/images/mahindra_001.jpg")
 if not TEST_IMAGE_PATH.exists():
-    print("Downloading test image...")
-    urllib.request.urlretrieve(TEST_IMAGE_URL, TEST_IMAGE_PATH)
-    print(f"Saved -> {TEST_IMAGE_PATH}")
+    raise FileNotFoundError(f"Test image not found: {TEST_IMAGE_PATH}. Run from repo root.")
 
 # Step 1: preprocess
 print("\n[1/3] Loading image...")
