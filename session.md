@@ -203,16 +203,37 @@ Field definitions, fuzzy thresholds, model ID, constants. Single source of truth
 
 ---
 
-## 8. Remaining Step (Requires Cloud GPU)
+## 8. Cloud GPU Checklist (All scripts ready — just needs GPU)
 
-Task 7 (smoke test) must be run on a cloud GPU machine:
+All scripts written and committed. On RunPod/Spheron RTX 4090 (~$0.65/hr):
 
-1. Spin up RTX 4090 on RunPod or Spheron (~$0.65/hr)
-2. Clone repo, run `pip install -r requirements.txt`
-3. Model downloads automatically from HuggingFace on first run (~15GB for Qwen2.5-VL-7B)
-4. Download one FUNSD image as `test_doc.png`
-5. Create and run `run_smoke_test.py` (see plan Task 7)
-6. Launch `python app.py` → test at `http://127.0.0.1:7860`
+```bash
+git clone <repo>
+cd "Verify Docs"
+pip install -r requirements.txt
+
+# Smoke test (model downloads ~15GB on first run, 5-10 min)
+python run_smoke_test.py
+
+# Full batch eval — all 150 synthetic docs
+python eval.py                    # all 150
+python eval.py --limit 10         # quick 10-doc sanity check
+python eval.py --pdfs-only        # 75 PDFs only
+
+# Launch UI
+python app.py  # → http://0.0.0.0:7860 (expose via RunPod port)
+```
+
+### eval.py — What it measures
+
+| Metric | Description |
+|---|---|
+| Status accuracy | % docs where APPROVED/CHANGES_REQUESTED is correct |
+| Precision/Recall/F1 | For CHANGES_REQUESTED class |
+| Per-field extraction | % docs where VLM extracted the right raw value per field |
+| Confusion matrix | TP/TN/FP/FN breakdown |
+
+Output saved to `eval_results.json`.
 
 ---
 
@@ -271,4 +292,7 @@ ee5f813  feat: image preprocessor for PDF and image inputs
 6fc3813  feat: SQLite storage and history tab
 c87b2f9  docs: session log with full design and implementation record
 ff225b8  feat: synthetic document generator — 75 PDFs + 75 JPGs, 3 lenders, ground truth JSON
+f2f335c  docs: update session log with synthetic data generation details
+ecfb1ce  feat: smoke test script and fix app launch for RunPod (0.0.0.0 binding)
+0360d65  feat: batch eval script against 150 synthetic docs
 ```
