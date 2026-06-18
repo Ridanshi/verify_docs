@@ -1,23 +1,35 @@
 import json
+import os
 import re
 import torch
 from PIL import Image
-from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
+from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, BitsAndBytesConfig
 from qwen_vl_utils import process_vision_info
 from config import VLM_MODEL_ID, VLM_MAX_NEW_TOKENS, FIELDS
 
 _model = None
 _processor = None
 
+# Set USE_4BIT=1 on Kaggle/Colab (T4/P100, 16GB VRAM). Leave unset on RTX 4090+.
+_USE_4BIT = os.environ.get("USE_4BIT", "0") == "1"
+
 
 def _load_model():
     global _model, _processor
     if _model is None:
-        _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-            VLM_MODEL_ID,
-            torch_dtype=torch.float16,
-            device_map="auto",
-        )
+        if _USE_4BIT:
+            bnb_config = BitsAndBytesConfig(load_in_4bit=True)
+            _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                VLM_MODEL_ID,
+                quantization_config=bnb_config,
+                device_map="auto",
+            )
+        else:
+            _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                VLM_MODEL_ID,
+                torch_dtype=torch.float16,
+                device_map="auto",
+            )
         _processor = AutoProcessor.from_pretrained(VLM_MODEL_ID)
 
 
