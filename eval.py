@@ -31,7 +31,7 @@ def resolve_path(filename: str) -> Path | None:
     return p if p.exists() else None
 
 
-def run_eval(limit: int | None, pdfs_only: bool, out_path: str) -> None:
+def run_eval(limit: int | None, pdfs_only: bool, out_path: str, lender: str | None = None) -> None:
     from preprocessor import load_image
     from extractor import extract_fields
     from comparator import compare_fields
@@ -41,6 +41,8 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str) -> None:
     entries = list(gt.items())
     if pdfs_only:
         entries = [(k, v) for k, v in entries if k.endswith(".pdf")]
+    if lender:
+        entries = [(k, v) for k, v in entries if k.startswith(lender)]
     if limit:
         entries = entries[:limit]
 
@@ -182,6 +184,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit",     type=int, default=None, help="Evaluate first N docs only")
     ap.add_argument("--pdfs-only", action="store_true",    help="Skip JPGs")
+    ap.add_argument("--lender",    type=str, default=None, help="Filter by lender prefix: aadhar, mahindra, hdfc")
     ap.add_argument("--out",       default="eval_results.json", help="Output JSON path")
     args = ap.parse_args()
-    run_eval(args.limit, args.pdfs_only, args.out)
+    run_eval(args.limit, args.pdfs_only, args.out, args.lender)
