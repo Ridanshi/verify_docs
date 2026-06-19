@@ -18,6 +18,11 @@ def _load_model():
     global _model, _processor
     if _model is None:
         num_gpus = torch.cuda.device_count()
+        if num_gpus == 0:
+            raise RuntimeError(
+                "No CUDA GPU detected. This model requires a GPU with ≥8GB VRAM. "
+                "Run on Kaggle T4 x2 or a cloud GPU instance."
+            )
         max_memory = {i: "13GiB" for i in range(num_gpus)}
         max_memory["cpu"] = "0GiB"
 
