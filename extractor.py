@@ -66,17 +66,18 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
                         the application, not the loan account.
                         Copy EVERY character exactly — do not skip, add, or transpose digits.
 
-  sanction_amount     — The total loan amount sanctioned/approved. Always express as
-                        "X.XX lakhs" in Indian rupees. Examples:
-                          ₹25,00,000  →  "25.00 lakhs"
-                          Rs.25.00 lakhs  →  "25.00 lakhs"
-                          ₹2,00,00,000  →  "200.00 lakhs"
-                          Rs. 1,50,00,000/-  →  "150.00 lakhs"
-                        Convert any format (crore, comma-separated, symbols) to lakhs.
+  sanction_amount     — The total loan amount sanctioned/approved. Copy the amount
+                        EXACTLY as it appears in the document — same digits, same
+                        format, same symbols. Do NOT convert, round, or do any math.
+                        Examples (copy verbatim):
+                          "₹25,00,000"        →  "₹25,00,000"
+                          "Rs.25.00 lakhs"    →  "Rs.25.00 lakhs"
+                          "₹2,00,00,000"      →  "₹2,00,00,000"
+                          "Rs. 1,50,00,000/-" →  "Rs. 1,50,00,000/-"
 
-  disbursement_amount — The amount actually disbursed. Always express as "X.XX lakhs"
-                        using the same conversion rules as sanction_amount.
-                        May differ from sanction_amount.
+  disbursement_amount — The amount actually disbursed. Copy EXACTLY as written, same
+                        as sanction_amount — no conversion, no math. May differ from
+                        sanction_amount.
 
   loan_type           — Category of loan, e.g. "Home Loan", "SME Loan", "Mortgage Loan",
                         "Loan Against Property". Extract as written.
@@ -84,8 +85,11 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
   branch              — The branch name or city where the loan is being processed.
                         Usually labelled "Branch", "Branch Office", or "Processing Centre".
 
-  disbursement_date   — The date of disbursement as written in the document
-                        (e.g. "19 Jun 2026", "19.06.2026"). NOT the sanction date.
+  disbursement_date   — The disbursement date. Copy it EXACTLY as written, character
+                        for character (e.g. "19 Jun 2026", "19.06.2026", "2026-06-19").
+                        Do NOT reformat or change the order of day/month/year.
+                        This is the DISBURSEMENT date — not the sanction date, offer
+                        date, or any other date on the page.
 
 Set a field to null only if it is genuinely absent from the document.
 
