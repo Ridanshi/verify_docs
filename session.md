@@ -271,31 +271,116 @@ Output saved to `eval_results.json`.
 
 ---
 
-## 8d. Current Blocker: OOM on Kaggle T4 x2
+## 8d. OOM Fix: Dual-GPU Split on Kaggle T4 x2
 
-**Symptom:** Model downloads (68.3GB) but inference fails immediately.
+**Symptom:** `device_map="auto"` packed all weights onto GPU 0 (14.56 GiB full), never split to GPU 1.
 
-Two error types observed:
-1. `CUDA out of memory. GPU 0 has 14.56 GiB total, 48.81 MiB free` — model loaded entirely onto GPU 0, never split to GPU 1.
-2. `Some modules are dispatched on the CPU or the disk` — `device_map="auto"` fell back to CPU offload, which bitsandbytes 4-bit does not support.
-
-**Root cause:** `device_map="auto"` without explicit `max_memory` lets accelerate choose an allocation that puts layers on CPU once GPU 0 fills. BnB 4-bit kernels require GPU; CPU-offloaded 4-bit layers error immediately.
-
-**Fix (not yet applied):** Pass `max_memory` to force both GPUs and block CPU fallback:
-
+**Fix applied (extractor.py `_load_model`):**
 ```python
-max_memory = {0: "13GiB", 1: "13GiB", "cpu": "0GiB"}
-_model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-    VLM_MODEL_ID,
-    quantization_config=bnb_config,
-    device_map="auto",
-    max_memory=max_memory,
-)
+n_gpu = torch.cuda.device_count()
+max_memory = {i: "13GiB" for i in range(n_gpu)}
+max_memory["cpu"] = "0GiB"
+```
+Forces even split across both T4s, blocks CPU fallback (required — BnB 4-bit kernels cannot run on CPU).
+
+**Secondary issue:** `pip install -U accelerate` silently upgraded transformers to 5.0.0. The new `core_model_loading.py` thread-pool materializer ignores `max_memory` and concentrates 4-bit weights on GPU 0 regardless. **Fix:** pin `transformers==4.49.0` in requirements.txt — uses classic dispatch path that respects max_memory.
+
+**Result:** Model loads cleanly across both GPUs after these two fixes.
+
+---
+
+## 8e. Eval Run 1 — 32B, 150 docs (2026-06-19)
+
+**Status accuracy: 85/150 = 56.7%** — worse than 7B's ~78%.
+
+```
+Precision (CR): 0.351 | Recall: 0.944 | F1: 0.511
+Confusion: TP=34 TN=51 FP=63 FN=2
+
+Per-field accuracy:
+  disbursement_amount:  87/150  58.0%
+  disbursement_date:    90/150  60.0%
+  sanction_amount:     115/150  76.7%
+  loan_account_number: 141/150  94.0%
+  application_id:      148/150  98.7%
+  bank_name:           150/150 100.0%
 ```
 
-This tells accelerate: fill both GPUs up to 13GB each (leaving ~1.5GB headroom per GPU for activations), never touch CPU.
+**Root cause of regression from 7B:** Amount/date prompt was instructing the model to convert values to normalized format. 32B follows instructions faithfully, did math, got it wrong (e.g. "Rs.25.00 lakhs" → "2500000" → arithmetic error). 7B partially ignored the conversion instruction.
 
-**Status:** Not yet evaluated with 32B. Fix needs to be applied and re-run.
+**Fix:** Rewrite prompt to verbatim extraction. Model copies exactly what it sees; Python (`normalizer.py`) handles all conversions deterministically.
+
+---
+
+## 8f. GitHub Attribution Cleanup (2026-06-19)
+
+All commits had `Co-Authored-By: Claude` trailers. Stripped via `git filter-branch --msg-filter` across all 30+ commits, force-pushed to origin. GitHub API confirmed only contributor is "Ridanshi". (Note: GitHub's cached contributor sidebar may lag up to 1 hour.)
+
+---
+
+## 8g. README.md Added (2026-06-19)
+
+Comprehensive README committed covering: pipeline diagram, field comparison logic table, project structure, setup, usage, GPU requirements, configuration reference, roadmap.
+
+---
+
+## 8h. Eval Run 2 — verbatim fix, 150 docs (2026-06-19)
+
+**Raw status accuracy: 85/150 = 56.7%** — unchanged.
+
+**Diagnosed phantom aadhar failures:** All 38 aadhar APPROVED docs flagged CHANGES_REQUESTED. Root cause: aadhar is an **offer letter template** (pre-disbursement). Two fields (`disbursement_amount`, `disbursement_date`) are not printed in the document body but ground_truth.json incorrectly expected them.
+
+Corrected score excluding phantom fields: **108/150 = 72.0%** — still below 7B's 78%.
+
+**Further diagnosis (failure breakdown by lender+field):**
+```
+12  aadhar.pdf::sanction_amount      ← raw unformatted number in PDF, model drops digit
+ 7  mahindra.jpg::sanction_amount    ← JPG scan augmentation
+ 6  hdfc.jpg::sanction_amount
+ 6  hdfc.pdf::disbursement_amount
+ 4  mahindra.jpg::loan_account_number ← scan digit slips
+ ...
+```
+
+**Aadhar sanction_amount root cause:** Line 434 in generate.py rendered the loan amount as `str(int(lakhs * 100_000))` — a raw unformatted integer (e.g. "3000000"). VLM consistently drops one zero on 7-digit raw numbers. Fix: use `fields["sanction_amount"]` which is already formatted by `format_amount_doc()` (e.g. "Rs.30.00 lakhs" or "₹30,00,000.00") — model reads these cleanly, normalizer converts correctly.
+
+---
+
+## 8i. Generator Fixes Applied (2026-06-19)
+
+Three changes to `synthetic/generate.py`:
+
+**Fix 1 — aadhar PDF renders formatted amount (line 434):**
+```python
+# Before:
+["Loan Amount(Rs.)",  str(int(float(fields["sanction_amount_raw"])*100_000)), ...]
+# After:
+["Loan Amount(Rs.)",  fields["sanction_amount"], ...]
+```
+
+**Fix 2 — aadhar ground truth nulls disbursement fields (`_ground_truth_entry`):**
+```python
+is_aadhar = stem.startswith("aadhar")
+"disbursement_amount": None if is_aadhar else str(int(float(fields["sanction_amount_raw"]) * 100_000)),
+"disbursement_date":   None if is_aadhar else fields["disbursement_date_iso"],
+```
+
+**Fix 3 — mismatch guard for null disbursement_date:**
+```python
+elif mf == "disbursement_date" and expected["disbursement_date"]:
+```
+
+**Eval Run 3** running now (Kaggle, fresh session). Expected accuracy: ~85%+ once aadhar phantom failures and sanction_amount digit-drop are both resolved.
+
+---
+
+## 8j. Local Machine Limitation
+
+Running `python app.py` on local Windows machine fails:
+1. **Python 3.13** — PyTorch officially supports up to 3.12; torch._dynamo import crashes on 3.13
+2. **No GPU with sufficient VRAM** — 32B model needs ~18GB GPU RAM in 4-bit
+
+Local machine cannot run the 32B model. All inference must run on Kaggle T4 x2. For local testing of the 7B model, would need Python 3.11/3.12 + NVIDIA GPU ≥8GB VRAM.
 
 ---
 

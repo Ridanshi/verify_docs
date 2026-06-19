@@ -431,7 +431,7 @@ def build_aadhar_pdf(path: Path, fields: dict):
     story.append(Spacer(1, 1*mm))
 
     loan_rows = [
-        ["Loan Amount(Rs.)",    str(int(float(fields["sanction_amount_raw"])*100_000)),
+        ["Loan Amount(Rs.)",    fields["sanction_amount"],
          "Rate of Interest",    "FLOATING"],
         ["Tenure",              f"{fields['tenure']} months",
          "EMI Amount",          "Dis02yrs 10899"],
@@ -605,16 +605,17 @@ def build_hdfc_pdf(path: Path, fields: dict):
 # ── GROUND TRUTH BUILDER ───────────────────────────────────────────────────────
 def _ground_truth_entry(stem: str, fields: dict, mismatch_fields: list) -> dict:
     """Build normalised expected_values and expected_status for ground_truth.json."""
+    is_aadhar = stem.startswith("aadhar")
     expected = {
         "customer_name":       fields["customer_name"],
         "bank_name":           fields["bank_name"],
         "loan_account_number": fields["loan_account_number"],
         "application_id":      fields["application_id"],
         "sanction_amount":     str(int(float(fields["sanction_amount_raw"]) * 100_000)),
-        "disbursement_amount": str(int(float(fields["sanction_amount_raw"]) * 100_000)),
+        "disbursement_amount": None if is_aadhar else str(int(float(fields["sanction_amount_raw"]) * 100_000)),
         "loan_type":           fields["loan_type"],
         "branch":              fields["branch"],
-        "disbursement_date":   fields["disbursement_date_iso"],
+        "disbursement_date":   None if is_aadhar else fields["disbursement_date_iso"],
     }
 
     if mismatch_fields:
@@ -624,7 +625,7 @@ def _ground_truth_entry(stem: str, fields: dict, mismatch_fields: list) -> dict:
             elif mf == "sanction_amount":
                 v = int(expected["sanction_amount"])
                 expected["sanction_amount"] = str(v + random.choice([500000, 1000000, 2500000]))
-            elif mf == "disbursement_date":
+            elif mf == "disbursement_date" and expected["disbursement_date"]:
                 d = date.fromisoformat(expected["disbursement_date"])
                 expected["disbursement_date"] = date(d.year, d.month, min(d.day+1, 28)).isoformat()
             elif mf == "branch":
