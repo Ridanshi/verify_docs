@@ -38,7 +38,7 @@ def verify_document(
         return f"Failed to load document: {e}", "", ""
 
     try:
-        extracted = extract_fields(image)
+        extracted, needs_review = extract_fields(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", ""
 
@@ -54,15 +54,16 @@ def verify_document(
         "disbursement_date": disbursement_date,
     }
 
-    result = compare_fields(extracted, expected)
+    result = compare_fields(extracted, expected, needs_review=needs_review)
 
     save_result(filename, result.status, result.extracted, expected, result.comments)
 
-    status_html = (
-        '<div style="font-size:1.4em;font-weight:bold;color:green">✅ APPROVED</div>'
-        if result.status == "APPROVED"
-        else '<div style="font-size:1.4em;font-weight:bold;color:red">❌ CHANGES REQUESTED</div>'
-    )
+    if result.status == "APPROVED":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:green">APPROVED</div>'
+    elif result.status == "NEEDS_REVIEW":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>'
+    else:
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:red">CHANGES REQUESTED</div>'
 
     comments_text = "\n".join(result.comments) if result.comments else "All fields matched."
 

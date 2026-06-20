@@ -62,7 +62,15 @@ def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
     return score >= 80
 
 
-def compare_fields(extracted: dict, expected: dict) -> ComparisonResult:
+def compare_fields(extracted: dict, expected: dict, needs_review: bool = False) -> ComparisonResult:
+    if needs_review:
+        return ComparisonResult(
+            status="NEEDS_REVIEW",
+            comments=["Document could not be read clearly. Please re-upload a higher-quality "
+                      "scan or verify this application manually."],
+            extracted=extracted,
+        )
+
     if not _is_valid_document(extracted):
         return ComparisonResult(
             status="CHANGES_REQUESTED",

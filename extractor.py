@@ -167,21 +167,29 @@ def _empty_fields() -> dict:
     return {f: None for f in FIELDS}
 
 
-def extract_fields(image: Image.Image) -> dict:
+def extract_fields(image: Image.Image) -> tuple[dict, bool]:
+    """Returns (fields_dict, needs_review).
+
+    needs_review=True when the model needed a retry to produce valid JSON,
+    indicating low confidence in the extraction.
+    """
     _load_model()
+
+    needs_review = False
 
     raw = _call_model(image, PROMPT)
     parsed = _parse_json(raw)
 
     if parsed is None:
+        needs_review = True
         raw = _call_model(image, STRICT_PROMPT)
         parsed = _parse_json(raw)
 
     if parsed is None:
-        return _empty_fields()
+        return _empty_fields(), needs_review
 
     if parsed.get("document_type") == "invalid":
-        return _empty_fields()
+        return _empty_fields(), False
 
     fields = parsed.get("fields", {})
     result = _empty_fields()
@@ -189,4 +197,4 @@ def extract_fields(image: Image.Image) -> dict:
         val = fields.get(key)
         result[key] = str(val).strip() if val and str(val).strip().lower() != "null" else None
 
-    return result
+    return result, needs_review

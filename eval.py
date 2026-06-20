@@ -51,6 +51,7 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str, lender: str | No
 
     # accumulators
     status_correct = 0
+    needs_review_count = 0
     field_hits: dict[str, int]   = {}
     field_total: dict[str, int]  = {}
     confusion = {"TP": 0, "TN": 0, "FP": 0, "FN": 0}   # pos = CHANGES_REQUESTED
@@ -70,9 +71,9 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str, lender: str | No
 
         t0 = time.time()
         try:
-            image    = load_image(str(path))
-            extracted = extract_fields(image)
-            result   = compare_fields(extracted, expected_values)
+            image = load_image(str(path))
+            extracted, needs_review = extract_fields(image)
+            result = compare_fields(extracted, expected_values, needs_review=needs_review)
         except Exception as e:
             print(f"  [{i}/{total}] ERROR {filename}: {e}")
             per_doc.append({"file": filename, "error": str(e)})
@@ -82,6 +83,9 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str, lender: str | No
         elapsed = time.time() - t0
         got_status = result.status
         status_ok  = got_status == expected_status
+
+        if got_status == "NEEDS_REVIEW":
+            needs_review_count += 1
 
         if status_ok:
             status_correct += 1
@@ -137,6 +141,7 @@ def run_eval(limit: int | None, pdfs_only: bool, out_path: str, lender: str | No
 
     status_pct = 100 * status_correct / evaluated
     print(f"  Status accuracy     : {status_correct}/{evaluated}  ({status_pct:.1f}%)")
+    print(f"  Needs review        : {needs_review_count}/{evaluated}  ({100*needs_review_count/evaluated:.1f}%)")
 
     prec = confusion["TP"] / (confusion["TP"] + confusion["FP"]) if (confusion["TP"] + confusion["FP"]) else 0
     rec  = confusion["TP"] / (confusion["TP"] + confusion["FN"]) if (confusion["TP"] + confusion["FN"]) else 0
