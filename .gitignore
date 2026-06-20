@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local runtime artifacts
+results.db
+eval_results.json
+
+# OS / editor
+.DS_Store
+Thumbs.db

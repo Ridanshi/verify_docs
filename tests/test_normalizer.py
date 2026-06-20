@@ -1,5 +1,28 @@
 import pytest
-from normalizer import normalize_amount, normalize_date, normalize_text
+from normalizer import normalize_amount, normalize_date, normalize_text, words_to_number
+
+
+def test_words_simple_lakhs():
+    assert words_to_number("Rupees Twenty Five Lakhs Only") == 2500000.0
+
+def test_words_lakh_and_thousand():
+    assert words_to_number("Rupees Sixty Three Lakh Fifty Thousand Only") == 6350000.0
+
+def test_words_crore():
+    assert words_to_number("Rupees Two Crore Only") == 20000000.0
+
+def test_words_crore_and_lakh():
+    assert words_to_number("Rupees One Crore Fifty Lakhs Only") == 15000000.0
+
+def test_words_and_does_not_corrupt_thousand():
+    # regression: stripping "and" must not break "thousand"
+    assert words_to_number("Five Lakh Seventy Five Thousand") == 575000.0
+
+def test_words_no_number_returns_none():
+    assert words_to_number("not an amount") is None
+
+def test_words_empty_returns_none():
+    assert words_to_number("") is None
 
 
 def test_amount_lakhs():

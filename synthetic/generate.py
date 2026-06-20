@@ -126,6 +126,42 @@ def format_amount_doc(lakhs: float) -> str:
         return f"Rs. {rupees:,}/-"
 
 
+_ONES = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+         "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+         "Seventeen", "Eighteen", "Nineteen"]
+_TENS = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
+
+
+def _two_digit_words(n: int) -> str:
+    if n < 20:
+        return _ONES[n]
+    return (_TENS[n // 10] + (" " + _ONES[n % 10] if n % 10 else "")).strip()
+
+
+def number_to_indian_words(rupees: int) -> str:
+    """1 rupee int -> Indian amount-in-words. 6350000 -> 'Sixty Three Lakh Fifty Thousand'."""
+    if rupees == 0:
+        return "Zero"
+    parts = []
+    crore = rupees // 10_000_000;  rupees %= 10_000_000
+    lakh  = rupees // 100_000;     rupees %= 100_000
+    thou  = rupees // 1_000;       rupees %= 1_000
+    hund  = rupees // 100;         rest = rupees % 100
+    if crore: parts.append(_two_digit_words(crore) + " Crore")
+    if lakh:  parts.append(_two_digit_words(lakh) + " Lakh")
+    if thou:  parts.append(_two_digit_words(thou) + " Thousand")
+    if hund:  parts.append(_ONES[hund] + " Hundred")
+    if rest:  parts.append(_two_digit_words(rest))
+    return " ".join(parts)
+
+
+def amount_with_words(lakhs: float) -> str:
+    """Digits + words, as real Indian sanction letters print it:
+    'Rs.25.00 lakhs (Rupees Twenty Five Lakh Only)'."""
+    rupees = int(lakhs * 100_000)
+    return f"{format_amount_doc(lakhs)} (Rupees {number_to_indian_words(rupees)} Only)"
+
+
 def format_date_doc(d: date) -> str:
     return random.choice([
         d.strftime("%d.%m.%Y"),
@@ -226,8 +262,8 @@ def _mahindra_data(idx: int) -> dict:
         "bank_name":          "Mahindra Finance",
         "loan_account_number": loan_no,
         "application_id":     app_id,
-        "sanction_amount":    format_amount_doc(lakhs),
-        "disbursement_amount": format_amount_doc(lakhs),
+        "sanction_amount":    amount_with_words(lakhs),
+        "disbursement_amount": amount_with_words(lakhs),
         "loan_type":          loan_type,
         "branch":             branch,
         "disbursement_date":  format_date_doc(disb_date),
@@ -338,8 +374,8 @@ def _aadhar_data(idx: int) -> dict:
         "bank_name":           "Aadhar Housing Finance Limited",
         "loan_account_number": loan_no,
         "application_id":      app_id,
-        "sanction_amount":     format_amount_doc(lakhs),
-        "disbursement_amount": format_amount_doc(lakhs),
+        "sanction_amount":     amount_with_words(lakhs),
+        "disbursement_amount": amount_with_words(lakhs),
         "loan_type":           loan_type,
         "branch":              branch,
         "disbursement_date":   format_date_doc(disb_date),
@@ -496,8 +532,8 @@ def _hdfc_data(idx: int) -> dict:
         "bank_name":           "HDFC Ltd",
         "loan_account_number": loan_no,
         "application_id":      app_id,
-        "sanction_amount":     format_amount_doc(lakhs),
-        "disbursement_amount": format_amount_doc(lakhs),
+        "sanction_amount":     amount_with_words(lakhs),
+        "disbursement_amount": amount_with_words(lakhs),
         "loan_type":           loan_type,
         "branch":              branch,
         "disbursement_date":   format_date_doc(disb_date),

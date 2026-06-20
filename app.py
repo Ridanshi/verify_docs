@@ -38,7 +38,7 @@ def verify_document(
         return f"Failed to load document: {e}", "", ""
 
     try:
-        extracted, needs_review = extract_fields(image)
+        extracted = extract_fields(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", ""
 
@@ -54,7 +54,7 @@ def verify_document(
         "disbursement_date": disbursement_date,
     }
 
-    result = compare_fields(extracted, expected, needs_review=needs_review)
+    result = compare_fields(extracted, expected)
 
     save_result(filename, result.status, result.extracted, expected, result.comments)
 

@@ -1,13 +1,13 @@
 transformers==4.49.0
-qwen-vl-utils>=0.0.8
+qwen-vl-utils>=0.0.8 # preps images for Qwen
 torch>=2.1.0
-torchvision>=0.16.0
-accelerate>=0.26.0
-bitsandbytes>=0.43.0
-Pillow>=10.0.0
+torchvision>=0.16.0 # Image ops for torch. Qwen-vl-utils needs it to process images
+accelerate>=0.26.0 # Splits the model across both T4 GPUs
+bitsandbytes>=0.43.0 # 4-bit quantization stores each weight in just 4 bits instead of 16. 4× smaller
+Pillow>=10.0.0 # Loads/resizes/sharpens images. Used in preprocessor.py
 rapidfuzz>=3.6.0
-python-dateutil>=2.8.2
+python-dateutil>=2.8.2 # Parses any date format → standard date. Used in normalizer.py
 gradio>=4.40.0
 pytest>=7.4.0
-reportlab>=4.0.0
-pymupdf>=1.23.0
+reportlab>=4.0.0 # Generates the synthetic PDF documents. Used in synthetic/generate.py
+pymupdf>=1.23.0 # Renders PDF pages → images, and PDF→JPG conversion. Used in preprocessor.py + generator
