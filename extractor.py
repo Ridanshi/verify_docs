@@ -80,6 +80,10 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
   sanction_amount     — The total loan amount sanctioned/approved. Copy the amount
                         EXACTLY as it appears in the document — same digits, same
                         format, same symbols. Do NOT convert, round, or do any math.
+                        Count the digits carefully — do NOT drop or add a zero.
+                        Indian comma format groups differently from Western:
+                        "25,00,000" = 25 lakhs = twenty-five lakh (7 digits).
+                        Preserve every digit and every comma exactly as printed.
                         Examples (copy verbatim):
                           "₹25,00,000"        →  "₹25,00,000"
                           "Rs.25.00 lakhs"    →  "Rs.25.00 lakhs"

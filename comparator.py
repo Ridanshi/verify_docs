@@ -23,6 +23,22 @@ def _is_valid_document(extracted: dict) -> bool:
     return found >= INVALID_DOC_MIN_FIELDS
 
 
+def _is_digit_scale_error(extracted_val, expected_val) -> bool:
+    """True when two amounts differ only by a 10x/100x/1000x factor — a dropped
+    or added zero, not a genuinely different number. Routes to human review
+    instead of a hard rejection."""
+    e = normalize_amount(str(extracted_val))
+    x = normalize_amount(str(expected_val))
+    if not e or not x:
+        return False
+    hi, lo = (e, x) if e > x else (x, e)
+    ratio = hi / lo
+    for factor in (10, 100, 1000):
+        if abs(ratio - factor) < 0.01:
+            return True
+    return False
+
+
 def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
     if extracted_val is None or str(extracted_val).strip() == "":
         return False
@@ -79,7 +95,8 @@ def compare_fields(extracted: dict, expected: dict, needs_review: bool = False) 
             extracted=extracted,
         )
 
-    comments = []
+    comments = []        # genuine mismatches → CHANGES_REQUESTED
+    review_comments = [] # digit-scale amount errors → NEEDS_REVIEW
     for f in FIELDS:
         extracted_val = extracted.get(f)
         expected_val = expected.get(f)
@@ -87,12 +104,26 @@ def compare_fields(extracted: dict, expected: dict, needs_review: bool = False) 
         if not expected_val:
             continue
 
-        if not _fields_match(f, extracted_val, expected_val):
-            label = _field_label(f)
+        if _fields_match(f, extracted_val, expected_val):
+            continue
+
+        label = _field_label(f)
+        if f in AMOUNT_FIELDS and _is_digit_scale_error(extracted_val, expected_val):
+            review_comments.append(
+                f"{label} digit error: document shows '{extracted_val}', "
+                f"expected '{expected_val}' (differs by a factor of 10 — likely a "
+                f"mis-read zero). Please verify manually."
+            )
+        else:
             comments.append(
                 f"{label} mismatch: document shows '{extracted_val}', "
                 f"expected '{expected_val}'"
             )
 
-    status = "APPROVED" if not comments else "CHANGES_REQUESTED"
-    return ComparisonResult(status=status, comments=comments, extracted=extracted)
+    # Genuine mismatch always wins — a real problem surfaces as CHANGES_REQUESTED.
+    if comments:
+        return ComparisonResult(status="CHANGES_REQUESTED", comments=comments, extracted=extracted)
+    # Only ambiguous digit-scale amount errors remain → route to human.
+    if review_comments:
+        return ComparisonResult(status="NEEDS_REVIEW", comments=review_comments, extracted=extracted)
+    return ComparisonResult(status="APPROVED", comments=[], extracted=extracted)
