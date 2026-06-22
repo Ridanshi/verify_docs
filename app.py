@@ -54,6 +54,16 @@ def verify_document(
         "disbursement_date": disbursement_date,
     }
 
+    if not any(v and str(v).strip() for v in expected.values()):
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:orange">NO EXPECTED VALUES</div>',
+            "No expected field values were entered — nothing to compare against.\n\n"
+            "Either:\n"
+            "  • Fill in the fields on the left, OR\n"
+            "  • Use the Auto Compare tab and upload a screenshot showing both the system panel and the document.",
+            "",
+        )
+
     result = compare_fields(extracted, expected)
 
     save_result(filename, result.status, result.extracted, expected, result.comments)
