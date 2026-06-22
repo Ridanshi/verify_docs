@@ -203,6 +203,86 @@ def _clean(val) -> str | None:
     return str(val).strip() if val and str(val).strip().lower() != "null" else None
 
 
+SYSTEM_PANEL_PROMPT = """You are looking at a screenshot of a loan management system.
+
+Focus ONLY on the LEFT panel of this screenshot — it shows the system's stored loan record with labeled fields.
+
+Extract these fields from the LEFT panel labels and their values:
+
+  customer_name       — value next to "Customer Name"
+  bank_name           — value next to "Bank"
+  loan_account_number — value next to "Loan Account Number" (copy every character; ignore annotations like "15 digits")
+  application_id      — value next to "Application ID" (digits only; ignore annotations like "5 digits")
+  sanction_amount     — value next to "Sanction Amount"
+  disbursement_amount — value next to "Disbursement Amount"
+  loan_type           — value next to "Type of Loan"
+  branch              — value next to "Branch Location" or "Branch"
+  disbursement_date   — value next to "Date of Disbursement"
+
+Set a field to null only if the label is absent or its value is blank / dash.
+
+Return ONLY valid JSON, no explanation:
+{
+  "customer_name": "...",
+  "bank_name": "...",
+  "loan_account_number": "...",
+  "application_id": "...",
+  "sanction_amount": "...",
+  "disbursement_amount": "...",
+  "loan_type": "...",
+  "branch": "...",
+  "disbursement_date": "..."
+}"""
+
+DOC_PANEL_PROMPT = """You are looking at a screenshot that shows a loan document on the RIGHT side.
+
+Focus ONLY on the loan document visible in the RIGHT panel of this screenshot — ignore the left panel entirely.
+
+""" + PROMPT
+
+
+def extract_system_fields(image: Image.Image) -> dict:
+    """Extract expected values from the LEFT panel (CRM/system) of a combined screenshot."""
+    _load_model()
+    raw = _call_model(image, SYSTEM_PANEL_PROMPT)
+    parsed = _parse_json(raw)
+    if parsed is None:
+        return {k: None for k in FIELDS}
+    result = {k: None for k in FIELDS}
+    for key in FIELDS:
+        result[key] = _clean(parsed.get(key))
+    return result
+
+
+def extract_from_combined_screenshot(image: Image.Image) -> tuple[dict, dict]:
+    """
+    Extract both sides of a combined CRM + document screenshot.
+    Returns (expected_values, extracted_fields).
+    expected_values: from left CRM panel
+    extracted_fields: from right document panel (same format as extract_fields)
+    """
+    _load_model()
+
+    # Call 1: system/CRM left panel → expected values
+    raw_system = _call_model(image, SYSTEM_PANEL_PROMPT)
+    parsed_system = _parse_json(raw_system)
+    expected = {k: None for k in FIELDS}
+    if parsed_system:
+        for key in FIELDS:
+            expected[key] = _clean(parsed_system.get(key))
+
+    # Call 2: document right panel → extracted fields
+    raw_doc = _call_model(image, DOC_PANEL_PROMPT)
+    parsed_doc = _parse_json(raw_doc)
+    extracted = _empty_fields()
+    if parsed_doc and parsed_doc.get("document_type") != "invalid":
+        fields = parsed_doc.get("fields", parsed_doc)
+        for key in _ALL_KEYS:
+            extracted[key] = _clean(fields.get(key))
+
+    return expected, extracted
+
+
 def extract_fields(image: Image.Image) -> dict:
     """Extract all fields (digits + amount-in-words) from the document image.
 

@@ -1,7 +1,7 @@
 import os
 import gradio as gr
 from preprocessor import load_image
-from extractor import extract_fields
+from extractor import extract_fields, extract_from_combined_screenshot
 from comparator import compare_fields
 from database import init_db, save_result, get_recent_results
 
@@ -76,6 +76,49 @@ def verify_document(
     return status_html, comments_text, extracted_table
 
 
+def auto_compare(screenshot_file):
+    if screenshot_file is None:
+        return "No screenshot uploaded.", "", "", ""
+
+    try:
+        file_path = screenshot_file if isinstance(screenshot_file, str) else screenshot_file.name
+        image = load_image(file_path)
+    except Exception as e:
+        return f"Failed to load screenshot: {e}", "", "", ""
+
+    try:
+        expected, extracted = extract_from_combined_screenshot(image)
+    except Exception as e:
+        return f"Extraction failed: {e}. Please try again.", "", "", ""
+
+    result = compare_fields(extracted, expected)
+
+    save_result("auto_compare", result.status, result.extracted, expected, result.comments)
+
+    if result.status == "APPROVED":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:green">APPROVED</div>'
+    elif result.status == "NEEDS_REVIEW":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>'
+    else:
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:red">CHANGES REQUESTED</div>'
+
+    comments_text = "\n".join(result.comments) if result.comments else "All fields matched."
+
+    system_rows = "\n".join(
+        f"| {FIELD_LABELS.get(k, k)} | {v or '—'} |"
+        for k, v in expected.items()
+    )
+    system_table = "**System values (left panel):**\n\n| Field | Value |\n|---|---|\n" + system_rows
+
+    extracted_rows = "\n".join(
+        f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
+        for k, v in result.extracted.items()
+    )
+    extracted_table = "**Document values (right panel):**\n\n| Field | Extracted Value |\n|---|---|\n" + extracted_rows
+
+    return status_html, comments_text, system_table, extracted_table
+
+
 def load_history():
     rows = get_recent_results(limit=50)
     if not rows:
@@ -122,6 +165,32 @@ with gr.Blocks(title="Loan Document Verifier") as demo:
                 f_sanction_amount, f_disbursement_amount, f_loan_type, f_branch, f_disbursement_date,
             ],
             outputs=[status_out, comments_out, extracted_out],
+        )
+
+    with gr.Tab("Auto Compare"):
+        gr.Markdown("## Auto Compare — Screenshot Mode")
+        gr.Markdown(
+            "Take a screenshot showing the **system panel on the left** and the "
+            "**loan document on the right**, then upload it here. "
+            "No manual entry needed."
+        )
+        with gr.Row():
+            with gr.Column():
+                screenshot_input = gr.File(
+                    label="Upload Screenshot (JPG / PNG)",
+                    file_types=[".jpg", ".jpeg", ".png"],
+                )
+                auto_btn = gr.Button("Compare", variant="primary")
+            with gr.Column():
+                auto_status_out   = gr.HTML(label="Status")
+                auto_comments_out = gr.Textbox(label="Mismatches", lines=5, interactive=False)
+                auto_system_out   = gr.Markdown(label="System Values")
+                auto_doc_out      = gr.Markdown(label="Document Values")
+
+        auto_btn.click(
+            fn=auto_compare,
+            inputs=[screenshot_input],
+            outputs=[auto_status_out, auto_comments_out, auto_system_out, auto_doc_out],
         )
 
     with gr.Tab("History"):
