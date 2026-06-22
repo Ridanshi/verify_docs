@@ -1,58 +1,86 @@
+# Extractor — loads the vision-language model and uses it to read fields from
+# loan document images.
+#
+# The model (Qwen2.5-VL-32B) is a large AI that understands both images and text.
+# We send it an image + a set of instructions (the PROMPT), and it returns a JSON
+# object with all the field values it found in the document.
+#
+# The model is loaded lazily — it's only pulled into memory the first time
+# extract_fields() is called, not when the module is imported.
+
 import json
 import os
 import re
 import torch
-from PIL import Image # PIL image object passed into the VLM.
-# Qwen VL model + processor.
-# BitsAndBytes enables 4-bit quantization to fit the 32B model into T4 GPUs.
+from PIL import Image
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, BitsAndBytesConfig
-from qwen_vl_utils import process_vision_info # Helper from Qwen for preparing image/video inputs.
+from qwen_vl_utils import process_vision_info  # Qwen helper for preparing image inputs
 from config import VLM_MODEL_ID, VLM_MAX_NEW_TOKENS, FIELDS, AMOUNT_WORD_FIELDS
 
-_model = None # No model loaded yet
-_processor = None # No processor loaded yet
+# These are module-level so the model stays in GPU memory between calls.
+# Loading takes 5-10 minutes; inference per document takes ~2 minutes.
+_model     = None
+_processor = None
 
-# 32B model always needs 4-bit. 7B can run float16 on RTX 4090+.
+# 4-bit quantization halves the model's VRAM usage (~18GB instead of ~64GB).
+# It's always on by default — the 32B model won't fit on T4 x2 without it.
 _USE_4BIT = os.environ.get("USE_4BIT", "1") == "1"
 
 
 def _load_model():
+    """Load the model into GPU memory (only runs once per session)."""
     global _model, _processor
-    if _model is None:
-        num_gpus = torch.cuda.device_count() # Determine how many CUDA GPUs are available
-        if num_gpus == 0:
-            raise RuntimeError(
-                "No CUDA GPU detected. This model requires a GPU with ≥8GB VRAM. "
-                "Run on Kaggle T4 x2 or a cloud GPU instance."
+    if _model is not None:
+        return  # already loaded
+
+    num_gpus = torch.cuda.device_count()
+    if num_gpus == 0:
+        raise RuntimeError(
+            "No CUDA GPU detected. This model requires a GPU with ≥8GB VRAM. "
+            "Run on Kaggle T4 x2 or a cloud GPU instance."
+        )
+
+    # Cap each GPU at 13GB so the model splits evenly across both T4s on Kaggle.
+    # Setting cpu to 0GiB blocks CPU offload — 4-bit kernels can't run on CPU.
+    max_memory = {i: "13GiB" for i in range(num_gpus)}
+    max_memory["cpu"] = "0GiB"
+
+    try:
+        if _USE_4BIT:
+            bnb_config = BitsAndBytesConfig(load_in_4bit=True)
+            _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                VLM_MODEL_ID,
+                quantization_config=bnb_config,
+                device_map="auto",
+                max_memory=max_memory,
             )
-        # Reserve up to 13GB on each GPU.
-        # On Kaggle T4 x2 this distributes the model across both GPUs.
-        max_memory = {i: "13GiB" for i in range(num_gpus)}
-        max_memory["cpu"] = "0GiB"
+        else:
+            # float16 — only viable on GPUs with ≥40GB VRAM (e.g. A100)
+            _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                VLM_MODEL_ID,
+                torch_dtype=torch.float16,
+                device_map="auto",
+                max_memory=max_memory,
+            )
+        _processor = AutoProcessor.from_pretrained(VLM_MODEL_ID)
 
-        try:
-            if _USE_4BIT:
-                bnb_config = BitsAndBytesConfig(load_in_4bit=True) # Load the model using 4-bit quantization to reduce VRAM usage
-                _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-                    VLM_MODEL_ID,
-                    quantization_config=bnb_config,
-                    device_map="auto",
-                    max_memory=max_memory,
-                )
-            else:
-                _model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-                    VLM_MODEL_ID,
-                    torch_dtype=torch.float16,
-                    device_map="auto",
-                    max_memory=max_memory,
-                )
-            _processor = AutoProcessor.from_pretrained(VLM_MODEL_ID)
-        except Exception:
-            _model = None
-            _processor = None
-            torch.cuda.empty_cache()
-            raise
+    except Exception:
+        # If loading fails halfway, clear everything so the next call starts clean.
+        # Without this, partial GPU allocations would cause OOM on retry.
+        _model     = None
+        _processor = None
+        torch.cuda.empty_cache()
+        raise
 
+
+# ── Prompts ────────────────────────────────────────────────────────────────────
+#
+# These are the written instructions we send to the model along with the image.
+# The model reads the image + the prompt and returns a JSON object.
+#
+# Key principle: we ask the model to copy values EXACTLY as they appear.
+# All conversion (amounts → floats, dates → ISO) is done in normalizer.py, not here.
+# This avoids the model doing arithmetic and getting it wrong.
 
 PROMPT = """You are a financial document extraction assistant for Indian loan documents.
 
@@ -137,71 +165,13 @@ Return ONLY valid JSON, no explanation:
   }
 }"""
 
+# Same as PROMPT but with a harder reminder — used on the retry if the first
+# response wasn't valid JSON
 STRICT_PROMPT = PROMPT + "\n\nIMPORTANT: Return ONLY the JSON object. No text before or after."
 
-
-def _call_model(image: Image.Image, prompt: str) -> str:
-    # Build a multimodal chat message containing: - the document image - the extraction promp
-    messages = [
-        {
-            "role": "user",
-            "content": [
-                {"type": "image", "image": image},
-                {"type": "text", "text": prompt},
-            ],
-        }
-    ]
-    
-    # Convert the message into Qwen's internal chat format.
-    # add_generation_prompt=True tells the model that it should generate a response after the provided message.
-    text = _processor.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=True
-    )
-    
-    # Extract image/video inputs in the format expected by Qwen
-    image_inputs, video_inputs = process_vision_info(messages)
-    
-    # Convert text + image into PyTorch tensors and move them onto the same device(s) as the model.
-    inputs = _processor(
-        text=[text],
-        images=image_inputs,
-        videos=video_inputs,
-        padding=True,
-        return_tensors="pt",
-    ).to(_model.device)
-
-    with torch.no_grad():
-        generated_ids = _model.generate(**inputs, max_new_tokens=VLM_MAX_NEW_TOKENS) # Generate model output
-
-    input_len = inputs["input_ids"].shape[1]
-    new_tokens = generated_ids[:, input_len:]
-    
-    # Convert generated token IDs back into readable text.
-    return _processor.batch_decode(new_tokens, skip_special_tokens=True)[0]
-
-# Extract and parse JSON from model output
-def _parse_json(raw: str) -> dict | None:
-    match = re.search(r"\{.*\}", raw, re.DOTALL)
-    if not match:
-        return None
-    try:
-        return json.loads(match.group()) # Convert JSON string into a Python dictionary
-    except json.JSONDecodeError:
-        return None
-
-# All keys the model is asked to return: the 9 standard fields plus the
-# amount-in-words companions used for digit cross-checking.
-_ALL_KEYS = FIELDS + list(AMOUNT_WORD_FIELDS.values())
-
-
-# Used whenever extraction fails or the document is invalid
-def _empty_fields() -> dict:
-    return {k: None for k in _ALL_KEYS}
-
-
-def _clean(val) -> str | None:
-    return str(val).strip() if val and str(val).strip().lower() != "null" else None
-
+# ── Auto Compare prompts ────────────────────────────────────────────────────────
+# Used when the user uploads a combined screenshot (system panel on the left,
+# loan document on the right). Two separate model calls read each side.
 
 SYSTEM_PANEL_PROMPT = """You are looking at a screenshot of a loan management system.
 
@@ -234,69 +204,104 @@ Return ONLY valid JSON, no explanation:
   "disbursement_date": "..."
 }"""
 
-DOC_PANEL_PROMPT = """You are looking at a screenshot that shows a loan document on the RIGHT side.
-
-Focus ONLY on the loan document visible in the RIGHT panel of this screenshot — ignore the left panel entirely.
-
-""" + PROMPT
-
-
-def extract_system_fields(image: Image.Image) -> dict:
-    """Extract expected values from the LEFT panel (CRM/system) of a combined screenshot."""
-    _load_model()
-    raw = _call_model(image, SYSTEM_PANEL_PROMPT)
-    parsed = _parse_json(raw)
-    if parsed is None:
-        return {k: None for k in FIELDS}
-    result = {k: None for k in FIELDS}
-    for key in FIELDS:
-        result[key] = _clean(parsed.get(key))
-    return result
+# The document prompt is the same as the main PROMPT, but we tell the model
+# to ignore the left panel (system UI) and only read the document on the right.
+DOC_PANEL_PROMPT = (
+    "You are looking at a screenshot that shows a loan document on the RIGHT side.\n\n"
+    "Focus ONLY on the loan document visible in the RIGHT panel of this screenshot "
+    "— ignore the left panel entirely.\n\n"
+    + PROMPT
+)
 
 
-def extract_from_combined_screenshot(image: Image.Image) -> tuple[dict, dict]:
+# ── Model helpers ───────────────────────────────────────────────────────────────
+
+def _call_model(image: Image.Image, prompt: str) -> str:
+    """Send one image + one prompt to the model and return the raw text response."""
+    messages = [
+        {
+            "role": "user",
+            "content": [
+                {"type": "image", "image": image},
+                {"type": "text",  "text":  prompt},
+            ],
+        }
+    ]
+
+    # Convert to Qwen's internal chat format
+    text = _processor.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+
+    # Prepare image tensors
+    image_inputs, video_inputs = process_vision_info(messages)
+
+    # Move everything to the GPU(s) the model is on
+    inputs = _processor(
+        text=[text],
+        images=image_inputs,
+        videos=video_inputs,
+        padding=True,
+        return_tensors="pt",
+    ).to(_model.device)
+
+    with torch.no_grad():
+        generated_ids = _model.generate(**inputs, max_new_tokens=VLM_MAX_NEW_TOKENS)
+
+    # Slice off the input tokens — we only want the newly generated response
+    input_len  = inputs["input_ids"].shape[1]
+    new_tokens = generated_ids[:, input_len:]
+    return _processor.batch_decode(new_tokens, skip_special_tokens=True)[0]
+
+
+def _parse_json(raw: str) -> dict | None:
+    """Pull a JSON object out of the model's raw text response.
+
+    The model sometimes adds a sentence before or after the JSON.
+    We use a regex to find the outermost { ... } block and parse that.
+    Returns None if no valid JSON is found.
     """
-    Extract both sides of a combined CRM + document screenshot.
-    Returns (expected_values, extracted_fields).
-    expected_values: from left CRM panel
-    extracted_fields: from right document panel (same format as extract_fields)
-    """
-    _load_model()
+    match = re.search(r"\{.*\}", raw, re.DOTALL)
+    if not match:
+        return None
+    try:
+        return json.loads(match.group())
+    except json.JSONDecodeError:
+        return None
 
-    # Call 1: system/CRM left panel → expected values
-    raw_system = _call_model(image, SYSTEM_PANEL_PROMPT)
-    parsed_system = _parse_json(raw_system)
-    expected = {k: None for k in FIELDS}
-    if parsed_system:
-        for key in FIELDS:
-            expected[key] = _clean(parsed_system.get(key))
 
-    # Call 2: document right panel → extracted fields
-    raw_doc = _call_model(image, DOC_PANEL_PROMPT)
-    parsed_doc = _parse_json(raw_doc)
-    extracted = _empty_fields()
-    if parsed_doc and parsed_doc.get("document_type") != "invalid":
-        fields = parsed_doc.get("fields", parsed_doc)
-        for key in _ALL_KEYS:
-            extracted[key] = _clean(fields.get(key))
+# The 9 core fields + 2 amount-in-words fields = 11 total keys we track
+_ALL_KEYS = FIELDS + list(AMOUNT_WORD_FIELDS.values())
 
-    return expected, extracted
 
+def _empty_fields() -> dict:
+    """Return a dict with all 11 fields set to None.
+    Used when extraction fails or the document is invalid."""
+    return {k: None for k in _ALL_KEYS}
+
+
+def _clean(val) -> str | None:
+    """Strip whitespace and convert the string "null" to Python None."""
+    return str(val).strip() if val and str(val).strip().lower() != "null" else None
+
+
+# ── Public extraction functions ─────────────────────────────────────────────────
 
 def extract_fields(image: Image.Image) -> dict:
-    """Extract all fields (digits + amount-in-words) from the document image.
+    """Extract all 11 fields from a single loan document image.
 
-    Retries once with a stricter prompt if the first JSON is unparseable.
-    A successful retry is NOT treated as low-confidence — the words/digits
-    cross-check in the comparator is what flags genuine amount uncertainty.
+    Tries once with the standard prompt. If the response isn't valid JSON,
+    retries once with a stricter version of the prompt.
+    Returns a dict with all fields (some may be None if absent from the doc).
     """
     _load_model()
 
-    raw = _call_model(image, PROMPT)
+    raw    = _call_model(image, PROMPT)
     parsed = _parse_json(raw)
 
     if parsed is None:
-        raw = _call_model(image, STRICT_PROMPT)
+        # First attempt failed — try again with a harder instruction
+        raw    = _call_model(image, STRICT_PROMPT)
         parsed = _parse_json(raw)
 
     if parsed is None:
@@ -311,3 +316,52 @@ def extract_fields(image: Image.Image) -> dict:
         result[key] = _clean(fields.get(key))
 
     return result
+
+
+def extract_system_fields(image: Image.Image) -> dict:
+    """Extract system/CRM values from the LEFT panel of a combined screenshot.
+
+    Used internally by extract_from_combined_screenshot().
+    Returns a dict of the 9 core fields (no amount-in-words needed here —
+    the system already stores clean values).
+    """
+    _load_model()
+    raw    = _call_model(image, SYSTEM_PANEL_PROMPT)
+    parsed = _parse_json(raw)
+    if parsed is None:
+        return {k: None for k in FIELDS}
+    result = {k: None for k in FIELDS}
+    for key in FIELDS:
+        result[key] = _clean(parsed.get(key))
+    return result
+
+
+def extract_from_combined_screenshot(image: Image.Image) -> tuple[dict, dict]:
+    """Extract both sides of a combined system + document screenshot.
+
+    Call 1: reads the LEFT panel (CRM/system) → what the system says
+    Call 2: reads the RIGHT panel (loan document) → what the document says
+
+    Returns (expected_values, extracted_fields) — same formats used everywhere
+    else in the pipeline, so comparator.py works without any changes.
+    """
+    _load_model()
+
+    # Left panel — system/CRM expected values
+    raw_system    = _call_model(image, SYSTEM_PANEL_PROMPT)
+    parsed_system = _parse_json(raw_system)
+    expected      = {k: None for k in FIELDS}
+    if parsed_system:
+        for key in FIELDS:
+            expected[key] = _clean(parsed_system.get(key))
+
+    # Right panel — actual loan document fields
+    raw_doc    = _call_model(image, DOC_PANEL_PROMPT)
+    parsed_doc = _parse_json(raw_doc)
+    extracted  = _empty_fields()
+    if parsed_doc and parsed_doc.get("document_type") != "invalid":
+        fields = parsed_doc.get("fields", parsed_doc)
+        for key in _ALL_KEYS:
+            extracted[key] = _clean(fields.get(key))
+
+    return expected, extracted

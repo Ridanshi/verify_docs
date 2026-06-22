@@ -1,3 +1,10 @@
+# Main app — launches the Gradio web UI.
+#
+# Three tabs:
+#   1. Verify Document  — upload a document + type expected values → get verdict
+#   2. Auto Compare     — upload one screenshot (system left, document right) → auto verdict
+#   3. History          — see the last 50 verification results from the database
+
 import os
 import gradio as gr
 from preprocessor import load_image
@@ -5,18 +12,20 @@ from extractor import extract_fields, extract_from_combined_screenshot
 from comparator import compare_fields
 from database import init_db, save_result, get_recent_results
 
+# Set up the SQLite database on startup (creates the file if it doesn't exist)
 init_db()
 
+# Human-readable labels for each internal field key
 FIELD_LABELS = {
-    "customer_name": "Customer Name",
-    "bank_name": "Bank Name",
-    "loan_account_number": "Loan Account Number",
-    "application_id": "Application ID",
-    "sanction_amount": "Sanction Amount",
-    "disbursement_amount": "Disbursement Amount",
-    "loan_type": "Loan Type",
-    "branch": "Branch",
-    "disbursement_date": "Disbursement Date",
+    "customer_name":      "Customer Name",
+    "bank_name":          "Bank Name",
+    "loan_account_number":"Loan Account Number",
+    "application_id":     "Application ID",
+    "sanction_amount":    "Sanction Amount",
+    "disbursement_amount":"Disbursement Amount",
+    "loan_type":          "Loan Type",
+    "branch":             "Branch",
+    "disbursement_date":  "Disbursement Date",
 }
 
 
@@ -25,35 +34,45 @@ def verify_document(
     customer_name, bank_name, loan_account_number, application_id,
     sanction_amount, disbursement_amount, loan_type, branch, disbursement_date,
 ):
+    """Handler for the Verify Document tab.
+
+    User uploads a document and manually types the expected values.
+    The model extracts fields from the document, then compares against what was typed.
+    """
     if document_file is None:
         return "No document uploaded.", "", ""
 
+    # Load and preprocess the uploaded file (PDF render or image enhance)
     try:
         file_path = document_file if isinstance(document_file, str) else document_file.name
-        filename = os.path.basename(file_path)
-        image = load_image(file_path)
+        filename  = os.path.basename(file_path)
+        image     = load_image(file_path)
     except ValueError as e:
         return str(e), "", ""
     except Exception as e:
         return f"Failed to load document: {e}", "", ""
 
+    # Run the model on the document image
     try:
         extracted = extract_fields(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", ""
 
+    # Build the expected values dict from what the user typed
     expected = {
-        "customer_name": customer_name,
-        "bank_name": bank_name,
+        "customer_name":       customer_name,
+        "bank_name":           bank_name,
         "loan_account_number": loan_account_number,
-        "application_id": application_id,
-        "sanction_amount": sanction_amount,
+        "application_id":      application_id,
+        "sanction_amount":     sanction_amount,
         "disbursement_amount": disbursement_amount,
-        "loan_type": loan_type,
-        "branch": branch,
-        "disbursement_date": disbursement_date,
+        "loan_type":           loan_type,
+        "branch":              branch,
+        "disbursement_date":   disbursement_date,
     }
 
+    # Guard: if every expected field is blank, there's nothing to compare against.
+    # Without this check the tool would silently return APPROVED on an empty form.
     if not any(v and str(v).strip() for v in expected.values()):
         return (
             '<div style="font-size:1.4em;font-weight:bold;color:orange">NO EXPECTED VALUES</div>',
@@ -66,8 +85,10 @@ def verify_document(
 
     result = compare_fields(extracted, expected)
 
+    # Save to history regardless of outcome
     save_result(filename, result.status, result.extracted, expected, result.comments)
 
+    # Colour-coded status badge
     if result.status == "APPROVED":
         status_html = '<div style="font-size:1.4em;font-weight:bold;color:green">APPROVED</div>'
     elif result.status == "NEEDS_REVIEW":
@@ -77,7 +98,8 @@ def verify_document(
 
     comments_text = "\n".join(result.comments) if result.comments else "All fields matched."
 
-    extracted_rows = "\n".join(
+    # Show what the model actually extracted, field by field
+    extracted_rows  = "\n".join(
         f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
         for k, v in result.extracted.items()
     )
@@ -87,15 +109,22 @@ def verify_document(
 
 
 def auto_compare(screenshot_file):
+    """Handler for the Auto Compare tab.
+
+    User uploads one screenshot showing the system panel on the left and the
+    loan document on the right. The model reads both sides automatically —
+    no manual typing needed.
+    """
     if screenshot_file is None:
         return "No screenshot uploaded.", "", "", ""
 
     try:
         file_path = screenshot_file if isinstance(screenshot_file, str) else screenshot_file.name
-        image = load_image(file_path)
+        image     = load_image(file_path)
     except Exception as e:
         return f"Failed to load screenshot: {e}", "", "", ""
 
+    # Two model calls: one for the left (system) panel, one for the right (document)
     try:
         expected, extracted = extract_from_combined_screenshot(image)
     except Exception as e:
@@ -114,13 +143,14 @@ def auto_compare(screenshot_file):
 
     comments_text = "\n".join(result.comments) if result.comments else "All fields matched."
 
-    system_rows = "\n".join(
+    # Show what was read from each side so the user can verify the model understood both panels
+    system_rows  = "\n".join(
         f"| {FIELD_LABELS.get(k, k)} | {v or '—'} |"
         for k, v in expected.items()
     )
     system_table = "**System values (left panel):**\n\n| Field | Value |\n|---|---|\n" + system_rows
 
-    extracted_rows = "\n".join(
+    extracted_rows  = "\n".join(
         f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
         for k, v in result.extracted.items()
     )
@@ -130,6 +160,7 @@ def auto_compare(screenshot_file):
 
 
 def load_history():
+    """Fetch the last 50 verifications from the database for the History tab."""
     rows = get_recent_results(limit=50)
     if not rows:
         return [["No verifications yet.", "", "", ""]]
@@ -139,7 +170,10 @@ def load_history():
     ]
 
 
+# ── UI layout ───────────────────────────────────────────────────────────────────
+
 with gr.Blocks(title="Loan Document Verifier") as demo:
+
     with gr.Tab("Verify Document"):
         gr.Markdown("## Loan Document Verification Tool")
         gr.Markdown("Upload a document and enter expected field values. The tool will extract and compare.")
@@ -215,5 +249,8 @@ with gr.Blocks(title="Loan Document Verifier") as demo:
         refresh_btn.click(fn=load_history, inputs=[], outputs=[history_table])
         demo.load(fn=load_history, inputs=[], outputs=[history_table])
 
+
 if __name__ == "__main__":
+    # share=True creates a public gradio.live link — needed on Kaggle where
+    # localhost isn't accessible from outside the notebook
     demo.launch(server_name="0.0.0.0", server_port=7860, share=True)

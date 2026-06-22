@@ -1,38 +1,61 @@
-from dataclasses import dataclass, field # Importing this helps us escape writing boilerplate constructors
-from rapidfuzz import fuzz # Fast fuzzy string matching library used for names, banks, branches, etc.
+# Comparator — takes what the model extracted from the document and compares it
+# against what the system says it should be.
+#
+# Each field type uses a different comparison strategy:
+#   - Names, banks, branches, loan types  →  fuzzy match (handles casing / abbreviations)
+#   - Loan account number, application ID →  exact match (one wrong digit = wrong record)
+#   - Amounts                             →  normalize to float + digit/word cross-check
+#   - Dates                               →  normalize to YYYY-MM-DD then compare
+#
+# Returns one of three statuses:
+#   APPROVED          — everything matched
+#   CHANGES_REQUESTED — one or more fields are wrong
+#   NEEDS_REVIEW      — amounts are ambiguous (digit/word conflict), send to a human
+
+from dataclasses import dataclass, field
+from rapidfuzz import fuzz
 from normalizer import normalize_amount, normalize_date, normalize_text, words_to_number
 from config import (
     FUZZY_FIELDS, EXACT_FIELDS, AMOUNT_FIELDS, DATE_FIELDS,
     FUZZY_THRESHOLDS, INVALID_DOC_MIN_FIELDS, FIELDS, AMOUNT_WORD_FIELDS,
 )
 
-# Standard result object returned by compare_fields(). Contains final status, reviewer comments, and extracted values.
+
 @dataclass
 class ComparisonResult:
-    status: str
+    """What compare_fields() returns — the final verdict plus supporting detail."""
+    status:   str
     comments: list[str] = field(default_factory=list)
-    extracted: dict = field(default_factory=dict)
+    extracted: dict     = field(default_factory=dict)
 
-# Convert internal field names into human-readable labels for comments. (sanction_amount -> Sanction Amount)
+
 def _field_label(field_key: str) -> str:
+    """Turn a snake_case key into a readable label. sanction_amount → Sanction Amount"""
     return field_key.replace("_", " ").title()
 
 
-# Documents with too few extracted fields are considered invalid uploads. 
-# Prevents approving blank pages, unrelated documents, or failed OCR outputs.
 def _is_valid_document(extracted: dict) -> bool:
-    # Missing extracted values can never match.
+    """Check that the document had enough readable content to be worth comparing.
+
+    If fewer than 3 fields came back non-empty, the upload was probably a blank
+    page, a photo of something unrelated, or a completely failed OCR.
+    """
     found = sum(1 for v in extracted.values() if v is not None and str(v).strip())
     return found >= INVALID_DOC_MIN_FIELDS
 
 
 def _amounts_close(a, b) -> bool:
+    """True if two floats are within a penny of each other (floating point safety)."""
     return a is not None and b is not None and abs(a - b) < 0.01
 
 
 def _scale_factor(a, b) -> bool:
-    """True when two amounts differ only by a 10x/100x/1000x factor — a dropped
-    or added zero, not a genuinely different number."""
+    """True when two amounts differ by exactly 10x, 100x, or 1000x.
+
+    This pattern — where one number is exactly 10 times the other — means the
+    model likely dropped or added a zero while reading the digits. It's the
+    most common OCR mistake on large Indian numbers.
+    """
     if not a or not b:
         return False
     hi, lo = (a, b) if a > b else (b, a)
@@ -41,57 +64,74 @@ def _scale_factor(a, b) -> bool:
 
 
 def _reconcile_amount(digit_str, word_str) -> tuple[float | None, bool]:
-    """Cross-check the amount's digits against its words.
-    Returns (best_value, internal_conflict).
+    """Cross-check the digit version of an amount against the words version.
 
-    - words missing        -> trust digits
-    - digits missing       -> trust words
-    - agree                -> trust either
-    - differ by 10x/100x   -> digits dropped a zero; WORDS win (authoritative)
-    - differ otherwise     -> unresolvable internal conflict -> (None, True)
+    Indian loan documents print amounts twice — "Rs.63.50 lakhs" and
+    "Rupees Sixty Three Lakh Fifty Thousand Only". If the model misread a digit,
+    the words version is usually still correct and can recover the right value.
+
+    Returns (best_value, conflict):
+      - best_value: the most trustworthy reading we could get
+      - conflict: True if digits and words disagree in a way we can't explain
+                  (meaning a human needs to look at this)
+
+    Decision logic:
+      words missing          → trust digits alone
+      digits missing         → trust words alone
+      both agree             → use digits (they're the same)
+      differ by 10x/100x     → digits dropped a zero; words win
+      differ in any other way → genuine conflict → (None, True)
     """
     d = normalize_amount(str(digit_str)) if digit_str else None
-    w = words_to_number(str(word_str)) if word_str else None
+    w = words_to_number(str(word_str))  if word_str  else None
+
     if d is None and w is None:
         return None, False
     if w is None:
-        return d, False
+        return d, False   # no words — just use digits
     if d is None:
-        return w, False
+        return w, False   # no digits — just use words
     if _amounts_close(d, w):
-        return d, False
+        return d, False   # both say the same thing — great
     if _scale_factor(d, w):
-        return w, False          # words recover the dropped/added zero
-    return None, True            # digits and words genuinely disagree
+        return w, False   # words recover the dropped/added zero
+    return None, True     # can't explain the difference — flag for human review
 
 
 def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
-    # Missing extracted values can never match
+    """Check whether one extracted field value matches the expected value.
+
+    Uses the right comparison strategy for each field type.
+    Returns False if extracted_val is missing — a missing value never matches.
+    """
     if extracted_val is None or str(extracted_val).strip() == "":
         return False
 
-    if field_key in AMOUNT_FIELDS: # Amount fields are normalized into floats before comparison.
+    if field_key in AMOUNT_FIELDS:
+        # Both values normalized to floats before comparing
         e = normalize_amount(str(extracted_val))
         x = normalize_amount(str(expected_val))
         if e is None or x is None:
             return False
         return e == x
 
-    if field_key in DATE_FIELDS: # Date fields are converted to YYYY-MM-DD before comparison.
+    if field_key in DATE_FIELDS:
+        # Both dates converted to YYYY-MM-DD before comparing
         e = normalize_date(str(extracted_val))
         x = normalize_date(str(expected_val))
         if e is None or x is None:
             return False
         return e == x
-     
-    # IDs require exact matching because even one wrong character usually identifies a different application/account.
+
     if field_key in EXACT_FIELDS:
         e = str(extracted_val).strip()
         x = str(expected_val).strip()
-        # accept if extracted ends with expected — handles "AHFLN No. 337887565" vs "337887565"
+        # Some lenders prefix the ID with extra text (e.g. "AHFLN No. 337887565").
+        # We accept a match if the extracted value ends with the expected ID.
         return e == x or e.endswith(x)
 
     if field_key in FUZZY_FIELDS:
+        # Fuzzy match — how similar are the two strings on a 0-100 scale?
         threshold = FUZZY_THRESHOLDS.get(field_key, 80)
         score = fuzz.ratio(
             normalize_text(str(extracted_val)),
@@ -99,6 +139,7 @@ def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
         )
         return score >= threshold
 
+    # Default — fuzzy at 80 for anything not explicitly categorised
     score = fuzz.ratio(
         normalize_text(str(extracted_val)),
         normalize_text(str(expected_val)),
@@ -107,18 +148,23 @@ def _fields_match(field_key: str, extracted_val, expected_val) -> bool:
 
 
 def _compare_amount(f: str, extracted: dict, expected_val) -> tuple[str, str]:
-    """Compare one amount field using digit/word reconciliation.
-    Returns (outcome, comment) where outcome is 'match' | 'mismatch' | 'review'.
+    """Run the full digit + word reconciliation for one amount field.
+
+    Returns (outcome, comment):
+      outcome = 'match'    → values agree, no comment needed
+      outcome = 'mismatch' → values disagree, add to CHANGES_REQUESTED
+      outcome = 'review'   → can't resolve, add to NEEDS_REVIEW
     """
-    label = _field_label(f)
+    label     = _field_label(f)
     digit_str = extracted.get(f)
-    word_str = extracted.get(AMOUNT_WORD_FIELDS[f])
-    exp_num = normalize_amount(str(expected_val))
+    word_str  = extracted.get(AMOUNT_WORD_FIELDS[f])
+    exp_num   = normalize_amount(str(expected_val))
 
     value, conflict = _reconcile_amount(digit_str, word_str)
 
-    # The document's own digits and words disagree — can't trust either.
     if conflict:
+        # The document itself is internally inconsistent — digits and words say different things.
+        # We can't trust either reading, so a human needs to look at the original.
         return "review", (
             f"{label} unclear: digits '{digit_str}' and words '{word_str}' disagree "
             f"on the document. Please verify manually."
@@ -127,16 +173,15 @@ def _compare_amount(f: str, extracted: dict, expected_val) -> tuple[str, str]:
     if _amounts_close(value, exp_num):
         return "match", ""
 
-    # Reconciled value disagrees with the expected value.
-    # If there were no words to confirm and the digits are off by exactly a
-    # 10x/100x factor, it is likely a mis-read zero — defer to a human rather
-    # than hard-reject.
-    word_num = words_to_number(str(word_str)) if word_str else None
+    # Reconciled value doesn't match the expected amount.
+    # Special case: if we had no words and the digits are off by exactly 10x,
+    # it's probably a misread zero — defer to human rather than hard-reject.
+    word_num  = words_to_number(str(word_str)) if word_str else None
     digit_num = normalize_amount(str(digit_str)) if digit_str else None
     if word_num is None and _scale_factor(digit_num, exp_num):
         return "review", (
             f"{label} digit error: document shows '{digit_str}', expected "
-            f"'{expected_val}' (off by a factor of 10 — likely a mis-read zero, "
+            f"'{expected_val}' (off by a factor of 10 — likely a misread zero, "
             f"no amount-in-words to confirm). Please verify manually."
         )
 
@@ -146,7 +191,17 @@ def _compare_amount(f: str, extracted: dict, expected_val) -> tuple[str, str]:
 
 
 def compare_fields(extracted: dict, expected: dict) -> ComparisonResult:
-    if not _is_valid_document(extracted): # Reject documents that do not contain enough usable information.
+    """Compare every extracted field against its expected value and return a verdict.
+
+    Goes through each field in order. Mismatches go into the comments list.
+    Amount fields with unresolvable uncertainty go into review_comments.
+
+    Final status:
+      - Any genuine mismatch           → CHANGES_REQUESTED (even if amounts are uncertain)
+      - No mismatches, but amount doubt → NEEDS_REVIEW
+      - Everything clean               → APPROVED
+    """
+    if not _is_valid_document(extracted):
         return ComparisonResult(
             status="CHANGES_REQUESTED",
             comments=["Invalid document uploaded. Please upload a valid sanctioned letter, "
@@ -154,11 +209,13 @@ def compare_fields(extracted: dict, expected: dict) -> ComparisonResult:
             extracted=extracted,
         )
 
-    comments = []        # genuine mismatches → CHANGES_REQUESTED
-    review_comments = [] # unresolved amount uncertainty → NEEDS_REVIEW
-    for f in FIELDS: # Compare every configured field
+    comments        = []  # hard mismatches → CHANGES_REQUESTED
+    review_comments = []  # amount uncertainty → NEEDS_REVIEW
+
+    for f in FIELDS:
         expected_val = expected.get(f)
-        if not expected_val: # Ignore fields that have no expected value.
+        if not expected_val:
+            # No expected value for this field — skip it, nothing to compare against
             continue
 
         if f in AMOUNT_FIELDS:
@@ -168,17 +225,20 @@ def compare_fields(extracted: dict, expected: dict) -> ComparisonResult:
             (review_comments if outcome == "review" else comments).append(comment)
             continue
 
-        if _fields_match(f, extracted.get(f), expected_val): # Field matches successfully
+        if _fields_match(f, extracted.get(f), expected_val):
             continue
+
+        # Field doesn't match — record what was found vs what was expected
         comments.append(
             f"{_field_label(f)} mismatch: document shows '{extracted.get(f)}', "
             f"expected '{expected_val}'"
         )
 
-    # Any genuine mismatch immediately results in CHANGES_REQUESTED.
     if comments:
+        # Hard mismatches always win — document must go back for corrections
         return ComparisonResult(status="CHANGES_REQUESTED", comments=comments, extracted=extracted)
-    # Only unresolved amount uncertainty remains → defer to a human.
     if review_comments:
+        # No hard mismatches, but we couldn't resolve the amounts — send to a human
         return ComparisonResult(status="NEEDS_REVIEW", comments=review_comments, extracted=extracted)
+
     return ComparisonResult(status="APPROVED", comments=[], extracted=extracted)
