@@ -1,15 +1,16 @@
-# seed_db.py — overwrites ops-pending staging records with realistic loan data.
+# seed_db.py — wipe cloned DB and re-insert clean test data for DB Verify tab.
 #
-# The cloned staging DB has garbage random values. This script replaces them
-# with realistic Indian loan data so the DB Verify flow can be tested properly.
+# TRUNCATES lending_partners, leads, applications, disbursements (CASCADE),
+# then inserts exact test records derived from real sample documents + bulk
+# random records for realism.
+#
+# Pinned test records:
+#   LAN AP0020067658 → Sathish Kumar & UMA, 195L, Mahindra Finance, MountRoad
+#   LAN 301047981    → SUGUNA K, 9L sanction/10.67L disb, Aadhar Housing Finance, Tambaram
 #
 # Usage:
-#   python seed_db.py          → seed all ops-pending records
-#   python seed_db.py --dry-run → print what would be updated, don't write
-#
-# After running, 2 special test records are created:
-#   LAN AP0020067658 → Sathish Kumar & UMA, 195L, Mahindra Finance  (APPROVED test)
-#   LAN AP0020067659 → Zainab Medicals, 63.5L, Mahindra Finance     (CHANGES REQUESTED test)
+#   python seed_db.py           → wipe + re-insert
+#   python seed_db.py --dry-run → print plan, no writes
 
 import os
 import sys
@@ -22,7 +23,7 @@ load_dotenv()
 
 DRY_RUN = "--dry-run" in sys.argv
 
-# ── Realistic seed data pools ────────────────────────────────────────────────
+# ── Seed data pools ──────────────────────────────────────────────────────────
 
 FIRST_NAMES = [
     "Rajesh", "Priya", "Amit", "Sunita", "Vikram", "Kavitha", "Suresh",
@@ -30,18 +31,14 @@ FIRST_NAMES = [
     "Lakshmi", "Ravi", "Geeta", "Prakash", "Shobha", "Harish", "Uma",
     "Ganesh", "Saritha", "Krishnan", "Padma", "Venkat", "Nirmala", "Ashok",
     "Jayanthi", "Mohan", "Sudha", "Bala", "Radha", "Ramesh", "Usha",
+    "Senthil", "Divya", "Karthik", "Pooja", "Murugan", "Geetha", "Selvam",
 ]
 
 LAST_NAMES = [
     "Kumar", "Sharma", "Singh", "Reddy", "Nair", "Patel", "Rao", "Iyer",
     "Verma", "Gupta", "Joshi", "Mehta", "Shah", "Pillai", "Menon",
     "Agarwal", "Mishra", "Pandey", "Tiwari", "Yadav", "Bhat", "Shetty",
-]
-
-BANKS = [
-    "Mahindra Finance", "HDFC Bank", "State Bank of India",
-    "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank",
-    "Bank of Baroda", "Punjab National Bank",
+    "Naidu", "Murugan", "Krishnamurthy", "Subramanian", "Venkatesh",
 ]
 
 BRANCHES = [
@@ -52,52 +49,47 @@ BRANCHES = [
     "Banjara Hills", "Jubilee Hills", "Hitech City",
     "Salt Lake", "Park Street", "Alipore",
     "Vashi", "Nerul", "Kharghar",
+    "Mylapore", "Adyar", "Perambur", "Chromepet",
 ]
 
-LOAN_TYPES = ["Home Loan", "LAP", "LAP Non Individual", "Plot Loan", "Construction Loan"]
+# (name, lan_prefix, lan_format_fn, lan_regex)
+LENDING_PARTNERS = [
+    ("Mahindra Finance",              "LAPSEC",  lambda: "LAPSEC" + str(random.randint(100000000, 999999999)), r"^LAPSEC\d{9}$"),
+    ("Aadhar Housing Finance Limited","AHFL",    lambda: str(random.randint(100000000, 999999999)),             r"^\d{9}$"),
+    ("HDFC Bank",                     "HL",      lambda: "HL" + str(random.randint(1000000000, 9999999999)),    r"^HL\d{10}$"),
+    ("State Bank of India",           "SBI",     lambda: str(random.randint(10000000000, 99999999999)),         r"^\d{11}$"),
+    ("ICICI Bank",                    "ICICI",   lambda: "ICICI" + str(random.randint(100000000, 999999999)),   r"^ICICI\d{9}$"),
+    ("Axis Bank",                     "AXIS",    lambda: "AXIS" + str(random.randint(100000000, 999999999)),    r"^AXIS\d{9}$"),
+    ("Kotak Mahindra Bank",           "KMB",     lambda: "KMB" + str(random.randint(100000000, 999999999)),     r"^KMB\d{9}$"),
+    ("Bank of Baroda",                "BOB",     lambda: "BOB" + str(random.randint(100000000, 999999999)),     r"^BOB\d{9}$"),
+]
+
+AMOUNT_LAKHS = [
+    9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 63.5,
+    70, 75, 80, 90, 100, 120, 150, 175, 195, 200, 250, 300,
+]
 
 
-def random_name(co_applicant_chance=0.3):
-    """Generate a realistic Indian customer name, sometimes with co-applicant."""
+def lakhs_to_paise(lakhs):
+    return int(lakhs * 100_000) * 100
+
+
+def random_name(co_applicant_chance=0.25):
     name = f"{random.choice(FIRST_NAMES)} {random.choice(LAST_NAMES)}"
     if random.random() < co_applicant_chance:
         name += f" & {random.choice(FIRST_NAMES)}"
     return name
 
 
-def random_lan(bank_name):
-    """Generate a LAN in the correct format for the bank."""
-    if "Mahindra" in bank_name:
-        return "LAPSEC" + str(random.randint(100000000, 999999999))
-    elif "HDFC" in bank_name:
-        return "HL" + str(random.randint(1000000000, 9999999999))
-    elif "SBI" in bank_name or "State Bank" in bank_name:
-        return str(random.randint(10000000000, 99999999999))
-    else:
-        return "LAN" + str(random.randint(10000000, 99999999))
-
-
-def random_amount_paise(min_lakhs=10, max_lakhs=500):
-    """Random sanction/disbursement amount in paise."""
-    lakhs = random.choice([
-        10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 63.5,
-        70, 75, 80, 90, 100, 120, 150, 175, 195, 200, 250, 300,
-    ])
-    lakhs = max(min_lakhs, min(max_lakhs, lakhs))
-    rupees = int(lakhs * 100_000)
-    return rupees * 100  # paise
-
-
-def random_date():
-    """Random disbursement date in the past 3 years."""
-    year  = random.randint(2022, 2025)
-    month = random.randint(1, 12)
-    day   = random.randint(1, 28)
-    return f"{year}-{month:02d}-{day:02d}"
-
-
 def random_app_id():
     return "AP" + str(random.randint(1000000000, 9999999999))
+
+
+def random_date(year_range=(2022, 2025)):
+    y = random.randint(*year_range)
+    m = random.randint(1, 12)
+    d = random.randint(1, 28)
+    return f"{y}-{m:02d}-{d:02d}"
 
 
 def get_connection():
@@ -112,97 +104,126 @@ def get_connection():
 
 def main():
     conn = get_connection()
-    cur  = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-
-    # Fetch all ops-pending disbursements with their join IDs
-    cur.execute("""
-        SELECT d.id AS disb_id, a.id AS app_id, l.id AS lead_id, lp.id AS lp_id
-        FROM disbursements d
-        JOIN applications    a  ON d.application_id    = a.id
-        JOIN leads           l  ON a.lead_id           = l.id
-        JOIN lending_partners lp ON a.lending_partner_id = lp.id
-        WHERE d.pending_approval_role IN ('operations', 'sbi_operations')
-        ORDER BY d.id
-    """)
-    records = cur.fetchall()
-    print(f"Found {len(records)} ops-pending records to seed.")
+    cur  = conn.cursor()
 
     if DRY_RUN:
-        print("DRY RUN — no changes written.")
-        cur.close(); conn.close(); return
+        print("DRY RUN — would wipe + re-insert the following:")
+        print(f"  {len(LENDING_PARTNERS)} lending partners")
+        print("  2 pinned test records (AP0020067658, 301047981)")
+        print("  ~50 bulk random ops-pending records")
+        conn.close()
+        return
 
-    cur2 = conn.cursor()
+    # ── 1. Wipe ───────────────────────────────────────────────────────────────
+    print("Wiping existing data (TRUNCATE CASCADE)...")
+    cur.execute("""
+        TRUNCATE disbursements, applications, leads, lending_partners
+        RESTART IDENTITY CASCADE
+    """)
+    print("  done.")
 
-    for i, rec in enumerate(records):
-        branch = random.choice(BRANCHES)
-        name   = random_name()
-        amount = random_amount_paise()
-        date   = random_date()
-        app_id = random_app_id()
-        # Use existing lending_partner name to derive a realistic LAN format
-        cur.execute("SELECT name FROM lending_partners WHERE id=%s", (rec["lp_id"],))
-        lp_row  = cur.fetchone()
-        bank    = lp_row["name"] if lp_row else "Unknown"
-        lan     = random_lan(bank)
+    # ── 2. Insert lending_partners ────────────────────────────────────────────
+    print(f"Inserting {len(LENDING_PARTNERS)} lending partners...")
+    lp_ids = {}  # name → id
+    for name, slug, _lan_fn, regex in LENDING_PARTNERS:
+        cur.execute("""
+            INSERT INTO lending_partners (name, slug, loan_account_number_regex, inserted_at, updated_at)
+            VALUES (%s, %s, %s, NOW(), NOW())
+            RETURNING id
+        """, (name, slug.lower(), regex))
+        lp_ids[name] = cur.fetchone()[0]
+    print(f"  inserted ids: {list(lp_ids.values())}")
 
-        # Don't touch lending_partners — unique name constraint prevents it
-        cur2.execute("UPDATE leads             SET name=%s WHERE id=%s", (name,   rec["lead_id"]))
-        cur2.execute("""
-            UPDATE applications
-            SET sanctioned_amount=%s, branch_name=%s, bank_application_id=%s
-            WHERE id=%s
-        """, (amount, branch, app_id, rec["app_id"]))
-        cur2.execute("""
-            UPDATE disbursements
-            SET loan_account_number=%s, disbursement_amount=%s,
-                disbursement_date=%s, updated_at=NOW()
-            WHERE id=%s
-        """, (lan, amount, date, rec["disb_id"]))
+    # Helper: lan generator by lender name
+    lp_lan_fn = {name: fn for name, _, fn, _ in LENDING_PARTNERS}
 
+    # ── 3. Insert pinned test records ─────────────────────────────────────────
+    print("Inserting pinned test records...")
+
+    def insert_record(customer_name, lp_name, branch, sanction_paise, disb_paise, lan, app_id, disb_date, role="operations"):
+        cur.execute("INSERT INTO leads (name, inserted_at, updated_at) VALUES (%s, NOW(), NOW()) RETURNING id", (customer_name,))
+        lead_id = cur.fetchone()[0]
+
+        cur.execute("""
+            INSERT INTO applications
+                (lead_id, lending_partner_id, sanctioned_amount, branch_name, bank_application_id, inserted_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, NOW(), NOW())
+            RETURNING id
+        """, (lead_id, lp_ids[lp_name], sanction_paise, branch, app_id))
+        app_id_db = cur.fetchone()[0]
+
+        cur.execute("""
+            INSERT INTO disbursements
+                (application_id, loan_account_number, disbursement_amount, disbursement_date,
+                 pending_approval_role, status, inserted_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, 'pending', NOW(), NOW())
+            RETURNING id
+        """, (app_id_db, lan, disb_paise, disb_date, role))
+        disb_id = cur.fetchone()[0]
+        return lead_id, app_id_db, disb_id
+
+    # Test A — APPROVED: document matches DB exactly
+    ids_a = insert_record(
+        customer_name  = "Sathish Kumar & UMA",
+        lp_name        = "Mahindra Finance",
+        branch         = "MountRoad",
+        sanction_paise = lakhs_to_paise(195),   # 1,950,000,000
+        disb_paise     = lakhs_to_paise(195),   # 1,950,000,000
+        lan            = "AP0020067658",
+        app_id         = "AP0020067658",
+        disb_date      = "2026-02-04",
+    )
+    print(f"  -> AP0020067658 (Sathish Kumar & UMA, 195L, Mahindra Finance) -- APPROVED test | disb_id={ids_a[2]}")
+
+    # Test B — APPROVED: SUGUNA K Aadhar Housing Finance
+    #   Sanction: ₹9,00,000 = 9L = 90,000,000 paise
+    #   Disb:    ₹10,67,004 = 1,067,004 rupees = 106,700,400 paise
+    ids_b = insert_record(
+        customer_name  = "SUGUNA K",
+        lp_name        = "Aadhar Housing Finance Limited",
+        branch         = "Tambaram",
+        sanction_paise = 90_000_000,    # 9L
+        disb_paise     = 106_700_400,   # 10,67,004 rupees
+        lan            = "301047981",
+        app_id         = "301047891",
+        disb_date      = "2026-03-14",
+    )
+    print(f"  -> 301047981 (SUGUNA K, 9L sanction, Aadhar Housing Finance) -- APPROVED test | disb_id={ids_b[2]}")
+
+    # ── 4. Bulk random ops-pending records ────────────────────────────────────
+    BULK_COUNT = 50
+    print(f"Inserting {BULK_COUNT} bulk random ops-pending records...")
+    lp_list = list(LENDING_PARTNERS)
+
+    for i in range(BULK_COUNT):
+        lp_name, _, lan_fn, _ = random.choice(lp_list)
+        amount = lakhs_to_paise(random.choice(AMOUNT_LAKHS))
+        disb_amount = int(amount * random.uniform(0.85, 1.0))  # disb ≤ sanction
+        role = random.choice(["operations"] * 9 + ["sbi_operations"])
+
+        insert_record(
+            customer_name  = random_name(),
+            lp_name        = lp_name,
+            branch         = random.choice(BRANCHES),
+            sanction_paise = amount,
+            disb_paise     = disb_amount,
+            lan            = lan_fn(),
+            app_id         = random_app_id(),
+            disb_date      = random_date(),
+            role           = role,
+        )
         if (i + 1) % 10 == 0:
-            print(f"  seeded {i+1}/{len(records)}...")
-
-    # ── Override 2 records for specific test scenarios ───────────────────────
-
-    # Test A — APPROVED: DB matches the sample document exactly
-    rec_a = records[0]
-    cur2.execute("UPDATE leads SET name='Sathish Kumar & UMA' WHERE id=%s", (rec_a["lead_id"],))
-    cur2.execute("""
-        UPDATE applications
-        SET sanctioned_amount=1950000000, branch_name='MountRoad',
-            bank_application_id='AP0020067658'
-        WHERE id=%s
-    """, (rec_a["app_id"],))
-    cur2.execute("""
-        UPDATE disbursements
-        SET loan_account_number='AP0020067658', disbursement_amount=1950000000,
-            disbursement_date='2026-02-04', updated_at=NOW()
-        WHERE id=%s
-    """, (rec_a["disb_id"],))
-    print("  → Set AP0020067658 (Sathish Kumar & UMA, 195L) — APPROVED test")
-
-    # Test B — CHANGES REQUESTED: same doc but DB has different customer + amount
-    rec_b = records[1]
-    cur2.execute("UPDATE leads SET name='Zainab Medicals' WHERE id=%s", (rec_b["lead_id"],))
-    cur2.execute("""
-        UPDATE applications
-        SET sanctioned_amount=635000000, branch_name='T.Nagar',
-            bank_application_id='AP0020067659'
-        WHERE id=%s
-    """, (rec_b["app_id"],))
-    cur2.execute("""
-        UPDATE disbursements
-        SET loan_account_number='AP0020067659', disbursement_amount=635000000,
-            disbursement_date='2026-01-31', updated_at=NOW()
-        WHERE id=%s
-    """, (rec_b["disb_id"],))
-    print("  → Set AP0020067659 (Zainab Medicals, 63.5L) — CHANGES REQUESTED test")
+            print(f"    {i+1}/{BULK_COUNT}...")
 
     conn.commit()
-    cur2.close(); cur.close(); conn.close()
-    print(f"\nDone. {len(records)} records seeded.")
-    print("\nVerify with:")
+    cur.close()
+    conn.close()
+
+    total = 2 + BULK_COUNT
+    print(f"\nDone. {total} records inserted.")
+    print("\nVerify:")
     print("  python -c \"from db_lookup import lookup_by_lan; print(lookup_by_lan('AP0020067658'))\"")
+    print("  python -c \"from db_lookup import lookup_by_lan; print(lookup_by_lan('301047981'))\"")
 
 
 if __name__ == "__main__":
