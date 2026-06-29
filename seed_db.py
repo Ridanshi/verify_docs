@@ -114,15 +114,60 @@ def main():
         conn.close()
         return
 
-    # ── 1. Wipe ───────────────────────────────────────────────────────────────
-    print("Wiping existing data (TRUNCATE CASCADE)...")
+    # ── 1. Create tables if they don't exist (fresh DB on Kaggle) ────────────
+    print("Creating tables if needed...")
     cur.execute("""
-        TRUNCATE disbursements, applications, leads, lending_partners
-        RESTART IDENTITY CASCADE
+        CREATE TABLE IF NOT EXISTS lending_partners (
+            id                       BIGSERIAL PRIMARY KEY,
+            name                     VARCHAR,
+            slug                     VARCHAR,
+            loan_account_number_regex VARCHAR DEFAULT '^[[:alnum:]]+$',
+            inserted_at              TIMESTAMP NOT NULL,
+            updated_at               TIMESTAMP NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS leads (
+            id          BIGSERIAL PRIMARY KEY,
+            name        VARCHAR,
+            inserted_at TIMESTAMP NOT NULL,
+            updated_at  TIMESTAMP NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS applications (
+            id                  BIGSERIAL PRIMARY KEY,
+            lead_id             BIGINT REFERENCES leads(id),
+            lending_partner_id  BIGINT REFERENCES lending_partners(id),
+            sanctioned_amount   BIGINT,
+            branch_name         VARCHAR,
+            bank_application_id VARCHAR,
+            inserted_at         TIMESTAMP NOT NULL,
+            updated_at          TIMESTAMP NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS disbursements (
+            id                   BIGSERIAL PRIMARY KEY,
+            application_id       BIGINT REFERENCES applications(id),
+            loan_account_number  VARCHAR,
+            disbursement_amount  BIGINT,
+            disbursement_date    DATE,
+            pending_approval_role VARCHAR,
+            status               VARCHAR,
+            inserted_at          TIMESTAMP NOT NULL,
+            updated_at           TIMESTAMP NOT NULL
+        );
     """)
     print("  done.")
 
-    # ── 2. Insert lending_partners ────────────────────────────────────────────
+    # ── 2. Wipe existing rows ─────────────────────────────────────────────────
+    print("Wiping existing data...")
+    cur.execute("DELETE FROM disbursements")
+    cur.execute("DELETE FROM applications")
+    cur.execute("DELETE FROM leads")
+    cur.execute("DELETE FROM lending_partners")
+    cur.execute("ALTER SEQUENCE lending_partners_id_seq RESTART WITH 1")
+    cur.execute("ALTER SEQUENCE leads_id_seq RESTART WITH 1")
+    cur.execute("ALTER SEQUENCE applications_id_seq RESTART WITH 1")
+    cur.execute("ALTER SEQUENCE disbursements_id_seq RESTART WITH 1")
+    print("  done.")
+
+    # ── 3. Insert lending_partners ────────────────────────────────────────────
     print(f"Inserting {len(LENDING_PARTNERS)} lending partners...")
     lp_ids = {}  # name → id
     for name, slug, _lan_fn, regex in LENDING_PARTNERS:
@@ -137,7 +182,7 @@ def main():
     # Helper: lan generator by lender name
     lp_lan_fn = {name: fn for name, _, fn, _ in LENDING_PARTNERS}
 
-    # ── 3. Insert pinned test records ─────────────────────────────────────────
+    # ── 4. Insert pinned test records ─────────────────────────────────────────
     print("Inserting pinned test records...")
 
     def insert_record(customer_name, lp_name, branch, sanction_paise, disb_paise, lan, app_id, disb_date, role="operations"):
@@ -190,7 +235,7 @@ def main():
     )
     print(f"  -> 301047981 (SUGUNA K, 9L sanction, Aadhar Housing Finance) -- APPROVED test | disb_id={ids_b[2]}")
 
-    # ── 4. Bulk random ops-pending records ────────────────────────────────────
+    # ── 5. Bulk random ops-pending records ────────────────────────────────────
     BULK_COUNT = 50
     print(f"Inserting {BULK_COUNT} bulk random ops-pending records...")
     lp_list = list(LENDING_PARTNERS)
