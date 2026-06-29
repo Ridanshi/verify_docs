@@ -19,3 +19,6 @@ Thumbs.db
 # Local session notes and internal tooling
 session.md
 docs/
+
+# Environment variables — never commit credentials
+.env

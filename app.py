@@ -11,6 +11,13 @@ from preprocessor import load_image
 from extractor import extract_fields, extract_from_combined_screenshot
 from comparator import compare_fields
 from database import init_db, save_result, get_recent_results
+from db_lookup import (
+    lookup_by_lan,
+    fetch_ops_queue,
+    LookupError,
+    AmbiguousRecordError,
+    DBConnectionError,
+)
 
 # Set up the SQLite database on startup (creates the file if it doesn't exist)
 init_db()
@@ -159,6 +166,131 @@ def auto_compare(screenshot_file):
     return status_html, comments_text, system_table, extracted_table
 
 
+def db_verify(document_file):
+    """Handler for the DB Verify tab.
+
+    Extracts loan_account_number from the uploaded document, looks it up in the
+    company DB (ops-pending queue only), cross-checks application_id, then runs
+    comparison. Expected values come entirely from DB — no manual typing needed.
+    """
+    if document_file is None:
+        return "No document uploaded.", "", "", ""
+
+    try:
+        file_path = document_file if isinstance(document_file, str) else document_file.name
+        filename  = os.path.basename(file_path)
+        image     = load_image(file_path)
+    except Exception as e:
+        return f"Failed to load document: {e}", "", "", ""
+
+    try:
+        extracted = extract_fields(image)
+    except Exception as e:
+        return f"Extraction failed: {e}. Please try again.", "", "", ""
+
+    # Safety rule 1: LAN must be present in the document.
+    lan = (extracted.get("loan_account_number") or "").strip()
+    if not lan:
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:red">EXTRACTION FAILED</div>',
+            "Could not extract Loan Account Number from document.\n"
+            "Cannot look up DB record without it.\n\n"
+            "Options:\n"
+            "  • Try again — VLM occasionally misses a field on first pass\n"
+            "  • Use Verify Document tab and enter expected values manually",
+            "", "",
+        )
+
+    # Safety rule 2: DB lookup — hard stop if no record or ambiguous.
+    try:
+        db_record = lookup_by_lan(lan)
+    except (LookupError, AmbiguousRecordError) as e:
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:red">NO RECORD FOUND</div>',
+            str(e),
+            f"Extracted LAN from document: **{lan}**",
+            "",
+        )
+    except DBConnectionError as e:
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:orange">DB UNAVAILABLE</div>',
+            str(e),
+            "", "",
+        )
+
+    # Safety rule 3: cross-check application_id — if doc has it and it differs from DB, stop.
+    doc_app_id = (extracted.get("application_id") or "").strip()
+    db_app_id  = (db_record.get("application_id") or "").strip()
+    if doc_app_id and db_app_id and doc_app_id != db_app_id:
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>',
+            f"Safety check failed: Application ID on document ({doc_app_id}) does not match "
+            f"DB record ({db_app_id}) for LAN {lan}.\n\n"
+            "Wrong record may have been fetched, or the document contains incorrect IDs. "
+            "Verify manually.",
+            f"Extracted LAN: **{lan}** | DB Application ID: **{db_app_id}**",
+            "",
+        )
+
+    # Build expected dict from DB values — convert amounts/dates to strings for comparator
+    disb_date = db_record.get("disbursement_date")
+    expected  = {
+        "customer_name":       db_record.get("customer_name"),
+        "bank_name":           db_record.get("bank_name"),
+        "loan_account_number": db_record.get("loan_account_number"),
+        "application_id":      db_record.get("application_id"),
+        "sanction_amount":     str(int(db_record["sanction_amount"]))  if db_record.get("sanction_amount")  else None,
+        "disbursement_amount": str(int(db_record["disbursement_amount"])) if db_record.get("disbursement_amount") else None,
+        "loan_type":           None,
+        "branch":              db_record.get("branch"),
+        "disbursement_date":   disb_date.isoformat() if disb_date else None,
+    }
+
+    result = compare_fields(extracted, expected)
+    save_result(filename, result.status, result.extracted, expected, result.comments)
+
+    if result.status == "APPROVED":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:green">APPROVED</div>'
+    elif result.status == "NEEDS_REVIEW":
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>'
+    else:
+        status_html = '<div style="font-size:1.4em;font-weight:bold;color:red">CHANGES REQUESTED</div>'
+
+    comments_text = "\n".join(result.comments) if result.comments else "All fields matched."
+
+    # Show the DB record that was matched so reviewer can confirm it's the right one
+    db_rows   = "\n".join(
+        f"| {FIELD_LABELS.get(k, k)} | {v or '—'} |"
+        for k, v in expected.items() if v
+    )
+    db_table  = f"**DB Record matched for LAN: {lan}**\n\n| Field | DB Value |\n|---|---|\n" + db_rows
+
+    ext_rows  = "\n".join(
+        f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
+        for k, v in result.extracted.items()
+    )
+    ext_table = "**Document (extracted by model):**\n\n| Field | Extracted Value |\n|---|---|\n" + ext_rows
+
+    return status_html, comments_text, db_table, ext_table
+
+
+def load_ops_queue():
+    """Fetch current ops-pending disbursements for the queue display."""
+    rows = fetch_ops_queue()
+    if not rows:
+        return [["DB not connected or queue is empty.", "", "", "", ""]]
+    return [
+        [
+            r.get("loan_account_number", ""),
+            r.get("customer_name", ""),
+            r.get("bank_name", ""),
+            r.get("branch", ""),
+            str(r.get("disbursement_date", "")),
+        ]
+        for r in rows
+    ]
+
+
 def load_history():
     """Fetch the last 50 verifications from the database for the History tab."""
     rows = get_recent_results(limit=50)
@@ -236,6 +368,44 @@ with gr.Blocks(title="Loan Document Verifier") as demo:
             inputs=[screenshot_input],
             outputs=[auto_status_out, auto_comments_out, auto_system_out, auto_doc_out],
         )
+
+    with gr.Tab("DB Verify"):
+        gr.Markdown("## DB Verify — Auto-match from Ops Queue")
+        gr.Markdown(
+            "Upload a loan document. The tool extracts the **Loan Account Number**, "
+            "looks it up in the ops-pending queue, and compares automatically. "
+            "No manual typing needed. Expected values come directly from the database."
+        )
+        with gr.Row():
+            with gr.Column(scale=1):
+                db_doc_input = gr.File(
+                    label="Upload Document (PDF / JPG / PNG / TIFF)",
+                    file_types=[".pdf", ".jpg", ".jpeg", ".png", ".tiff", ".tif"],
+                )
+                db_verify_btn = gr.Button("Verify from DB", variant="primary")
+                gr.Markdown("---")
+                gr.Markdown("### Current Ops Queue")
+                queue_refresh_btn = gr.Button("Refresh Queue", variant="secondary")
+                queue_table = gr.Dataframe(
+                    headers=["LAN", "Customer", "Bank", "Branch", "Disb. Date"],
+                    datatype=["str", "str", "str", "str", "str"],
+                    interactive=False,
+                    wrap=True,
+                )
+
+            with gr.Column(scale=2):
+                db_status_out   = gr.HTML(label="Status")
+                db_comments_out = gr.Textbox(label="Comments / Mismatches", lines=6, interactive=False)
+                db_record_out   = gr.Markdown(label="DB Record (Expected)")
+                db_doc_out      = gr.Markdown(label="Document (Extracted)")
+
+        db_verify_btn.click(
+            fn=db_verify,
+            inputs=[db_doc_input],
+            outputs=[db_status_out, db_comments_out, db_record_out, db_doc_out],
+        )
+        queue_refresh_btn.click(fn=load_ops_queue, inputs=[], outputs=[queue_table])
+        demo.load(fn=load_ops_queue, inputs=[], outputs=[queue_table])
 
     with gr.Tab("History"):
         gr.Markdown("## Past Verifications")

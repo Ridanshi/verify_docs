@@ -1,4 +1,6 @@
 transformers==4.49.0
+psycopg2-binary>=2.9.9
+python-dotenv>=1.0.0
 qwen-vl-utils>=0.0.8 # preps images for Qwen
 torch>=2.1.0
 torchvision>=0.16.0 # Image ops for torch. Qwen-vl-utils needs it to process images
