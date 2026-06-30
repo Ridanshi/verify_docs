@@ -100,8 +100,11 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
                         organisation's name, NOT a street address, city, or branch name.
 
   loan_account_number — The loan account number for this disbursement. Usually labelled
-                        "Loan Account No", "Account Number", or "LAP No". It is a unique
-                        identifier for the loan itself, different from the application ID.
+                        "Loan Account No", "Account Number", "LAP No", "LAN", "LAN Number",
+                        "App/LAN Number", or "Loan A/c No". It is a unique identifier
+                        for the loan itself, different from the application ID.
+                        Note: a label like "App/LAN Number" contains the LAN value, not
+                        the application ID — extract it as loan_account_number.
                         Copy EVERY character exactly — do not skip, add, or transpose digits.
 
   application_id      — The loan application reference number. Usually labelled
