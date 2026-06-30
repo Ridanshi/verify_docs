@@ -5,8 +5,9 @@
 # random records for realism.
 #
 # Pinned test records:
-#   LAN AP0020067658 → Sathish Kumar & UMA, 195L, Mahindra Finance, MountRoad
-#   LAN 301047981    → SUGUNA K, 9L sanction/10.67L disb, Aadhar Housing Finance, Tambaram
+#   LAN AP0020067658     → Sathish Kumar & UMA, 195L, Mahindra Finance, MountRoad
+#   LAN 301047981        → SUGUNA K, 9L sanction/10.67L disb, Aadhar Housing Finance, Tambaram
+#   LAN LAPSEC000007708  → Zainab Medicals, 63.5L, Mahindra Finance, T.Nagar (mismatch test)
 #
 # Usage:
 #   python seed_db.py           → wipe + re-insert
@@ -109,7 +110,7 @@ def main():
     if DRY_RUN:
         print("DRY RUN — would wipe + re-insert the following:")
         print(f"  {len(LENDING_PARTNERS)} lending partners")
-        print("  2 pinned test records (AP0020067658, 301047981)")
+        print("  3 pinned test records (AP0020067658, 301047981, LAPSEC000007708)")
         print("  ~50 bulk random ops-pending records")
         conn.close()
         return
@@ -234,6 +235,22 @@ def main():
         disb_date      = "2026-03-14",
     )
     print(f"  -> 301047981 (SUGUNA K, 9L sanction, Aadhar Housing Finance) -- APPROVED test | disb_id={ids_b[2]}")
+
+    # Test C — CHANGES REQUESTED: Zainab Medicals case (mirrors real CRM screen).
+    #   The reviewer is processing case LAPSEC000007708 (Zainab Medicals, T.nagar, 63.5L).
+    #   If they accidentally attach a different doc (e.g. Sathish Kumar sanctioned letter),
+    #   every field will mismatch → verdict CHANGES REQUESTED.
+    ids_c = insert_record(
+        customer_name  = "Zainab Medicals",
+        lp_name        = "Mahindra Finance",
+        branch         = "T.Nagar",
+        sanction_paise = lakhs_to_paise(63.5),   # 63,50,000
+        disb_paise     = lakhs_to_paise(63.5),
+        lan            = "LAPSEC000007708",
+        app_id         = "91950",
+        disb_date      = "2026-01-31",
+    )
+    print(f"  -> LAPSEC000007708 (Zainab Medicals, 63.5L, Mahindra Finance) -- mismatch test | disb_id={ids_c[2]}")
 
     # ── 5. Bulk random ops-pending records ────────────────────────────────────
     BULK_COUNT = 50
