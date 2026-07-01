@@ -1,9 +1,10 @@
 # Extractor — loads the vision-language model and uses it to read fields from
 # loan document images.
 #
-# The model (Qwen2.5-VL-32B) is a large AI that understands both images and text.
-# We send it an image + a set of instructions (the PROMPT), and it returns a JSON
-# object with all the field values it found in the document.
+# The model (Qwen2.5-VL — 7B by default, 32B optional) is a vision-language AI
+# that understands both images and text. We send it an image + a set of
+# instructions (the PROMPT), and it returns a JSON object with all the field
+# values it found in the document.
 #
 # The model is loaded lazily — it's only pulled into memory the first time
 # extract_fields() is called, not when the module is imported.
@@ -22,8 +23,8 @@ from config import VLM_MODEL_ID, VLM_MAX_NEW_TOKENS, FIELDS, AMOUNT_WORD_FIELDS
 _model     = None
 _processor = None
 
-# 4-bit quantization halves the model's VRAM usage (~18GB instead of ~64GB).
-# It's always on by default — the 32B model won't fit on T4 x2 without it.
+# 4-bit quantization slashes VRAM footprint. 7B → ~5GB, 32B → ~18GB.
+# Always on by default — 32B needs it on T4 x2, and 7B still benefits.
 _USE_4BIT = os.environ.get("USE_4BIT", "1") == "1"
 
 
@@ -40,8 +41,10 @@ def _load_model():
             "Run on Kaggle T4 x2 or a cloud GPU instance."
         )
 
-    # Cap each GPU at 13GB so the model splits evenly across both T4s on Kaggle.
-    # Setting cpu to 0GiB blocks CPU offload — 4-bit kernels can't run on CPU.
+    # Cap each GPU at 13GB so, when running 32B, the model splits evenly across
+    # both T4s on Kaggle. 7B fits entirely on GPU 0 — device_map="auto" places
+    # it there and leaves GPU 1 idle. Setting cpu to 0GiB blocks CPU offload —
+    # 4-bit kernels can't run on CPU.
     max_memory = {i: "13GiB" for i in range(num_gpus)}
     max_memory["cpu"] = "0GiB"
 

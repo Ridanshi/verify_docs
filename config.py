@@ -46,9 +46,36 @@ FUZZY_THRESHOLDS = {
 # If fewer than 3 fields were extracted, the document is probably invalid or unreadable.
 INVALID_DOC_MIN_FIELDS = 3
 
-# The vision-language model we're using. 32B is needed for reliable digit/OCR accuracy on Indian documents.
-VLM_MODEL_ID = "Qwen/Qwen2.5-VL-32B-Instruct"
+# The vision-language model we're using. 7B fits on a single T4 with room for
+# activations — 4-bit quantized weights are ~5GB, avoiding the GPU-split fragility
+# of the 32B model. Trade-off: ~5-10 percentage-point accuracy drop on Devanagari
+# names and small-font amounts. Swap back to 32B if a single A100 is available.
+VLM_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
 
 # How many tokens the model can generate in its response (the JSON output).
 # 512 is more than enough for our 11-field JSON.
 VLM_MAX_NEW_TOKENS = 512
+
+
+# ── Lender LAN patterns ────────────────────────────────────────────────────────
+#
+# Every lender formats its Loan Account Number differently. Before trusting a
+# VLM-extracted LAN we validate it against the known patterns for our lenders —
+# a value that matches no pattern is almost certainly an OCR error and should
+# not hit the database.
+
+import re as _re
+
+LAN_PATTERNS = {
+    "mahindra": r"^LAPSEC\d{9}$",     # e.g. LAPSEC954654015
+    "aadhar":   r"^\d{9}$",           # e.g. 337887565
+    "hdfc":     r"^HL\d{10}$",        # e.g. HL1234567890
+    "ap":       r"^AP\d{10}$",        # e.g. AP0020067658
+}
+
+
+def matches_any_lender_pattern(lan: str) -> bool:
+    """True if the given LAN matches at least one known lender's format."""
+    if not lan:
+        return False
+    return any(_re.fullmatch(p, lan.strip()) for p in LAN_PATTERNS.values())

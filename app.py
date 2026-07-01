@@ -6,11 +6,13 @@
 #   3. History          — see the last 50 verification results from the database
 
 import os
-import re
 import gradio as gr
+from rapidfuzz import fuzz
 from preprocessor import load_image
 from extractor import extract_fields, extract_from_combined_screenshot
 from comparator import compare_fields
+from normalizer import normalize_text
+from config import matches_any_lender_pattern
 from database import init_db, save_result, get_recent_results
 from db_lookup import (
     lookup_by_lan,
@@ -19,6 +21,11 @@ from db_lookup import (
     AmbiguousRecordError,
     DBConnectionError,
 )
+
+# Minimum fuzzy-match score for the customer-name cross-check between the doc
+# and the DB record found via the extracted LAN. Below this we flag NEEDS_REVIEW
+# because a name mismatch usually means the LAN was misread (wrong DB row pulled).
+_LAN_CROSSCHECK_THRESHOLD = 70
 
 # Set up the SQLite database on startup (creates the file if it doesn't exist)
 init_db()
@@ -167,31 +174,18 @@ def auto_compare(screenshot_file):
     return status_html, comments_text, system_table, extracted_table
 
 
-_LAN_PATTERN = re.compile(r"^[A-Za-z0-9]{6,25}$")
-
-
-def _lan_from_filename(filename):
-    """Strip extension and surrounding whitespace; return the LAN candidate.
-
-    Reviewer convention: save the document as <Loan_Account_Number>.<ext>
-    before uploading. The filename stem IS the case identifier — this is the
-    only trusted source of "which DB record to compare against". The doc's
-    own LAN is never trusted (a wrong doc may be attached to the case).
-    """
-    stem = os.path.splitext(filename)[0].strip()
-    return stem
-
-
 def db_verify(document_file):
     """Handler for the DB Verify tab.
 
-    Filename-driven workflow: the uploaded file MUST be named after the case
-    LAN (e.g. LAPSEC000007708.pdf). The app fetches that exact DB record and
-    compares it against fields extracted from the document.
+    VLM-driven workflow: the model reads the LAN from the document itself.
+    Fully automated — no filename convention required. Safety net: after DB
+    lookup we cross-check the DB customer name against the customer name the
+    VLM read from the document. A mismatch usually means the LAN was misread
+    (wrong DB row pulled) and we flag NEEDS_REVIEW instead of silently
+    producing a wrong verdict.
 
-    This catches the "wrong doc attached to case" scenario — if reviewer
-    is working on case X but attaches the document for case Y, every field
-    will mismatch and the verdict will be CHANGES REQUESTED.
+    This still catches the "wrong doc attached to case" scenario — see the
+    comparator, which flags every field mismatch as CHANGES REQUESTED.
     """
     if document_file is None:
         return "No document uploaded.", "", "", ""
@@ -203,27 +197,42 @@ def db_verify(document_file):
     except Exception as e:
         return f"Failed to load document: {e}", "", "", ""
 
-    # Source of truth: the filename. NOT what the model reads from the document.
-    lan = _lan_from_filename(filename)
+    # Step 1: VLM reads all fields (including the LAN) from the document
+    try:
+        extracted = extract_fields(image)
+    except Exception as e:
+        return f"Extraction failed: {e}. Please try again.", "", "", ""
 
-    if not _LAN_PATTERN.match(lan):
+    lan = (extracted.get("loan_account_number") or "").strip()
+
+    # Step 2: LAN presence check
+    if not lan:
         return (
-            '<div style="font-size:1.4em;font-weight:bold;color:red">INVALID FILENAME</div>',
-            f"Filename '{filename}' does not look like a Loan Account Number.\n\n"
-            "Rename the file to match the case LAN before uploading.\n"
-            "Example: LAPSEC000007708.pdf, AP0020067658.png, 301047981.jpg",
+            '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>',
+            "No Loan Account Number could be read from the document. "
+            "Please re-upload a clearer image or verify manually.",
             "", "",
         )
 
-    # Fetch the case from DB — hard stop if no record or ambiguous.
+    # Step 3: LAN format validation against known lender patterns.
+    # If the extracted value matches no known format it is almost certainly an
+    # OCR error — don't send garbage to the DB.
+    if not matches_any_lender_pattern(lan):
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>',
+            f"Extracted LAN '{lan}' does not match any known lender format. "
+            "Possible OCR error — verify the LAN on the document manually.",
+            "", "",
+        )
+
+    # Step 4: DB lookup
     try:
         db_record = lookup_by_lan(lan)
     except (LookupError, AmbiguousRecordError) as e:
         return (
-            '<div style="font-size:1.4em;font-weight:bold;color:red">NO RECORD FOUND</div>',
-            f"{e}\n\nFilename LAN: {lan}\n\n"
-            "Either the LAN is wrong (check filename) or the case is not in the ops queue.",
-            f"Filename LAN: **{lan}**",
+            '<div style="font-size:1.4em;font-weight:bold;color:red">CHANGES REQUESTED</div>',
+            f"LAN '{lan}' extracted from the document is not in the ops queue.\n\n{e}",
+            f"Extracted LAN: **{lan}**",
             "",
         )
     except DBConnectionError as e:
@@ -233,11 +242,23 @@ def db_verify(document_file):
             "", "",
         )
 
-    # Extract document fields via VLM (after DB lookup, so we fail fast on bad filename)
-    try:
-        extracted = extract_fields(image)
-    except Exception as e:
-        return f"Extraction failed: {e}. Please try again.", "", "", ""
+    # Step 5: cross-check with a second signal (customer name). If the DB
+    # record found by the extracted LAN has a customer name that doesn't match
+    # the customer name the VLM read from the document, the LAN was probably
+    # misread — flag rather than compare against the wrong record.
+    doc_customer = extracted.get("customer_name") or ""
+    db_customer  = db_record.get("customer_name") or ""
+    if doc_customer and db_customer:
+        score = fuzz.ratio(normalize_text(doc_customer), normalize_text(db_customer))
+        if score < _LAN_CROSSCHECK_THRESHOLD:
+            return (
+                '<div style="font-size:1.4em;font-weight:bold;color:orange">NEEDS REVIEW</div>',
+                f"LAN may be misread. Extracted LAN '{lan}' points to DB customer "
+                f"'{db_customer}' but the document shows '{doc_customer}' "
+                f"(similarity {score}/100). Verify manually.",
+                f"Extracted LAN: **{lan}**",
+                "",
+            )
 
     # Build expected dict from DB values — convert amounts/dates to strings for comparator
     disb_date = db_record.get("disbursement_date")
@@ -270,7 +291,7 @@ def db_verify(document_file):
         f"| {FIELD_LABELS.get(k, k)} | {v or '—'} |"
         for k, v in expected.items() if v
     )
-    db_table  = f"**DB Record for case LAN: {lan}** (from filename)\n\n| Field | DB Value |\n|---|---|\n" + db_rows
+    db_table  = f"**DB Record for LAN: {lan}** (read from document)\n\n| Field | DB Value |\n|---|---|\n" + db_rows
 
     ext_rows  = "\n".join(
         f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
@@ -377,13 +398,17 @@ with gr.Blocks(title="Loan Document Verifier") as demo:
         )
 
     with gr.Tab("DB Verify"):
-        gr.Markdown("## DB Verify — Filename-driven case match")
+        gr.Markdown("## DB Verify — Auto-match against ops queue")
         gr.Markdown(
-            "**Rename the document to match the case Loan Account Number before uploading.**\n\n"
-            "Examples: `LAPSEC000007708.pdf`, `AP0020067658.png`, `301047981.jpg`\n\n"
-            "The tool fetches that exact case from the ops queue and compares every "
-            "DB field against what the model reads from the document. "
-            "If a wrong document is attached to a case, every field will mismatch — "
+            "**Upload any loan document — no rename needed.**\n\n"
+            "The tool reads the Loan Account Number directly from the document, "
+            "fetches the matching case from the ops queue, and compares every DB "
+            "field against what the model reads from the document.\n\n"
+            "Safety nets:\n"
+            "- LAN format is validated against known lender patterns before DB lookup.\n"
+            "- Customer name from the doc is cross-checked against the DB record — "
+            "a mismatch flags NEEDS REVIEW (the LAN may have been misread).\n"
+            "- If a wrong document is attached to a case, every field will mismatch — "
             "verdict will be CHANGES REQUESTED."
         )
         with gr.Row():
