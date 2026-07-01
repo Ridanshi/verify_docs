@@ -34,6 +34,7 @@ SELECT
     (d.disbursement_amount / 100.0)::bigint AS disbursement_amount,
     d.disbursement_date,
     a.branch_name                       AS branch,
+    a.loan_type                         AS loan_type,
     d.loan_account_number,
     lp.loan_account_number_regex        AS lan_regex
 FROM disbursements d

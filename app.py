@@ -269,7 +269,7 @@ def db_verify(document_file):
         "application_id":      db_record.get("application_id"),
         "sanction_amount":     str(int(db_record["sanction_amount"]))  if db_record.get("sanction_amount")  else None,
         "disbursement_amount": str(int(db_record["disbursement_amount"])) if db_record.get("disbursement_amount") else None,
-        "loan_type":           None,
+        "loan_type":           db_record.get("loan_type"),
         "branch":              db_record.get("branch"),
         "disbursement_date":   disb_date.isoformat() if disb_date else None,
     }

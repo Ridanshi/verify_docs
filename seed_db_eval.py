@@ -89,9 +89,11 @@ def main():
             sanctioned_amount   BIGINT,
             branch_name         VARCHAR,
             bank_application_id VARCHAR,
+            loan_type           VARCHAR,
             inserted_at         TIMESTAMP NOT NULL,
             updated_at          TIMESTAMP NOT NULL
         );
+        ALTER TABLE applications ADD COLUMN IF NOT EXISTS loan_type VARCHAR;
         CREATE TABLE IF NOT EXISTS disbursements (
             id                   BIGSERIAL PRIMARY KEY,
             application_id       BIGINT REFERENCES applications(id),
@@ -144,9 +146,9 @@ def main():
 
         cur.execute(
             """INSERT INTO applications
-               (lead_id, lending_partner_id, sanctioned_amount, branch_name, bank_application_id, inserted_at, updated_at)
-               VALUES (%s, %s, %s, %s, %s, NOW(), NOW()) RETURNING id""",
-            (lead_id, lp_ids[bank], sanction_paise, ev["branch"], ev["application_id"]),
+               (lead_id, lending_partner_id, sanctioned_amount, branch_name, bank_application_id, loan_type, inserted_at, updated_at)
+               VALUES (%s, %s, %s, %s, %s, %s, NOW(), NOW()) RETURNING id""",
+            (lead_id, lp_ids[bank], sanction_paise, ev["branch"], ev["application_id"], ev.get("loan_type")),
         )
         app_id_db = cur.fetchone()[0]
 
