@@ -163,8 +163,15 @@ def _compare_amount(f: str, extracted: dict, expected_val) -> tuple[str, str]:
     value, conflict = _reconcile_amount(digit_str, word_str)
 
     if conflict:
-        # The document itself is internally inconsistent — digits and words say different things.
-        # We can't trust either reading, so a human needs to look at the original.
+        # Digits and words disagree. Before flagging for review, check whether either
+        # one matches the expected value — if so, that reading is likely correct and
+        # the other is a misread.
+        d = normalize_amount(str(digit_str)) if digit_str else None
+        w = words_to_number(str(word_str)) if word_str else None
+        if _amounts_close(w, exp_num):
+            return "match", ""   # words correct, digits misread — trust words
+        if _amounts_close(d, exp_num):
+            return "match", ""   # digits correct, words misread — trust digits
         return "review", (
             f"{label} unclear: digits '{digit_str}' and words '{word_str}' disagree "
             f"on the document. Please verify manually."
