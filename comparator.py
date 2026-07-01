@@ -83,7 +83,13 @@ def _reconcile_amount(digit_str, word_str) -> tuple[float | None, bool]:
       differ in any other way → genuine conflict → (None, True)
     """
     d = normalize_amount(str(digit_str)) if digit_str else None
-    w = words_to_number(str(word_str))  if word_str  else None
+    # VLM sometimes puts mixed digit+unit strings in the "words" field
+    # (e.g. "Rs.130.00 lakhs"). words_to_number handles spelled-out numbers
+    # only; for mixed strings, normalize_amount does the right thing.
+    if word_str and any(c.isdigit() for c in str(word_str)):
+        w = normalize_amount(str(word_str))
+    else:
+        w = words_to_number(str(word_str)) if word_str else None
 
     if d is None and w is None:
         return None, False
