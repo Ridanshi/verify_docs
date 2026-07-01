@@ -50,7 +50,7 @@ INVALID_DOC_MIN_FIELDS = 3
 # activations — 4-bit quantized weights are ~5GB, avoiding the GPU-split fragility
 # of the 32B model. Trade-off: ~5-10 percentage-point accuracy drop on Devanagari
 # names and small-font amounts. Swap back to 32B if a single A100 is available.
-VLM_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
+VLM_MODEL_ID = "Qwen/Qwen2.5-VL-32B-Instruct"
 
 # How many tokens the model can generate in its response (the JSON output).
 # 512 is more than enough for our 11-field JSON.
