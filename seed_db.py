@@ -139,6 +139,7 @@ def main():
             sanctioned_amount   BIGINT,
             branch_name         VARCHAR,
             bank_application_id VARCHAR,
+            loan_type           VARCHAR,
             inserted_at         TIMESTAMP NOT NULL,
             updated_at          TIMESTAMP NOT NULL
         );
