@@ -175,18 +175,24 @@ def auto_compare(screenshot_file):
 
 
 def db_verify(document_file):
-    """Handler for the DB Verify tab.
+    """Handler for the DB Verify tab."""
+    import traceback
+    try:
+        return _db_verify_impl(document_file)
+    except Exception as e:
+        tb = traceback.format_exc()
+        print("=" * 60, flush=True)
+        print("DB VERIFY ERROR:", flush=True)
+        print(tb, flush=True)
+        print("=" * 60, flush=True)
+        return (
+            '<div style="font-size:1.4em;font-weight:bold;color:red">INTERNAL ERROR</div>',
+            f"Exception: {type(e).__name__}: {e}\n\nFull traceback:\n{tb}",
+            "", "",
+        )
 
-    VLM-driven workflow: the model reads the LAN from the document itself.
-    Fully automated — no filename convention required. Safety net: after DB
-    lookup we cross-check the DB customer name against the customer name the
-    VLM read from the document. A mismatch usually means the LAN was misread
-    (wrong DB row pulled) and we flag NEEDS_REVIEW instead of silently
-    producing a wrong verdict.
 
-    This still catches the "wrong doc attached to case" scenario — see the
-    comparator, which flags every field mismatch as CHANGES REQUESTED.
-    """
+def _db_verify_impl(document_file):
     if document_file is None:
         return "No document uploaded.", "", "", ""
 
