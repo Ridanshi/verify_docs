@@ -9,7 +9,9 @@ import os
 import gradio as gr
 from rapidfuzz import fuzz
 from preprocessor import load_image
-from extractor import extract_fields, extract_from_combined_screenshot
+# Lazy-import extractor inside handlers — touching torch/transformers at module load
+# corrupts memory on CUDA-version-mismatched hosts (e.g. Colab CUDA 13 vs torch CUDA 12)
+# and silently kills the whole server before the UI can load.
 from comparator import compare_fields
 from normalizer import normalize_text
 from config import matches_any_lender_pattern
@@ -21,6 +23,16 @@ from db_lookup import (
     AmbiguousRecordError,
     DBConnectionError,
 )
+
+
+def _extract_fields(image):
+    from extractor import extract_fields
+    return extract_fields(image)
+
+
+def _extract_from_combined_screenshot(image):
+    from extractor import extract_from_combined_screenshot
+    return extract_from_combined_screenshot(image)
 
 # Minimum fuzzy-match score for the customer-name cross-check between the doc
 # and the DB record found via the extracted LAN. Below this we flag NEEDS_REVIEW
@@ -69,7 +81,7 @@ def verify_document(
 
     # Run the model on the document image
     try:
-        extracted = extract_fields(image)
+        extracted = _extract_fields(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", ""
 
@@ -141,7 +153,7 @@ def auto_compare(screenshot_file):
 
     # Two model calls: one for the left (system) panel, one for the right (document)
     try:
-        expected, extracted = extract_from_combined_screenshot(image)
+        expected, extracted = _extract_from_combined_screenshot(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", "", ""
 
@@ -205,7 +217,7 @@ def _db_verify_impl(document_file):
 
     # Step 1: VLM reads all fields (including the LAN) from the document
     try:
-        extracted = extract_fields(image)
+        extracted = _extract_fields(image)
     except Exception as e:
         return f"Extraction failed: {e}. Please try again.", "", "", ""
 
