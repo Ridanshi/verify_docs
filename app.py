@@ -289,7 +289,7 @@ def _db_verify_impl(case_lan, document_file):
         f"| {FIELD_LABELS.get(k, k)} | {v or '—'} |"
         for k, v in expected.items() if v
     )
-    db_table  = f"**DB Record for LAN: {lan}** (read from document)\n\n| Field | DB Value |\n|---|---|\n" + db_rows
+    db_table  = f"**DB Record for Case LAN: {case_lan}**\n\n| Field | DB Value |\n|---|---|\n" + db_rows
 
     ext_rows  = "\n".join(
         f"| {FIELD_LABELS.get(k, k)} | {v or 'not found'} |"
