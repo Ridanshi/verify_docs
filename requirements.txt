@@ -16,3 +16,4 @@ pymupdf>=1.23.0 # Renders PDF pages → images, and PDF→JPG conversion. Used i
 fastapi>=0.115.0
 uvicorn[standard]>=0.30.0
 python-multipart>=0.0.9 # required by FastAPI to parse multipart form/file uploads
+pyngrok>=7.1.0
