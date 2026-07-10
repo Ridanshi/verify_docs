@@ -13,3 +13,6 @@ gradio>=4.40.0
 pytest>=7.4.0
 reportlab>=4.0.0 # Generates the synthetic PDF documents. Used in synthetic/generate.py
 pymupdf>=1.23.0 # Renders PDF pages → images, and PDF→JPG conversion. Used in preprocessor.py + generator
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9 # required by FastAPI to parse multipart form/file uploads
