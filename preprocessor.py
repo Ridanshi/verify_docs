@@ -14,6 +14,14 @@ SUPPORTED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".tiff", ".tif", ".bmp"}
 # The model was trained on images up to 1120×1120. Anything larger gets scaled down.
 MAX_SIDE = 1120
 
+# Used only for the focused amount-only re-extraction pass (see extractor.py's
+# refine_amount_fields()). Small print on amounts is the main cause of
+# digit-drop errors — this higher cap keeps more detail for that second,
+# amount-only read. Not used for the main 9-field extraction (MAX_SIDE above)
+# since a bigger image there just costs more compute without a paired benefit.
+MAX_SIDE_HIGH_RES = 2000
+HIGH_RES_PDF_DPI  = 300
+
 # Enhancement strengths — kept mild on purpose. Aggressive sharpening or contrast
 # can actually hurt OCR by creating artefacts.
 _SHARPEN_FACTOR  = 1.5   # 1.0 = original sharpness
@@ -23,13 +31,13 @@ _DESKEW_STEP     = 0.5   # step size for the angle search
 _DESKEW_MIN_DEG  = 0.3   # don't bother rotating if the tilt is less than this
 
 
-def _resize(img: Image.Image) -> Image.Image:
-    """Scale the image down so its longest side is at most 1120px.
-    Images smaller than 1120px are left untouched."""
+def _resize(img: Image.Image, max_side: int = MAX_SIDE) -> Image.Image:
+    """Scale the image down so its longest side is at most max_side px.
+    Images already smaller than that are left untouched."""
     w, h = img.size
-    if max(w, h) <= MAX_SIDE:
+    if max(w, h) <= max_side:
         return img
-    scale = MAX_SIDE / max(w, h)
+    scale = max_side / max(w, h)
     return img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
 
 
@@ -75,24 +83,19 @@ def _enhance_scan(img: Image.Image) -> Image.Image:
     return img
 
 
-def load_image(file_path: str) -> Image.Image:
-    """Load a PDF or image file and return a clean, model-ready PIL image.
-
-    PDF  → rendered at 200 DPI via PyMuPDF → resized (no scan enhancement).
-    Image → opened with PIL → resized → deskew + sharpen + contrast boost.
-
-    Raises ValueError for unsupported file formats.
-    """
+def _load(file_path: str, max_side: int, pdf_dpi: int) -> Image.Image:
+    """Shared implementation behind load_image() and load_image_high_res() —
+    only the resolution differs between the two."""
     path = file_path.lower()
 
     if path.endswith(".pdf"):
         doc  = fitz.open(file_path)
         page = doc[0]  # always use the first page
-        mat  = fitz.Matrix(200 / 72, 200 / 72)  # render at 200 DPI
+        mat  = fitz.Matrix(pdf_dpi / 72, pdf_dpi / 72)
         pix  = page.get_pixmap(matrix=mat)
         img  = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
         doc.close()
-        return _resize(img)  # PDFs are already clean — skip scan enhancement
+        return _resize(img, max_side)  # PDFs are already clean — skip scan enhancement
 
     ext = "." + path.rsplit(".", 1)[-1] if "." in path else ""
     if ext not in SUPPORTED_IMAGE_EXTS:
@@ -101,5 +104,27 @@ def load_image(file_path: str) -> Image.Image:
         )
 
     img = Image.open(file_path).convert("RGB")
-    img = _resize(img)
+    img = _resize(img, max_side)
     return _enhance_scan(img)  # scanned images benefit from cleanup
+
+
+def load_image(file_path: str) -> Image.Image:
+    """Load a PDF or image file and return a clean, model-ready PIL image.
+
+    PDF  → rendered at 200 DPI via PyMuPDF → resized to MAX_SIDE (no scan enhancement).
+    Image → opened with PIL → resized to MAX_SIDE → deskew + sharpen + contrast boost.
+
+    Raises ValueError for unsupported file formats.
+    """
+    return _load(file_path, max_side=MAX_SIDE, pdf_dpi=200)
+
+
+def load_image_high_res(file_path: str) -> Image.Image:
+    """Same as load_image(), but at a higher resolution cap (MAX_SIDE_HIGH_RES)
+    and higher PDF render DPI. Used only for the focused amount-only
+    re-extraction pass — small print needs more detail than the main
+    9-field pass requires, at the cost of more GPU compute per call.
+
+    Raises ValueError for unsupported file formats.
+    """
+    return _load(file_path, max_side=MAX_SIDE_HIGH_RES, pdf_dpi=HIGH_RES_PDF_DPI)

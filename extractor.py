@@ -219,6 +219,46 @@ DOC_PANEL_PROMPT = (
     + PROMPT
 )
 
+# ── Amount-only refinement prompt ────────────────────────────────────────────────
+# Small print on amounts is the main cause of digit-drop errors (e.g. reading
+# ₹6,50,000 instead of ₹65,00,000). This second, narrower prompt asks the model
+# to focus purely on the four amount-related fields, on a higher-resolution
+# render of the same document (see preprocessor.load_image_high_res). Splitting
+# this into its own focused call — rather than asking for all 9 fields at once —
+# gives the model less to split attention across for this specific weak spot.
+AMOUNT_FOCUS_PROMPT = """You are a financial document extraction assistant. Read this
+Indian loan document image VERY carefully, focusing only on monetary amounts.
+
+Extract exactly these 4 fields:
+
+  sanction_amount     — The total loan amount sanctioned/approved, in DIGITS.
+                        Copy EXACTLY as printed — same digits, same commas, same
+                        symbols. Count every digit twice before answering. Indian
+                        comma grouping: "25,00,000" = twenty-five lakh (7 digits).
+                        Do NOT drop, add, or transpose a single digit.
+
+  sanction_amount_words — The same amount written IN WORDS, usually in brackets
+                        after the digits, e.g. "(Rupees Twenty Five Lakhs Only)".
+                        Copy exactly. Set to null if no words version is printed.
+
+  disbursement_amount — The amount actually disbursed, in DIGITS. Same precision
+                        rules as sanction_amount.
+
+  disbursement_amount_words — The disbursed amount in words, if printed in
+                        brackets. Copy exactly. Set to null if absent.
+
+Set a field to null only if it is genuinely absent from the document.
+
+Return ONLY valid JSON, no explanation:
+{
+  "sanction_amount": "...",
+  "sanction_amount_words": "...",
+  "disbursement_amount": "...",
+  "disbursement_amount_words": "..."
+}"""
+
+_AMOUNT_KEYS = ["sanction_amount", "sanction_amount_words", "disbursement_amount", "disbursement_amount_words"]
+
 
 # ── Model helpers ───────────────────────────────────────────────────────────────
 
@@ -320,6 +360,30 @@ def extract_fields(image: Image.Image) -> dict:
     result = _empty_fields()
     for key in _ALL_KEYS:
         result[key] = _clean(fields.get(key))
+
+    return result
+
+
+def refine_amount_fields(image_high_res: Image.Image, extracted: dict) -> dict:
+    """Re-read just the amount fields on a higher-resolution render of the same
+    document, to catch digit-drop errors from the main extract_fields() pass.
+
+    Returns a NEW dict: a copy of `extracted` with the 4 amount keys overwritten
+    by this pass's reading — unless this pass itself failed to parse a JSON
+    response, in which case the original values are kept (never silently drop
+    a good reading in favor of a failed one).
+    """
+    _load_model()
+
+    raw    = _call_model(image_high_res, AMOUNT_FOCUS_PROMPT)
+    parsed = _parse_json(raw)
+
+    if parsed is None:
+        return dict(extracted)  # refinement pass failed — keep the original reading
+
+    result = dict(extracted)
+    for key in _AMOUNT_KEYS:
+        result[key] = _clean(parsed.get(key))
 
     return result
 

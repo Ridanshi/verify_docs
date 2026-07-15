@@ -46,11 +46,12 @@ FUZZY_THRESHOLDS = {
 # If fewer than 3 fields were extracted, the document is probably invalid or unreadable.
 INVALID_DOC_MIN_FIELDS = 3
 
-# The vision-language model we're using. 7B fits on a single T4 with room for
-# activations — 4-bit quantized weights are ~5GB, avoiding the GPU-split fragility
-# of the 32B model. Trade-off: ~5-10 percentage-point accuracy drop on Devanagari
-# names and small-font amounts. Swap back to 32B if a single A100 is available.
-VLM_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
+# The vision-language model we're using. 32B needs ~18GB in 4-bit — split across
+# both T4 GPUs on Kaggle (see extractor.py's max_memory map). Requires the
+# transformers==4.49.0 pin in requirements.txt — newer versions concentrate the
+# quantized weights on one GPU and OOM. Needs Kaggle's GPU T4 x2 accelerator,
+# not just a single T4 (7B fit on one; 32B does not).
+VLM_MODEL_ID = "Qwen/Qwen2.5-VL-32B-Instruct"
 
 # How many tokens the model can generate in its response (the JSON output).
 # 512 is more than enough for our 11-field JSON.

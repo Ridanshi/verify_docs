@@ -54,3 +54,60 @@ def test_verify_requires_document_file():
     response = client.post("/verify", data={"expected": json.dumps(VALID_EXPECTED)})
 
     assert response.status_code == 422  # FastAPI's own validation — no file provided
+
+
+@patch("api.compare_fields")
+@patch("api.refine_amount_fields")
+@patch("api.extract_fields")
+@patch("api.load_image_high_res")
+@patch("api.load_image")
+def test_verify_runs_amount_refinement_when_enough_fields_found(
+    mock_load_image, mock_load_image_high_res, mock_extract_fields, mock_refine_amount_fields, mock_compare_fields
+):
+    # 3+ non-null fields → looks like a real document → refinement pass should run
+    main_pass_result = {"customer_name": "Jane Doe", "bank_name": "HDFC", "sanction_amount": "5,00,000"}
+    refined_result = {**main_pass_result, "sanction_amount": "50,00,000"}
+
+    mock_load_image.return_value = "fake-image-object"
+    mock_load_image_high_res.return_value = "fake-high-res-image-object"
+    mock_extract_fields.return_value = main_pass_result
+    mock_refine_amount_fields.return_value = refined_result
+    mock_compare_fields.return_value = ComparisonResult(status="APPROVED", comments=[], extracted=refined_result)
+
+    response = client.post(
+        "/verify",
+        data={"expected": json.dumps(VALID_EXPECTED)},
+        files={"document": ("doc.pdf", io.BytesIO(b"%PDF-1.4 dummy"), "application/pdf")},
+    )
+
+    assert response.status_code == 200
+    mock_load_image_high_res.assert_called_once()
+    mock_refine_amount_fields.assert_called_once_with("fake-high-res-image-object", main_pass_result)
+    mock_compare_fields.assert_called_once_with(refined_result, VALID_EXPECTED)
+
+
+@patch("api.compare_fields")
+@patch("api.refine_amount_fields")
+@patch("api.extract_fields")
+@patch("api.load_image_high_res")
+@patch("api.load_image")
+def test_verify_skips_refinement_for_near_empty_extraction(
+    mock_load_image, mock_load_image_high_res, mock_extract_fields, mock_refine_amount_fields, mock_compare_fields
+):
+    # Only 1 non-null field → looks invalid/unreadable → skip the extra GPU pass
+    sparse_result = {"customer_name": "Jane Doe"}
+
+    mock_load_image.return_value = "fake-image-object"
+    mock_extract_fields.return_value = sparse_result
+    mock_compare_fields.return_value = ComparisonResult(status="CHANGES_REQUESTED", comments=[], extracted=sparse_result)
+
+    response = client.post(
+        "/verify",
+        data={"expected": json.dumps(VALID_EXPECTED)},
+        files={"document": ("doc.pdf", io.BytesIO(b"%PDF-1.4 dummy"), "application/pdf")},
+    )
+
+    assert response.status_code == 200
+    mock_load_image_high_res.assert_not_called()
+    mock_refine_amount_fields.assert_not_called()
+    mock_compare_fields.assert_called_once_with(sparse_result, VALID_EXPECTED)
