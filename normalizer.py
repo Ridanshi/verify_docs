@@ -128,11 +128,37 @@ def normalize_date(value: str) -> str | None:
         return None
 
 
+# Company legal-suffix variants, collapsed to one canonical short form before
+# fuzzy comparison. Lenders write their own name inconsistently across
+# different documents/systems ("Aadhar Housing Finance Limited" on one letter,
+# "Ltd." on another) — this is a real, general variance across any lender's
+# own paperwork, not specific to any one company. Ordered longest/most
+# specific phrase first so e.g. "private limited" is caught before the bare
+# "limited" pattern would partially match it.
+_COMPANY_SUFFIX_PATTERNS = [
+    (r"\bprivate limited\b", "pvt ltd"),
+    (r"\bpvt\.?\s*ltd\b\.?", "pvt ltd"),
+    (r"\blimited\b", "ltd"),
+    (r"\bltd\b\.?", "ltd"),
+    (r"\bincorporated\b", "inc"),
+    (r"\binc\b\.?", "inc"),
+    (r"\bcompany\b", "co"),
+    (r"\bco\b\.?", "co"),
+]
+
+
 def normalize_text(value: str) -> str:
-    """Lowercase and strip a string so comparisons aren't thrown off by casing.
+    """Lowercase, strip, and standardize company legal suffixes so comparisons
+    aren't thrown off by casing or common abbreviation variance.
 
     "ZAINAB MEDICALS" and "Zainab Medicals" should be treated as the same.
+    "Aadhar Housing Finance Limited" and "...Ltd." should be treated as the
+    same too — this affects bank_name and any other fuzzy-matched field,
+    across every lender, not just one specific case.
     """
     if not value:
         return ""
-    return str(value).lower().strip()
+    text = str(value).lower().strip()
+    for pattern, replacement in _COMPANY_SUFFIX_PATTERNS:
+        text = re.sub(pattern, replacement, text)
+    return re.sub(r"\s+", " ", text).strip()

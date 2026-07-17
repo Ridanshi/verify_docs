@@ -69,3 +69,17 @@ def test_text_whitespace():
 
 def test_text_none():
     assert normalize_text(None) == ""
+
+def test_text_limited_matches_ltd():
+    assert normalize_text("Aadhar Housing Finance Limited") == normalize_text("Aadhar Housing Finance Ltd.")
+
+def test_text_ltd_trailing_period_stripped():
+    assert normalize_text("HDFC Ltd") == normalize_text("HDFC Ltd.")
+
+def test_text_private_limited_matches_pvt_ltd():
+    assert normalize_text("ABC Finance Private Limited") == normalize_text("ABC Finance Pvt. Ltd.")
+
+def test_text_company_suffix_does_not_affect_plain_names():
+    # a generalized fix shouldn't accidentally mangle names with no legal suffix
+    assert normalize_text("Mount Road") == "mount road"
+    assert normalize_text("Zainab Medicals") == "zainab medicals"
