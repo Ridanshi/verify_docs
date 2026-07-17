@@ -1,0 +1,162 @@
+{
+  "amount_stress_001.pdf": {
+    "file": "amount_stress_001.pdf",
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC284778999",
+      "application_id": "AP2097497558",
+      "sanction_amount": 500000,
+      "disbursement_amount": 500000,
+      "loan_type": "SME Loan",
+      "branch": "Ambattur",
+      "disbursement_date": "2026-03-07"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 500000
+  },
+  "amount_stress_002.pdf": {
+    "file": "amount_stress_002.pdf",
+    "expected_values": {
+      "customer_name": "Gomathi Devi & Shankar",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC271411438",
+      "application_id": "AP5124591368",
+      "sanction_amount": 1200000,
+      "disbursement_amount": 1200000,
+      "loan_type": "LAP Non Individual",
+      "branch": "Porur",
+      "disbursement_date": "2026-02-21"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 1200000
+  },
+  "amount_stress_003.pdf": {
+    "file": "amount_stress_003.pdf",
+    "expected_values": {
+      "customer_name": "Priya Sharma",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC449382151",
+      "application_id": "AP7723401887",
+      "sanction_amount": 2500000,
+      "disbursement_amount": 2500000,
+      "loan_type": "LAP",
+      "branch": "Adyar",
+      "disbursement_date": "2026-01-13"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 2500000
+  },
+  "amount_stress_004.pdf": {
+    "file": "amount_stress_004.pdf",
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC748352166",
+      "application_id": "AP3466360701",
+      "sanction_amount": 4000000,
+      "disbursement_amount": 4000000,
+      "loan_type": "SME Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-03-21"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 4000000
+  },
+  "amount_stress_005.pdf": {
+    "file": "amount_stress_005.pdf",
+    "expected_values": {
+      "customer_name": "Kavitha Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC938562027",
+      "application_id": "AP4699431381",
+      "sanction_amount": 6350000,
+      "disbursement_amount": 6350000,
+      "loan_type": "Business Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-05-05"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 6350000
+  },
+  "amount_stress_006.pdf": {
+    "file": "amount_stress_006.pdf",
+    "expected_values": {
+      "customer_name": "Prasad Reddy",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC782392620",
+      "application_id": "AP6240735331",
+      "sanction_amount": 7825000,
+      "disbursement_amount": 7825000,
+      "loan_type": "SME Loan",
+      "branch": "T.Nagar",
+      "disbursement_date": "2026-02-27"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 7825000
+  },
+  "amount_stress_007.pdf": {
+    "file": "amount_stress_007.pdf",
+    "expected_values": {
+      "customer_name": "Venkatesh Rao",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC427629138",
+      "application_id": "AP8365633771",
+      "sanction_amount": 9999000,
+      "disbursement_amount": 9999000,
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-02-18"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 9999000
+  },
+  "amount_stress_008.pdf": {
+    "file": "amount_stress_008.pdf",
+    "expected_values": {
+      "customer_name": "Anita Gupta & Vikram Gupta",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC132805807",
+      "application_id": "AP9046014769",
+      "sanction_amount": 15000000,
+      "disbursement_amount": 15000000,
+      "loan_type": "Home Loan",
+      "branch": "Adyar",
+      "disbursement_date": "2026-01-28"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 15000000
+  },
+  "amount_stress_009.pdf": {
+    "file": "amount_stress_009.pdf",
+    "expected_values": {
+      "customer_name": "Suresh Nair",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC713020497",
+      "application_id": "AP6198975870",
+      "sanction_amount": 25000000,
+      "disbursement_amount": 25000000,
+      "loan_type": "LAP Non Individual",
+      "branch": "Sholinganallur",
+      "disbursement_date": "2026-05-16"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 25000000
+  },
+  "amount_stress_010.pdf": {
+    "file": "amount_stress_010.pdf",
+    "expected_values": {
+      "customer_name": "Mohammed Ali",
+      "bank_name": "Mahindra Finance",
+      "loan_account_number": "LAPSEC835117572",
+      "application_id": "AP7880103069",
+      "sanction_amount": 50000000,
+      "disbursement_amount": 50000000,
+      "loan_type": "SME Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-04-05"
+    },
+    "expected_status": "APPROVED",
+    "true_rupees": 50000000
+  }
+}
