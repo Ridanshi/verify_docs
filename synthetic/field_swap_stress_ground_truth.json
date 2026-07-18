@@ -3,13 +3,13 @@
     "file": "field_swap_mahindra_7001.pdf",
     "lender": "mahindra",
     "expected_values": {
-      "customer_name": "Anita Gupta & Vikram Gupta",
+      "customer_name": "Zainab Khan",
       "bank_name": "Mahindra Finance",
-      "loan_account_number": "LAPSEC499398069",
-      "application_id": "AP1850095536",
-      "loan_type": "LAP",
-      "branch": "Vellore",
-      "disbursement_date": "2026-03-25"
+      "loan_account_number": "LAPSEC468628563",
+      "application_id": "AP5707923890",
+      "loan_type": "LAP Non Individual",
+      "branch": "Salem",
+      "disbursement_date": "2026-05-05"
     },
     "expected_status": "APPROVED"
   },
@@ -17,13 +17,13 @@
     "file": "field_swap_mahindra_7002.pdf",
     "lender": "mahindra",
     "expected_values": {
-      "customer_name": "Zainab Khan",
+      "customer_name": "Senthil Kumar & Malathi",
       "bank_name": "Mahindra Finance",
-      "loan_account_number": "LAPSEC115604690",
-      "application_id": "AP9211379809",
-      "loan_type": "LAP Non Individual",
-      "branch": "Ambattur",
-      "disbursement_date": "2026-01-09"
+      "loan_account_number": "LAPSEC836425032",
+      "application_id": "AP3116258495",
+      "loan_type": "SME Loan",
+      "branch": "Velachery",
+      "disbursement_date": "2026-01-07"
     },
     "expected_status": "APPROVED"
   },
@@ -31,13 +31,13 @@
     "file": "field_swap_mahindra_7003.pdf",
     "lender": "mahindra",
     "expected_values": {
-      "customer_name": "Senthil Kumar & Malathi",
+      "customer_name": "Anita Gupta & Vikram Gupta",
       "bank_name": "Mahindra Finance",
-      "loan_account_number": "LAPSEC120484201",
-      "application_id": "AP1205745088",
-      "loan_type": "SME Loan",
-      "branch": "Sholinganallur",
-      "disbursement_date": "2026-01-19"
+      "loan_account_number": "LAPSEC108315442",
+      "application_id": "AP9725852709",
+      "loan_type": "LAP Non Individual",
+      "branch": "Coimbatore",
+      "disbursement_date": "2026-06-09"
     },
     "expected_status": "APPROVED"
   },
@@ -45,13 +45,13 @@
     "file": "field_swap_mahindra_7004.pdf",
     "lender": "mahindra",
     "expected_values": {
-      "customer_name": "Indira Nair & Vijayan Nair",
+      "customer_name": "Rajesh Kumar",
       "bank_name": "Mahindra Finance",
-      "loan_account_number": "LAPSEC843733361",
-      "application_id": "AP2197826188",
-      "loan_type": "Home Loan",
-      "branch": "Porur",
-      "disbursement_date": "2026-03-13"
+      "loan_account_number": "LAPSEC794302549",
+      "application_id": "AP3200387225",
+      "loan_type": "SME Loan",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-04-08"
     },
     "expected_status": "APPROVED"
   },
@@ -61,11 +61,11 @@
     "expected_values": {
       "customer_name": "Indira Nair & Vijayan Nair",
       "bank_name": "Mahindra Finance",
-      "loan_account_number": "LAPSEC378436461",
-      "application_id": "AP8195205954",
-      "loan_type": "Home Loan",
-      "branch": "Salem",
-      "disbursement_date": "2026-01-19"
+      "loan_account_number": "LAPSEC358977735",
+      "application_id": "AP6326395693",
+      "loan_type": "SME Loan",
+      "branch": "MountRoad",
+      "disbursement_date": "2026-04-27"
     },
     "expected_status": "APPROVED"
   },
@@ -73,13 +73,13 @@
     "file": "field_swap_aadhar_7001.pdf",
     "lender": "aadhar",
     "expected_values": {
-      "customer_name": "Suresh Nair",
+      "customer_name": "Rajesh Kumar",
       "bank_name": "Aadhar Housing Finance Limited",
-      "loan_account_number": "372437538",
-      "application_id": "365467901",
-      "loan_type": "Home Loan",
-      "branch": "Poonamallee",
-      "disbursement_date": "2026-06-26"
+      "loan_account_number": "376622592",
+      "application_id": "359872002",
+      "loan_type": "Plot Loan",
+      "branch": "Sriperumbudur",
+      "disbursement_date": "2026-05-16"
     },
     "expected_status": "APPROVED"
   },
@@ -87,13 +87,13 @@
     "file": "field_swap_aadhar_7002.pdf",
     "lender": "aadhar",
     "expected_values": {
-      "customer_name": "Meena Krishnan",
+      "customer_name": "Gomathi Devi & Shankar",
       "bank_name": "Aadhar Housing Finance Limited",
-      "loan_account_number": "395382199",
-      "application_id": "365135012",
-      "loan_type": "HOME LOAN QR",
-      "branch": "Perambur",
-      "disbursement_date": "2026-01-23"
+      "loan_account_number": "303907141",
+      "application_id": "306342137",
+      "loan_type": "Home Improvement Loan",
+      "branch": "Uthandi",
+      "disbursement_date": "2026-06-12"
     },
     "expected_status": "APPROVED"
   },
@@ -101,13 +101,13 @@
     "file": "field_swap_aadhar_7003.pdf",
     "lender": "aadhar",
     "expected_values": {
-      "customer_name": "Karthik Raj & Divya Karthik",
+      "customer_name": "Mohammed Ali",
       "bank_name": "Aadhar Housing Finance Limited",
-      "loan_account_number": "304734101",
-      "application_id": "330088964",
-      "loan_type": "Home Improvement Loan",
-      "branch": "Avadi",
-      "disbursement_date": "2026-05-25"
+      "loan_account_number": "321715291",
+      "application_id": "375573883",
+      "loan_type": "HOME LOAN QR",
+      "branch": "Tambaram",
+      "disbursement_date": "2026-02-13"
     },
     "expected_status": "APPROVED"
   },
@@ -115,13 +115,13 @@
     "file": "field_swap_aadhar_7004.pdf",
     "lender": "aadhar",
     "expected_values": {
-      "customer_name": "Senthil Kumar & Malathi",
+      "customer_name": "Nalini Mohan",
       "bank_name": "Aadhar Housing Finance Limited",
-      "loan_account_number": "356411457",
-      "application_id": "303276544",
+      "loan_account_number": "367687056",
+      "application_id": "300316054",
       "loan_type": "Home Extension Loan",
-      "branch": "Sriperumbudur",
-      "disbursement_date": "2026-06-05"
+      "branch": "Siruseri",
+      "disbursement_date": "2026-05-18"
     },
     "expected_status": "APPROVED"
   },
@@ -129,13 +129,13 @@
     "file": "field_swap_aadhar_7005.pdf",
     "lender": "aadhar",
     "expected_values": {
-      "customer_name": "Priya Sharma",
+      "customer_name": "Suresh Nair",
       "bank_name": "Aadhar Housing Finance Limited",
-      "loan_account_number": "328704400",
-      "application_id": "380712635",
+      "loan_account_number": "322350431",
+      "application_id": "315087883",
       "loan_type": "Home Extension Loan",
-      "branch": "Uthandi",
-      "disbursement_date": "2026-02-04"
+      "branch": "Perambur",
+      "disbursement_date": "2026-03-04"
     },
     "expected_status": "APPROVED"
   },
@@ -143,13 +143,13 @@
     "file": "field_swap_hdfc_7001.pdf",
     "lender": "hdfc",
     "expected_values": {
-      "customer_name": "Suresh Nair",
+      "customer_name": "Prasad Reddy",
       "bank_name": "HDFC Ltd",
-      "loan_account_number": "HL8979988691",
-      "application_id": "HDFC61076221",
-      "loan_type": "Home Loan - Regular",
-      "branch": "Kodambakkam",
-      "disbursement_date": "2026-04-13"
+      "loan_account_number": "HL9620618555",
+      "application_id": "HDFC15706296",
+      "loan_type": "Home Loan",
+      "branch": "Egmore",
+      "disbursement_date": "2026-03-05"
     },
     "expected_status": "APPROVED"
   },
@@ -157,13 +157,13 @@
     "file": "field_swap_hdfc_7002.pdf",
     "lender": "hdfc",
     "expected_values": {
-      "customer_name": "Sunitha Thomas",
+      "customer_name": "Arjun Singh",
       "bank_name": "HDFC Ltd",
-      "loan_account_number": "HL4861658104",
-      "application_id": "HDFC91993998",
-      "loan_type": "Loan Against Property",
-      "branch": "Vadapalani",
-      "disbursement_date": "2026-03-21"
+      "loan_account_number": "HL7829832932",
+      "application_id": "HDFC79329412",
+      "loan_type": "NRI Home Loan",
+      "branch": "Anna Nagar",
+      "disbursement_date": "2026-04-28"
     },
     "expected_status": "APPROVED"
   },
@@ -171,13 +171,13 @@
     "file": "field_swap_hdfc_7003.pdf",
     "lender": "hdfc",
     "expected_values": {
-      "customer_name": "Usha Rani",
+      "customer_name": "Anita Gupta & Vikram Gupta",
       "bank_name": "HDFC Ltd",
-      "loan_account_number": "HL4138325643",
-      "application_id": "HDFC90853460",
-      "loan_type": "NRI Home Loan",
-      "branch": "Kilpauk",
-      "disbursement_date": "2026-02-28"
+      "loan_account_number": "HL2158035089",
+      "application_id": "HDFC51461616",
+      "loan_type": "Loan Against Property",
+      "branch": "Nungambakkam",
+      "disbursement_date": "2026-04-10"
     },
     "expected_status": "APPROVED"
   },
@@ -185,13 +185,13 @@
     "file": "field_swap_hdfc_7004.pdf",
     "lender": "hdfc",
     "expected_values": {
-      "customer_name": "Meena Krishnan",
+      "customer_name": "Ravi Shankar",
       "bank_name": "HDFC Ltd",
-      "loan_account_number": "HL2432745989",
-      "application_id": "HDFC37205981",
-      "loan_type": "Home Loan - Regular",
-      "branch": "Vadapalani",
-      "disbursement_date": "2026-01-05"
+      "loan_account_number": "HL8282805234",
+      "application_id": "HDFC90139419",
+      "loan_type": "NRI Home Loan",
+      "branch": "Besant Nagar",
+      "disbursement_date": "2026-04-15"
     },
     "expected_status": "APPROVED"
   },
@@ -199,13 +199,13 @@
     "file": "field_swap_hdfc_7005.pdf",
     "lender": "hdfc",
     "expected_values": {
-      "customer_name": "Indira Nair & Vijayan Nair",
+      "customer_name": "Suresh Nair",
       "bank_name": "HDFC Ltd",
-      "loan_account_number": "HL8183200712",
-      "application_id": "HDFC91454525",
-      "loan_type": "Home Loan",
-      "branch": "Guindy",
-      "disbursement_date": "2026-05-03"
+      "loan_account_number": "HL3990714388",
+      "application_id": "HDFC29770945",
+      "loan_type": "Loan Against Property",
+      "branch": "Nungambakkam",
+      "disbursement_date": "2026-05-13"
     },
     "expected_status": "APPROVED"
   }
