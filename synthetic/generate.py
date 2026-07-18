@@ -434,7 +434,7 @@ def build_aadhar_pdf(path: Path, fields: dict):
 
     ref_data = [[
         Paragraph("", normal),
-        Paragraph(fields["disbursement_date"], right),
+        Paragraph(f"Date: {fields['disbursement_date']}", right),
     ]]
     ref_tbl = Table(ref_data, colWidths=[W*0.6, W*0.4])
     ref_tbl.setStyle(TableStyle([("PADDING",(0,0),(-1,-1),0)]))
