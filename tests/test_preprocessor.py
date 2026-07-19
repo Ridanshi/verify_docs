@@ -33,7 +33,7 @@ def test_resize_large_image():
         path = f.name
     _make_test_image(path, size=(3000, 4000))
     img = load_image(path)
-    assert max(img.size) <= 2000
+    assert max(img.size) <= 1120
     os.unlink(path)
 
 
@@ -46,18 +46,18 @@ def test_unsupported_format_raises():
     os.unlink(path)
 
 
-def test_high_res_matches_load_image_resolution():
-    # MAX_SIDE was raised to match MAX_SIDE_HIGH_RES (both 2000/300 DPI) after
-    # the base extraction pass proved to benefit from the same resolution the
-    # amount-refinement pass already used successfully — the two are now
-    # intentionally the same, kept as separate constants since they serve
-    # conceptually different purposes and may diverge again later.
+def test_high_res_allows_larger_images_than_load_image():
+    # MAX_SIDE (main pass) was briefly raised to match MAX_SIDE_HIGH_RES but
+    # reverted — it caused a 100% CUDA OOM failure on Kaggle when BOTH passes
+    # in the pipeline were oversized at once. The high-res path stays reserved
+    # for the narrower amount-only refinement pass, which is the only place
+    # it's actually been proven safe.
     with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
         path = f.name
     _make_test_image(path, size=(3000, 4000))
-    img_normal   = load_image(path)
-    img_high_res = load_image_high_res(path)
-    assert img_normal.size == img_high_res.size
+    img = load_image_high_res(path)
+    assert isinstance(img, Image.Image)
+    assert max(img.size) > 1120  # must exceed load_image()'s 1120 cap
     os.unlink(path)
 
 

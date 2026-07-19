@@ -11,20 +11,19 @@ from PIL import Image, ImageEnhance
 
 SUPPORTED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".tiff", ".tif", ".bmp"}
 
-# Qwen2.5-VL uses native dynamic resolution (no fixed input size) — 1120 was
-# a speed/memory-driven cap, not a model limit. Raised to match
-# MAX_SIDE_HIGH_RES below, since that value is validated working (amount-stress
-# test: 10/10 correct across a spread of magnitudes at this resolution) —
-# reusing a proven number here for the main pass too, rather than guessing a
-# new one. Helps small print on ANY field (not just amounts), including the
-# single-digit misreads seen on loan_account_number/application_id.
-MAX_SIDE = 2000
-PDF_DPI  = 300
+# REVERTED: raising this to 2000 (same run as MAX_SIDE_HIGH_RES below) caused
+# a 100% CUDA OOM failure on Kaggle — with the 32B model already occupying
+# ~9.3GB, a single 2000px image tensor alone exceeded the T4's remaining
+# headroom before the model even got to inference. The amount-refinement
+# pass safely uses 2000px because it's the ONLY oversized pass in the whole
+# pipeline; making BOTH passes that large was the actual cause of the crash,
+# not something specific to size 2000 itself. Back to the original 1120 cap.
+MAX_SIDE = 1120
+PDF_DPI  = 200
 
 # Used for the focused amount-only re-extraction pass (see extractor.py's
-# refine_amount_fields()) — kept as a separate constant even though it's
-# currently the same value as MAX_SIDE/PDF_DPI above, since the two serve
-# conceptually different purposes and may need to diverge again later.
+# refine_amount_fields()) — proven working at this resolution (amount-stress
+# test: 10/10). Kept oversized ONLY here, not in the main pass — see note above.
 MAX_SIDE_HIGH_RES = 2000
 HIGH_RES_PDF_DPI  = 300
 
