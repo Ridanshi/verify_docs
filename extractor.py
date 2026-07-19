@@ -108,12 +108,18 @@ Step 2: Extract exactly these 9 fields. Read each definition carefully before ex
                         for the loan itself, different from the application ID.
                         Note: a label like "App/LAN Number" contains the LAN value, not
                         the application ID — extract it as loan_account_number.
-                        Copy EVERY character exactly — do not skip, add, or transpose digits.
+                        Read it character by character — do not skip, add, or transpose a
+                        single digit. Watch closely for commonly confused digit pairs
+                        (6/8, 1/7, 0/8, 3/8, 5/6) and count the total digit length twice
+                        before answering.
 
   application_id      — The loan application reference number. Usually labelled
                         "Application No", "Application ID", or "Ref No". It identifies
                         the application, not the loan account.
-                        Copy EVERY character exactly — do not skip, add, or transpose digits.
+                        Read it character by character — do not skip, add, or transpose a
+                        single digit. Watch closely for commonly confused digit pairs
+                        (6/8, 1/7, 0/8, 3/8, 5/6) and count the total digit length twice
+                        before answering.
 
   sanction_amount     — The total loan amount sanctioned/approved, in DIGITS. Copy the
                         amount EXACTLY as it appears — same digits, same format, same

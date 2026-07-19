@@ -11,14 +11,20 @@ from PIL import Image, ImageEnhance
 
 SUPPORTED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".tiff", ".tif", ".bmp"}
 
-# The model was trained on images up to 1120×1120. Anything larger gets scaled down.
-MAX_SIDE = 1120
+# Qwen2.5-VL uses native dynamic resolution (no fixed input size) — 1120 was
+# a speed/memory-driven cap, not a model limit. Raised to match
+# MAX_SIDE_HIGH_RES below, since that value is validated working (amount-stress
+# test: 10/10 correct across a spread of magnitudes at this resolution) —
+# reusing a proven number here for the main pass too, rather than guessing a
+# new one. Helps small print on ANY field (not just amounts), including the
+# single-digit misreads seen on loan_account_number/application_id.
+MAX_SIDE = 2000
+PDF_DPI  = 300
 
-# Used only for the focused amount-only re-extraction pass (see extractor.py's
-# refine_amount_fields()). Small print on amounts is the main cause of
-# digit-drop errors — this higher cap keeps more detail for that second,
-# amount-only read. Not used for the main 9-field extraction (MAX_SIDE above)
-# since a bigger image there just costs more compute without a paired benefit.
+# Used for the focused amount-only re-extraction pass (see extractor.py's
+# refine_amount_fields()) — kept as a separate constant even though it's
+# currently the same value as MAX_SIDE/PDF_DPI above, since the two serve
+# conceptually different purposes and may need to diverge again later.
 MAX_SIDE_HIGH_RES = 2000
 HIGH_RES_PDF_DPI  = 300
 
@@ -111,12 +117,12 @@ def _load(file_path: str, max_side: int, pdf_dpi: int) -> Image.Image:
 def load_image(file_path: str) -> Image.Image:
     """Load a PDF or image file and return a clean, model-ready PIL image.
 
-    PDF  → rendered at 200 DPI via PyMuPDF → resized to MAX_SIDE (no scan enhancement).
+    PDF  → rendered at PDF_DPI via PyMuPDF → resized to MAX_SIDE (no scan enhancement).
     Image → opened with PIL → resized to MAX_SIDE → deskew + sharpen + contrast boost.
 
     Raises ValueError for unsupported file formats.
     """
-    return _load(file_path, max_side=MAX_SIDE, pdf_dpi=200)
+    return _load(file_path, max_side=MAX_SIDE, pdf_dpi=PDF_DPI)
 
 
 def load_image_high_res(file_path: str) -> Image.Image:
