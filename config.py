@@ -46,12 +46,13 @@ FUZZY_THRESHOLDS = {
 # If fewer than 3 fields were extracted, the document is probably invalid or unreadable.
 INVALID_DOC_MIN_FIELDS = 3
 
-# The vision-language model we're using. 32B needs ~18GB in 4-bit — split across
-# both T4 GPUs on Kaggle (see extractor.py's max_memory map). Requires the
-# transformers==4.49.0 pin in requirements.txt — newer versions concentrate the
-# quantized weights on one GPU and OOM. Needs Kaggle's GPU T4 x2 accelerator,
-# not just a single T4 (7B fit on one; 32B does not).
-VLM_MODEL_ID = "Qwen/Qwen2.5-VL-32B-Instruct"
+# The vision-language model we're using. 7B fits on a single T4 (~5-6GB in 4-bit)
+# and leaves ample headroom, so Kaggle sessions stay stable across many uploads.
+# 32B is more accurate (see prior stress-test results) but on Kaggle free-tier
+# the kernel dies unpredictably under the tighter memory budget — 7B trades a
+# small accuracy hit for reliability we can actually demo with. Swap back to
+# "Qwen/Qwen2.5-VL-32B-Instruct" once running on hardware with >=24GB VRAM.
+VLM_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
 
 # How many tokens the model can generate in its response (the JSON output).
 # 512 is more than enough for our 11-field JSON.
